@@ -1,0 +1,410 @@
+Info: Reading netlist file "/home/maciej/Desktop/Projects/MIDI-Synth/v_2/KiCad/netlists/midi-v2-circuit.net".
+
+Info: Using references to match components and footprints.
+
+Info: Checking netlist component footprint "C1:/5B2BAED4:Capacitors_SMD:C_0805_HandSoldering".
+
+Adding new component "C1:/5B2BAED4" footprint "Capacitors_SMD:C_0805_HandSoldering".
+
+Changing component "C1:/5B2BAED4" pin "1" net name from "" to "Net-(C1-Pad1)".
+
+Changing component "C1:/5B2BAED4" pin "2" net name from "" to "GND".
+
+Info: Checking netlist component footprint "C2:/5B2BAF8F:Capacitors_SMD:C_0805_HandSoldering".
+
+Adding new component "C2:/5B2BAF8F" footprint "Capacitors_SMD:C_0805_HandSoldering".
+
+Changing component "C2:/5B2BAF8F" pin "1" net name from "" to "Net-(C2-Pad1)".
+
+Changing component "C2:/5B2BAF8F" pin "2" net name from "" to "GND".
+
+Info: Checking netlist component footprint "C3:/5B2BBEE0:Capacitors_SMD:C_0805_HandSoldering".
+
+Adding new component "C3:/5B2BBEE0" footprint "Capacitors_SMD:C_0805_HandSoldering".
+
+Changing component "C3:/5B2BBEE0" pin "1" net name from "" to "Net-(C3-Pad1)".
+
+Changing component "C3:/5B2BBEE0" pin "2" net name from "" to "GND".
+
+Info: Checking netlist component footprint "C4:/5B2B7A4D:Capacitors_SMD:C_0805_HandSoldering".
+
+Adding new component "C4:/5B2B7A4D" footprint "Capacitors_SMD:C_0805_HandSoldering".
+
+Changing component "C4:/5B2B7A4D" pin "1" net name from "" to "+5V".
+
+Changing component "C4:/5B2B7A4D" pin "2" net name from "" to "GND".
+
+Info: Checking netlist component footprint "C5:/5B2B8A3A:Capacitors_SMD:C_0805_HandSoldering".
+
+Adding new component "C5:/5B2B8A3A" footprint "Capacitors_SMD:C_0805_HandSoldering".
+
+Changing component "C5:/5B2B8A3A" pin "1" net name from "" to "+5V".
+
+Changing component "C5:/5B2B8A3A" pin "2" net name from "" to "GND".
+
+Info: Checking netlist component footprint "C6:/5B2B8C4B:Capacitors_SMD:C_0805_HandSoldering".
+
+Adding new component "C6:/5B2B8C4B" footprint "Capacitors_SMD:C_0805_HandSoldering".
+
+Changing component "C6:/5B2B8C4B" pin "1" net name from "" to "+5V".
+
+Changing component "C6:/5B2B8C4B" pin "2" net name from "" to "GND".
+
+Info: Checking netlist component footprint "C7:/5B2B8C9C:Capacitors_SMD:C_0805_HandSoldering".
+
+Adding new component "C7:/5B2B8C9C" footprint "Capacitors_SMD:C_0805_HandSoldering".
+
+Changing component "C7:/5B2B8C9C" pin "1" net name from "" to "Net-(C7-Pad1)".
+
+Changing component "C7:/5B2B8C9C" pin "2" net name from "" to "GND".
+
+Info: Checking netlist component footprint "CON1:/5B2E168A:Connectors_IDC:IDC-Header_2x05_Pitch2.54mm_Angled".
+
+Adding new component "CON1:/5B2E168A" footprint "Connectors_IDC:IDC-Header_2x05_Pitch2.54mm_Angled".
+
+Changing component "CON1:/5B2E168A" pin "1" net name from "" to "knob-pot-4".
+
+Changing component "CON1:/5B2E168A" pin "2" net name from "" to "slide-pot-1".
+
+Changing component "CON1:/5B2E168A" pin "3" net name from "" to "knob-pot-3".
+
+Changing component "CON1:/5B2E168A" pin "4" net name from "" to "slide-pot-2".
+
+Changing component "CON1:/5B2E168A" pin "5" net name from "" to "knob-pot-2".
+
+Changing component "CON1:/5B2E168A" pin "6" net name from "" to "joystick-pot-1".
+
+Changing component "CON1:/5B2E168A" pin "7" net name from "" to "knob-pot-1".
+
+Changing component "CON1:/5B2E168A" pin "8" net name from "" to "joystick-pot-2".
+
+Changing component "CON1:/5B2E168A" pin "9" net name from "" to "+5V".
+
+Changing component "CON1:/5B2E168A" pin "10" net name from "" to "GND".
+
+Info: Checking netlist component footprint "CON2:/5B2AEEE8:Connectors_IDC:IDC-Header_2x05_Pitch2.54mm_Straight".
+
+Adding new component "CON2:/5B2AEEE8" footprint "Connectors_IDC:IDC-Header_2x05_Pitch2.54mm_Straight".
+
+Changing component "CON2:/5B2AEEE8" pin "1" net name from "" to "MOSI".
+
+Changing component "CON2:/5B2AEEE8" pin "2" net name from "" to "+5V".
+
+Changing component "CON2:/5B2AEEE8" pin "3" net name from "" to "Net-(CON2-Pad3)".
+
+Changing component "CON2:/5B2AEEE8" pin "4" net name from "" to "GND".
+
+Changing component "CON2:/5B2AEEE8" pin "5" net name from "" to "RST".
+
+Changing component "CON2:/5B2AEEE8" pin "6" net name from "" to "GND".
+
+Changing component "CON2:/5B2AEEE8" pin "7" net name from "" to "SCK".
+
+Changing component "CON2:/5B2AEEE8" pin "8" net name from "" to "GND".
+
+Changing component "CON2:/5B2AEEE8" pin "9" net name from "" to "MISO".
+
+Changing component "CON2:/5B2AEEE8" pin "10" net name from "" to "GND".
+
+Info: Checking netlist component footprint "CON3:/5B2AEFCB:Connectors_IDC:IDC-Header_2x05_Pitch2.54mm_Straight".
+
+Adding new component "CON3:/5B2AEFCB" footprint "Connectors_IDC:IDC-Header_2x05_Pitch2.54mm_Straight".
+
+Changing component "CON3:/5B2AEFCB" pin "1" net name from "" to "knob-pot-4".
+
+Changing component "CON3:/5B2AEFCB" pin "2" net name from "" to "slide-pot-1".
+
+Changing component "CON3:/5B2AEFCB" pin "3" net name from "" to "knob-pot-3".
+
+Changing component "CON3:/5B2AEFCB" pin "4" net name from "" to "slide-pot-2".
+
+Changing component "CON3:/5B2AEFCB" pin "5" net name from "" to "knob-pot-2".
+
+Changing component "CON3:/5B2AEFCB" pin "6" net name from "" to "joystick-pot-1".
+
+Changing component "CON3:/5B2AEFCB" pin "7" net name from "" to "knob-pot-1".
+
+Changing component "CON3:/5B2AEFCB" pin "8" net name from "" to "joystick-pot-2".
+
+Changing component "CON3:/5B2AEFCB" pin "9" net name from "" to "+5V".
+
+Changing component "CON3:/5B2AEFCB" pin "10" net name from "" to "GND".
+
+Info: Checking netlist component footprint "J1:/5B2E2943:TerminalBlocks_Phoenix:TerminalBlock_Phoenix_MPT-2.54mm_10pol".
+
+Adding new component "J1:/5B2E2943" footprint "TerminalBlocks_Phoenix:TerminalBlock_Phoenix_MPT-2.54mm_10pol".
+
+Changing component "J1:/5B2E2943" pin "4" net name from "" to "joystick-pot-2".
+
+Changing component "J1:/5B2E2943" pin "1" net name from "" to "+5V".
+
+Changing component "J1:/5B2E2943" pin "2" net name from "" to "GND".
+
+Changing component "J1:/5B2E2943" pin "3" net name from "" to "joystick-pot-1".
+
+Changing component "J1:/5B2E2943" pin "5" net name from "" to "slide-pot-1".
+
+Changing component "J1:/5B2E2943" pin "6" net name from "" to "slide-pot-2".
+
+Changing component "J1:/5B2E2943" pin "7" net name from "" to "knob-pot-1".
+
+Changing component "J1:/5B2E2943" pin "8" net name from "" to "knob-pot-2".
+
+Changing component "J1:/5B2E2943" pin "9" net name from "" to "knob-pot-3".
+
+Changing component "J1:/5B2E2943" pin "10" net name from "" to "knob-pot-4".
+
+Info: Checking netlist component footprint "J2:/5B2C07E4:Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm".
+
+Adding new component "J2:/5B2C07E4" footprint "Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm".
+
+Changing component "J2:/5B2C07E4" pin "1" net name from "" to "SDA".
+
+Changing component "J2:/5B2C07E4" pin "2" net name from "" to "SCL".
+
+Changing component "J2:/5B2C07E4" pin "3" net name from "" to "+5V".
+
+Changing component "J2:/5B2C07E4" pin "4" net name from "" to "GND".
+
+Info: Checking netlist component footprint "J3:/5B2EB01F:misc-1-midi-din-8:MIDI-DIN-8".
+
+Adding new component "J3:/5B2EB01F" footprint "misc-1-midi-din-8:MIDI-DIN-8".
+
+Changing component "J3:/5B2EB01F" pin "8" net name from "" to "Net-(J3-Pad8)".
+
+Changing component "J3:/5B2EB01F" pin "3" net name from "" to "Net-(J3-Pad3)".
+
+Changing component "J3:/5B2EB01F" pin "2" net name from "" to "GND".
+
+Changing component "J3:/5B2EB01F" pin "5" net name from "" to "Net-(J3-Pad5)".
+
+Changing component "J3:/5B2EB01F" pin "7" net name from "" to "Net-(J3-Pad7)".
+
+Changing component "J3:/5B2EB01F" pin "1" net name from "" to "Net-(J3-Pad1)".
+
+Changing component "J3:/5B2EB01F" pin "4" net name from "" to "Net-(J3-Pad4)".
+
+Changing component "J3:/5B2EB01F" pin "6" net name from "" to "Net-(J3-Pad6)".
+
+Info: Checking netlist component footprint "J4:/5B2AEA28:Connectors_IDC:IDC-Header_2x10_Pitch2.54mm_Angled".
+
+Adding new component "J4:/5B2AEA28" footprint "Connectors_IDC:IDC-Header_2x10_Pitch2.54mm_Angled".
+
+Changing component "J4:/5B2AEA28" pin "1" net name from "" to "note-13".
+
+Changing component "J4:/5B2AEA28" pin "2" net name from "" to "note-12".
+
+Changing component "J4:/5B2AEA28" pin "3" net name from "" to "note-11".
+
+Changing component "J4:/5B2AEA28" pin "4" net name from "" to "note-10".
+
+Changing component "J4:/5B2AEA28" pin "5" net name from "" to "note-9".
+
+Changing component "J4:/5B2AEA28" pin "6" net name from "" to "note-8".
+
+Changing component "J4:/5B2AEA28" pin "7" net name from "" to "note-7".
+
+Changing component "J4:/5B2AEA28" pin "8" net name from "" to "note-6".
+
+Changing component "J4:/5B2AEA28" pin "9" net name from "" to "note-5".
+
+Changing component "J4:/5B2AEA28" pin "10" net name from "" to "note-4".
+
+Changing component "J4:/5B2AEA28" pin "11" net name from "" to "note-3".
+
+Changing component "J4:/5B2AEA28" pin "12" net name from "" to "note-2".
+
+Changing component "J4:/5B2AEA28" pin "13" net name from "" to "note-1".
+
+Changing component "J4:/5B2AEA28" pin "14" net name from "" to "octave-4".
+
+Changing component "J4:/5B2AEA28" pin "15" net name from "" to "octave-3".
+
+Changing component "J4:/5B2AEA28" pin "16" net name from "" to "octave-2".
+
+Changing component "J4:/5B2AEA28" pin "17" net name from "" to "octave-1".
+
+Info: Checking netlist component footprint "L1:/5B2BC3A2:Inductors_SMD:L_1812_HandSoldering".
+
+Adding new component "L1:/5B2BC3A2" footprint "Inductors_SMD:L_1812_HandSoldering".
+
+Changing component "L1:/5B2BC3A2" pin "1" net name from "" to "Net-(C7-Pad1)".
+
+Changing component "L1:/5B2BC3A2" pin "2" net name from "" to "+5V".
+
+Info: Checking netlist component footprint "R1:/5B2B99E0:Resistors_SMD:R_0805_HandSoldering".
+
+Adding new component "R1:/5B2B99E0" footprint "Resistors_SMD:R_0805_HandSoldering".
+
+Changing component "R1:/5B2B99E0" pin "1" net name from "" to "+5V".
+
+Changing component "R1:/5B2B99E0" pin "2" net name from "" to "RST".
+
+Info: Checking netlist component footprint "R2:/5B2C1345:Resistors_SMD:R_0805_HandSoldering".
+
+Adding new component "R2:/5B2C1345" footprint "Resistors_SMD:R_0805_HandSoldering".
+
+Changing component "R2:/5B2C1345" pin "1" net name from "" to "+5V".
+
+Changing component "R2:/5B2C1345" pin "2" net name from "" to "SDA".
+
+Info: Checking netlist component footprint "R3:/5B2C1C9B:Resistors_SMD:R_0805_HandSoldering".
+
+Adding new component "R3:/5B2C1C9B" footprint "Resistors_SMD:R_0805_HandSoldering".
+
+Changing component "R3:/5B2C1C9B" pin "1" net name from "" to "+5V".
+
+Changing component "R3:/5B2C1C9B" pin "2" net name from "" to "SCL".
+
+Info: Checking netlist component footprint "R4:/5B2D2B8E:Resistors_SMD:R_0805_HandSoldering".
+
+Adding new component "R4:/5B2D2B8E" footprint "Resistors_SMD:R_0805_HandSoldering".
+
+Changing component "R4:/5B2D2B8E" pin "1" net name from "" to "Net-(J3-Pad4)".
+
+Changing component "R4:/5B2D2B8E" pin "2" net name from "" to "midi-data-pin".
+
+Info: Checking netlist component footprint "R5:/5B2D55DF:Resistors_SMD:R_0805_HandSoldering".
+
+Adding new component "R5:/5B2D55DF" footprint "Resistors_SMD:R_0805_HandSoldering".
+
+Changing component "R5:/5B2D55DF" pin "1" net name from "" to "+5V".
+
+Changing component "R5:/5B2D55DF" pin "2" net name from "" to "Net-(J3-Pad5)".
+
+Info: Checking netlist component footprint "RV1:/5B2E8139:SparkFun-Electromechanical:JOYSTICK".
+
+Adding new component "RV1:/5B2E8139" footprint "SparkFun-Electromechanical:JOYSTICK".
+
+Changing component "RV1:/5B2E8139" pin "B1A" net name from "" to "Net-(RV1-PadB1A)".
+
+Changing component "RV1:/5B2E8139" pin "B1B" net name from "" to "Net-(RV1-PadB1B)".
+
+Changing component "RV1:/5B2E8139" pin "B2A" net name from "" to "Net-(RV1-PadB2A)".
+
+Changing component "RV1:/5B2E8139" pin "B2B" net name from "" to "Net-(RV1-PadB2B)".
+
+Changing component "RV1:/5B2E8139" pin "H1" net name from "" to "+5V".
+
+Changing component "RV1:/5B2E8139" pin "H2" net name from "" to "joystick-pot-2".
+
+Changing component "RV1:/5B2E8139" pin "H3" net name from "" to "GND".
+
+Changing component "RV1:/5B2E8139" pin "V1" net name from "" to "+5V".
+
+Changing component "RV1:/5B2E8139" pin "V2" net name from "" to "joystick-pot-1".
+
+Changing component "RV1:/5B2E8139" pin "V3" net name from "" to "GND".
+
+Info: Checking netlist component footprint "SW2:/5B2B95B3:Buttons_Switches_THT:SW_Tactile_Straight_KSA0Axx1LFTR".
+
+Adding new component "SW2:/5B2B95B3" footprint "Buttons_Switches_THT:SW_Tactile_Straight_KSA0Axx1LFTR".
+
+Changing component "SW2:/5B2B95B3" pin "1" net name from "" to "GND".
+
+Changing component "SW2:/5B2B95B3" pin "2" net name from "" to "RST".
+
+Changing component "SW2:/5B2B95B3" pin "1" net name from "" to "GND".
+
+Changing component "SW2:/5B2B95B3" pin "2" net name from "" to "RST".
+
+Info: Checking netlist component footprint "U1:/5B2AD854:Housings_QFP:LQFP-44_10x10mm_Pitch0.8mm".
+
+Adding new component "U1:/5B2AD854" footprint "Housings_QFP:LQFP-44_10x10mm_Pitch0.8mm".
+
+Changing component "U1:/5B2AD854" pin "1" net name from "" to "MOSI".
+
+Changing component "U1:/5B2AD854" pin "2" net name from "" to "MISO".
+
+Changing component "U1:/5B2AD854" pin "3" net name from "" to "SCK".
+
+Changing component "U1:/5B2AD854" pin "4" net name from "" to "RST".
+
+Changing component "U1:/5B2AD854" pin "5" net name from "" to "+5V".
+
+Changing component "U1:/5B2AD854" pin "6" net name from "" to "GND".
+
+Changing component "U1:/5B2AD854" pin "7" net name from "" to "Net-(C1-Pad1)".
+
+Changing component "U1:/5B2AD854" pin "8" net name from "" to "Net-(C2-Pad1)".
+
+Changing component "U1:/5B2AD854" pin "9" net name from "" to "note-1".
+
+Changing component "U1:/5B2AD854" pin "10" net name from "" to "midi-data-pin".
+
+Changing component "U1:/5B2AD854" pin "11" net name from "" to "note-2".
+
+Changing component "U1:/5B2AD854" pin "12" net name from "" to "note-3".
+
+Changing component "U1:/5B2AD854" pin "13" net name from "" to "note-4".
+
+Changing component "U1:/5B2AD854" pin "14" net name from "" to "note-5".
+
+Changing component "U1:/5B2AD854" pin "15" net name from "" to "note-6".
+
+Changing component "U1:/5B2AD854" pin "16" net name from "" to "note-7".
+
+Changing component "U1:/5B2AD854" pin "17" net name from "" to "+5V".
+
+Changing component "U1:/5B2AD854" pin "18" net name from "" to "GND".
+
+Changing component "U1:/5B2AD854" pin "19" net name from "" to "SCL".
+
+Changing component "U1:/5B2AD854" pin "20" net name from "" to "SDA".
+
+Changing component "U1:/5B2AD854" pin "21" net name from "" to "note-8".
+
+Changing component "U1:/5B2AD854" pin "22" net name from "" to "note-9".
+
+Changing component "U1:/5B2AD854" pin "23" net name from "" to "note-10".
+
+Changing component "U1:/5B2AD854" pin "24" net name from "" to "note-11".
+
+Changing component "U1:/5B2AD854" pin "25" net name from "" to "note-12".
+
+Changing component "U1:/5B2AD854" pin "26" net name from "" to "note-13".
+
+Changing component "U1:/5B2AD854" pin "27" net name from "" to "Net-(C7-Pad1)".
+
+Changing component "U1:/5B2AD854" pin "28" net name from "" to "GND".
+
+Changing component "U1:/5B2AD854" pin "29" net name from "" to "Net-(C3-Pad1)".
+
+Changing component "U1:/5B2AD854" pin "30" net name from "" to "joystick-pot-2".
+
+Changing component "U1:/5B2AD854" pin "31" net name from "" to "joystick-pot-1".
+
+Changing component "U1:/5B2AD854" pin "32" net name from "" to "knob-pot-4".
+
+Changing component "U1:/5B2AD854" pin "33" net name from "" to "knob-pot-3".
+
+Changing component "U1:/5B2AD854" pin "34" net name from "" to "knob-pot-2".
+
+Changing component "U1:/5B2AD854" pin "35" net name from "" to "knob-pot-1".
+
+Changing component "U1:/5B2AD854" pin "36" net name from "" to "slide-pot-2".
+
+Changing component "U1:/5B2AD854" pin "37" net name from "" to "slide-pot-1".
+
+Changing component "U1:/5B2AD854" pin "38" net name from "" to "+5V".
+
+Changing component "U1:/5B2AD854" pin "39" net name from "" to "GND".
+
+Changing component "U1:/5B2AD854" pin "40" net name from "" to "octave-1".
+
+Changing component "U1:/5B2AD854" pin "41" net name from "" to "octave-2".
+
+Changing component "U1:/5B2AD854" pin "42" net name from "" to "octave-3".
+
+Changing component "U1:/5B2AD854" pin "43" net name from "" to "octave-4".
+
+Changing component "U1:/5B2AD854" pin "44" net name from "" to "button-1".
+
+Info: Checking netlist component footprint "Y1:/5B2BA77D:Crystals:Crystal_HC18-U_Vertical".
+
+Adding new component "Y1:/5B2BA77D" footprint "Crystals:Crystal_HC18-U_Vertical".
+
+Changing component "Y1:/5B2BA77D" pin "1" net name from "" to "Net-(C1-Pad1)".
+
+Changing component "Y1:/5B2BA77D" pin "2" net name from "" to "Net-(C2-Pad1)".
+

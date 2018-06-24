@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP Joystick-switch-POT_Dual
+D Dual Potentiometer
+K resistor variable
+$ENDCMP
+#
+#End Doc Library
