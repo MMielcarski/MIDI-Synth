@@ -1,4 +1,4 @@
-update=Mon 25 Jun 2018 01:01:47 AM CEST
+update=Mon 25 Jun 2018 02:17:17 PM CEST
 version=1
 last_client=kicad
 [cvpcb]
@@ -45,7 +45,7 @@ version=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=
-LastNetListRead=netlists/midi-v2-circuit-correct_2.net
+LastNetListRead=netlists/midi-v2-circuit-correct_3.net
 PadDrill=0.762
 PadDrillOvalY=0.762
 PadSizeH=1.524
