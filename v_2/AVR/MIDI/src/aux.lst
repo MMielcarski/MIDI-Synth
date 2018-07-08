@@ -1,0 +1,119 @@
+   1               		.file	"aux.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	initializeSetup
+  12               	initializeSetup:
+  13               	.LFB11:
+  14               		.file 1 "src/aux.c"
+   1:src/aux.c     **** #include "aux.h"
+   2:src/aux.c     **** 
+   3:src/aux.c     **** extern volatile uint16_t Timer1=0, Timer2=0;	// timers for long button push
+   4:src/aux.c     **** 
+   5:src/aux.c     **** void initializeSetup (void)		//initializing registers
+   6:src/aux.c     **** {
+  15               		.loc 1 6 0
+  16               		.cfi_startproc
+  17               	/* prologue: function */
+  18               	/* frame size = 0 */
+  19               	/* stack size = 0 */
+  20               	.L__stack_usage = 0
+   7:src/aux.c     **** 	//MCUCSR = (1<<JTD);			//disabling JTAG
+   8:src/aux.c     **** 	//MCUCSR = (1<<JTD);			//
+   9:src/aux.c     **** 
+  10:src/aux.c     **** 		//note_DDR = note_1 | note_2 | note_3 | note_4;		// note keys as output
+  11:src/aux.c     **** 		//button_DDR = button_1 | button_2;					// button keys as output
+  12:src/aux.c     **** 
+  13:src/aux.c     **** 	//note_PORT = note_1 | note_2 | note_3 | note_4;	// note keys with pullup
+  14:src/aux.c     **** 	DDRD = 0;
+  21               		.loc 1 14 0
+  22 0000 1AB8      		out 0xa,__zero_reg__
+  15:src/aux.c     **** 	PORTD = (1 << PD0) | (1 << PD2);	// note_1 with pullup
+  23               		.loc 1 15 0
+  24 0002 85E0      		ldi r24,lo8(5)
+  25 0004 8BB9      		out 0xb,r24
+  26 0006 0895      		ret
+  27               		.cfi_endproc
+  28               	.LFE11:
+  30               	.global	ADC_init
+  32               	ADC_init:
+  33               	.LFB12:
+  16:src/aux.c     **** 	//button_PORT = button_1 | button_2;				// button keys with pullup	
+  17:src/aux.c     **** }
+  18:src/aux.c     **** 
+  19:src/aux.c     **** void ADC_init (void)
+  20:src/aux.c     **** {
+  34               		.loc 1 20 0
+  35               		.cfi_startproc
+  36               	/* prologue: function */
+  37               	/* frame size = 0 */
+  38               	/* stack size = 0 */
+  39               	.L__stack_usage = 0
+  21:src/aux.c     **** 	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // Set ADC prescalar to 128 - 125KHz sample 
+  40               		.loc 1 21 0
+  41 0008 EAE7      		ldi r30,lo8(122)
+  42 000a F0E0      		ldi r31,0
+  43 000c 8081      		ld r24,Z
+  44 000e 8760      		ori r24,lo8(7)
+  45 0010 8083      		st Z,r24
+  22:src/aux.c     **** 
+  23:src/aux.c     **** 	ADMUX |= (1 << REFS0); 	// Set ADC reference to AVCC
+  46               		.loc 1 23 0
+  47 0012 ACE7      		ldi r26,lo8(124)
+  48 0014 B0E0      		ldi r27,0
+  49 0016 8C91      		ld r24,X
+  50 0018 8064      		ori r24,lo8(64)
+  51 001a 8C93      		st X,r24
+  24:src/aux.c     **** 	ADMUX |= (1 << ADLAR); 	// Left adjust ADC result to allow easy 8 bit reading
+  52               		.loc 1 24 0
+  53 001c 8C91      		ld r24,X
+  54 001e 8062      		ori r24,lo8(32)
+  55 0020 8C93      		st X,r24
+  25:src/aux.c     **** 
+  26:src/aux.c     **** 	ADCSRA |= (1 << ADEN);  // Enable ADC
+  56               		.loc 1 26 0
+  57 0022 8081      		ld r24,Z
+  58 0024 8068      		ori r24,lo8(-128)
+  59 0026 8083      		st Z,r24
+  27:src/aux.c     **** 	ADCSRA |= (1 << ADSC);  // Start A2D Conversions
+  60               		.loc 1 27 0
+  61 0028 8081      		ld r24,Z
+  62 002a 8064      		ori r24,lo8(64)
+  63 002c 8083      		st Z,r24
+  28:src/aux.c     **** 	ADCSRA |= (1 << ADATE);	// for free running mode
+  64               		.loc 1 28 0
+  65 002e 8081      		ld r24,Z
+  66 0030 8062      		ori r24,lo8(32)
+  67 0032 8083      		st Z,r24
+  68 0034 0895      		ret
+  69               		.cfi_endproc
+  70               	.LFE12:
+  72               	.global	Timer2
+  73               		.section .bss
+  76               	Timer2:
+  77 0000 0000      		.zero	2
+  78               	.global	Timer1
+  81               	Timer1:
+  82 0002 0000      		.zero	2
+  83               		.text
+  84               	.Letext0:
+  85               		.file 2 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 aux.c
+     /tmp/ccbnpB6N.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccbnpB6N.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccbnpB6N.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccbnpB6N.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccbnpB6N.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccbnpB6N.s:12     .text:0000000000000000 initializeSetup
+     /tmp/ccbnpB6N.s:32     .text:0000000000000008 ADC_init
+     /tmp/ccbnpB6N.s:76     .bss:0000000000000000 Timer2
+     /tmp/ccbnpB6N.s:81     .bss:0000000000000002 Timer1
+
+UNDEFINED SYMBOLS
+__do_clear_bss

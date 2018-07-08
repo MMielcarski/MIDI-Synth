@@ -658,25 +658,25 @@ $EndComp
 $Comp
 L GND #PWR026
 U 1 1 5B2DB672
-P 1150 4725
-F 0 "#PWR026" H 1150 4475 50  0001 C CNN
-F 1 "GND" H 1150 4575 50  0000 C CNN
-F 2 "" H 1150 4725 50  0001 C CNN
-F 3 "" H 1150 4725 50  0001 C CNN
-	1    1150 4725
+P 900 4450
+F 0 "#PWR026" H 900 4200 50  0001 C CNN
+F 1 "GND" H 900 4300 50  0000 C CNN
+F 2 "" H 900 4450 50  0001 C CNN
+F 3 "" H 900 4450 50  0001 C CNN
+	1    900  4450
 	1    0    0    -1  
 $EndComp
-Text GLabel 2050 5025 0    60   Input ~ 0
+Text GLabel 1625 5125 0    60   Input ~ 0
 knob-pot-1
-Text GLabel 2050 5125 0    60   Input ~ 0
+Text GLabel 1625 5025 0    60   Input ~ 0
 knob-pot-2
-Text GLabel 2050 5225 0    60   Input ~ 0
+Text GLabel 1625 4925 0    60   Input ~ 0
 knob-pot-3
-Text GLabel 2050 5325 0    60   Input ~ 0
+Text GLabel 1625 4825 0    60   Input ~ 0
 knob-pot-4
-Text GLabel 2050 4825 0    60   Input ~ 0
+Text GLabel 1625 5325 0    60   Input ~ 0
 slide-pot-1
-Text GLabel 2050 4925 0    60   Input ~ 0
+Text GLabel 1625 5225 0    60   Input ~ 0
 slide-pot-2
 $Comp
 L Joystick-switch-POT_Dual RV1
@@ -1084,7 +1084,7 @@ Wire Wire Line
 Wire Wire Line
 	1150 4625 2050 4625
 Wire Wire Line
-	1150 4725 2050 4725
+	1025 4725 2050 4725
 Wire Notes Line
 	575  2525 575  7675
 Wire Notes Line
@@ -1352,13 +1352,13 @@ Wire Wire Line
 	2300 6750 2000 6750
 Wire Wire Line
 	2000 6850 2300 6850
-Text GLabel 2050 5425 0    60   Input ~ 0
-button-1
-Text GLabel 2050 5525 0    60   Input ~ 0
-button-2
 Text GLabel 2050 5625 0    60   Input ~ 0
-button-3
+button-1
 Text GLabel 2050 5725 0    60   Input ~ 0
+button-2
+Text GLabel 2050 5425 0    60   Input ~ 0
+button-3
+Text GLabel 2050 5525 0    60   Input ~ 0
 button-4
 $Comp
 L Screw_Terminal_01x12 J1
@@ -1395,4 +1395,86 @@ Text GLabel 9200 5700 0    60   Input ~ 0
 button-3
 Text GLabel 10150 5700 2    60   Input ~ 0
 button-4
+$Comp
+L R R6
+U 1 1 5B34137C
+P 1900 5325
+F 0 "R6" V 1850 5150 50  0000 C CNN
+F 1 "330" V 1900 5325 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 5325 50  0001 C CNN
+F 3 "" H 1900 5325 50  0001 C CNN
+	1    1900 5325
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1025 4725 1025 4450
+Wire Wire Line
+	1025 4450 900  4450
+$Comp
+L R R7
+U 1 1 5B342758
+P 1900 5225
+F 0 "R7" V 1850 5050 50  0000 C CNN
+F 1 "330" V 1900 5225 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 5225 50  0001 C CNN
+F 3 "" H 1900 5225 50  0001 C CNN
+	1    1900 5225
+	0    1    1    0   
+$EndComp
+$Comp
+L R R10
+U 1 1 5B342C8C
+P 1900 5125
+F 0 "R10" V 1850 4950 50  0000 C CNN
+F 1 "330" V 1900 5125 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 5125 50  0001 C CNN
+F 3 "" H 1900 5125 50  0001 C CNN
+	1    1900 5125
+	0    1    1    0   
+$EndComp
+$Comp
+L R R11
+U 1 1 5B342C92
+P 1900 5025
+F 0 "R11" V 1850 4850 50  0000 C CNN
+F 1 "330" V 1900 5025 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 5025 50  0001 C CNN
+F 3 "" H 1900 5025 50  0001 C CNN
+	1    1900 5025
+	0    1    1    0   
+$EndComp
+$Comp
+L R R12
+U 1 1 5B342D6E
+P 1900 4925
+F 0 "R12" V 1850 4750 50  0000 C CNN
+F 1 "330" V 1900 4925 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 4925 50  0001 C CNN
+F 3 "" H 1900 4925 50  0001 C CNN
+	1    1900 4925
+	0    1    1    0   
+$EndComp
+$Comp
+L R R13
+U 1 1 5B342D74
+P 1900 4825
+F 0 "R13" V 1850 4650 50  0000 C CNN
+F 1 "330" V 1900 4825 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 4825 50  0001 C CNN
+F 3 "" H 1900 4825 50  0001 C CNN
+	1    1900 4825
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1750 5325 1625 5325
+Wire Wire Line
+	1625 5225 1750 5225
+Wire Wire Line
+	1750 5125 1625 5125
+Wire Wire Line
+	1625 5025 1750 5025
+Wire Wire Line
+	1750 4925 1625 4925
+Wire Wire Line
+	1625 4825 1750 4825
 $EndSCHEMATC

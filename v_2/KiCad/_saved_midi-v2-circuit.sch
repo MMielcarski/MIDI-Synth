@@ -101,13 +101,13 @@ Text GLabel 6075 6075 2    60   Input ~ 0
 note-13
 Text GLabel 6075 6375 2    60   Input ~ 0
 midi-data-pin
-Text GLabel 6900 4875 2    60   Input ~ 0
+Text GLabel 7525 4875 2    60   Input ~ 0
 octave-1
-Text GLabel 6900 4975 2    60   Input ~ 0
+Text GLabel 7525 4975 2    60   Input ~ 0
 octave-2
-Text GLabel 6900 5075 2    60   Input ~ 0
+Text GLabel 7525 5075 2    60   Input ~ 0
 octave-3
-Text GLabel 6900 5175 2    60   Input ~ 0
+Text GLabel 7525 5175 2    60   Input ~ 0
 octave-4
 $Comp
 L GND #PWR01
@@ -130,13 +130,13 @@ Text GLabel 6075 5475 2    60   Input ~ 0
 SDA
 Text GLabel 6075 5375 2    60   Input ~ 0
 SCL
-Text GLabel 7775 4475 2    60   Input ~ 0
+Text GLabel 8250 4475 2    60   Input ~ 0
 button-1
-Text GLabel 7775 4575 2    60   Input ~ 0
+Text GLabel 8250 4575 2    60   Input ~ 0
 button-2
-Text GLabel 7775 4675 2    60   Input ~ 0
+Text GLabel 8250 4675 2    60   Input ~ 0
 button-3
-Text GLabel 7775 4775 2    60   Input ~ 0
+Text GLabel 8250 4775 2    60   Input ~ 0
 button-4
 $Comp
 L Conn_01x17 J4
@@ -228,23 +228,23 @@ $EndComp
 $Comp
 L +5V #PWR04
 U 1 1 5B2B743F
-P 9200 6100
-F 0 "#PWR04" H 9200 5950 50  0001 C CNN
-F 1 "+5V" H 9200 6240 50  0000 C CNN
-F 2 "" H 9200 6100 50  0001 C CNN
-F 3 "" H 9200 6100 50  0001 C CNN
-	1    9200 6100
+P 9500 6075
+F 0 "#PWR04" H 9500 5925 50  0001 C CNN
+F 1 "+5V" H 9500 6215 50  0000 C CNN
+F 2 "" H 9500 6075 50  0001 C CNN
+F 3 "" H 9500 6075 50  0001 C CNN
+	1    9500 6075
 	1    0    0    -1  
 $EndComp
 $Comp
 L GND #PWR05
 U 1 1 5B2B745D
-P 10000 6000
-F 0 "#PWR05" H 10000 5750 50  0001 C CNN
-F 1 "GND" H 10000 5850 50  0000 C CNN
-F 2 "" H 10000 6000 50  0001 C CNN
-F 3 "" H 10000 6000 50  0001 C CNN
-	1    10000 6000
+P 10300 5975
+F 0 "#PWR05" H 10300 5725 50  0001 C CNN
+F 1 "GND" H 10300 5825 50  0000 C CNN
+F 2 "" H 10300 5975 50  0001 C CNN
+F 3 "" H 10300 5975 50  0001 C CNN
+	1    10300 5975
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -497,7 +497,7 @@ U 1 1 5B2BC3A2
 P 6275 2875
 F 0 "L1" V 6225 2875 50  0000 C CNN
 F 1 "10uH" V 6350 2875 50  0000 C CNN
-F 2 "Inductors_SMD:L_1812_HandSoldering" H 6275 2875 50  0001 C CNN
+F 2 "Inductors_SMD:L_0805_HandSoldering" H 6275 2875 50  0001 C CNN
 F 3 "" H 6275 2875 50  0001 C CNN
 	1    6275 2875
 	0    -1   -1   0   
@@ -666,17 +666,17 @@ F 3 "" H 900 4450 50  0001 C CNN
 	1    900  4450
 	1    0    0    -1  
 $EndComp
-Text GLabel 1625 5025 0    60   Input ~ 0
-knob-pot-1
 Text GLabel 1625 5125 0    60   Input ~ 0
+knob-pot-1
+Text GLabel 1625 5025 0    60   Input ~ 0
 knob-pot-2
-Text GLabel 1625 5225 0    60   Input ~ 0
-knob-pot-3
-Text GLabel 1625 5325 0    60   Input ~ 0
-knob-pot-4
-Text GLabel 1625 4825 0    60   Input ~ 0
-slide-pot-1
 Text GLabel 1625 4925 0    60   Input ~ 0
+knob-pot-3
+Text GLabel 1625 4825 0    60   Input ~ 0
+knob-pot-4
+Text GLabel 1625 5325 0    60   Input ~ 0
+slide-pot-1
+Text GLabel 1625 5225 0    60   Input ~ 0
 slide-pot-2
 $Comp
 L Joystick-switch-POT_Dual RV1
@@ -941,11 +941,11 @@ Wire Wire Line
 	5075 7275 5075 7375
 Connection ~ 5075 7275
 Wire Wire Line
-	6075 4575 7775 4575
+	6075 4575 8250 4575
 Wire Wire Line
-	6075 4675 7775 4675
+	6075 4675 8250 4675
 Wire Wire Line
-	6075 4775 7775 4775
+	6075 4775 8250 4775
 Wire Wire Line
 	6575 5275 6575 4975
 Connection ~ 6575 4975
@@ -956,7 +956,7 @@ Wire Wire Line
 	6775 5275 6775 5175
 Connection ~ 6775 5175
 Wire Wire Line
-	6075 4475 7775 4475
+	6075 4475 8250 4475
 Wire Wire Line
 	5625 1150 5975 1150
 Wire Wire Line
@@ -976,27 +976,27 @@ Wire Wire Line
 Wire Wire Line
 	6575 1150 6225 1150
 Wire Wire Line
-	9200 5300 9600 5300
+	9500 5275 9900 5275
 Wire Wire Line
-	9200 5400 9600 5400
+	9500 5375 9900 5375
 Wire Wire Line
-	9200 5500 9600 5500
+	9500 5475 9900 5475
 Wire Wire Line
-	9200 5600 9600 5600
+	9500 5575 9900 5575
 Wire Wire Line
-	10150 5300 9850 5300
+	10450 5275 10150 5275
 Wire Wire Line
-	10150 5400 9850 5400
+	10450 5375 10150 5375
 Wire Wire Line
-	10150 5500 9850 5500
+	10450 5475 10150 5475
 Wire Wire Line
-	10150 5600 9850 5600
+	10450 5575 10150 5575
 Wire Wire Line
-	9450 5900 9450 6150
+	9750 5875 9750 6125
 Wire Wire Line
-	9450 6150 9200 6150
+	9750 6125 9500 6125
 Wire Wire Line
-	9200 6150 9200 6100
+	9500 6125 9500 6075
 Wire Wire Line
 	5225 2775 5225 3175
 Connection ~ 5225 2875
@@ -1150,115 +1150,115 @@ midi-raw-signal-data
 $Comp
 L C C8
 U 1 1 5B31F54F
-P 7800 5050
-F 0 "C8" H 7825 5150 50  0000 L CNN
-F 1 "100n" H 7600 4950 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 7838 4900 50  0001 C CNN
-F 3 "" H 7800 5050 50  0001 C CNN
-	1    7800 5050
+P 8275 5050
+F 0 "C8" H 8300 5150 50  0000 L CNN
+F 1 "100n" H 8075 4950 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 8313 4900 50  0001 C CNN
+F 3 "" H 8275 5050 50  0001 C CNN
+	1    8275 5050
 	0    1    1    0   
 $EndComp
 $Comp
 L C C9
 U 1 1 5B31F7B1
-P 7800 5275
-F 0 "C9" H 7825 5375 50  0000 L CNN
-F 1 "100n" H 7600 5175 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 7838 5125 50  0001 C CNN
-F 3 "" H 7800 5275 50  0001 C CNN
-	1    7800 5275
+P 8275 5275
+F 0 "C9" H 8300 5375 50  0000 L CNN
+F 1 "100n" H 8075 5175 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 8313 5125 50  0001 C CNN
+F 3 "" H 8275 5275 50  0001 C CNN
+	1    8275 5275
 	0    1    1    0   
 $EndComp
 $Comp
 L C C10
 U 1 1 5B31F842
-P 7800 5500
-F 0 "C10" H 7825 5600 50  0000 L CNN
-F 1 "100n" H 7600 5400 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 7838 5350 50  0001 C CNN
-F 3 "" H 7800 5500 50  0001 C CNN
-	1    7800 5500
+P 8275 5500
+F 0 "C10" H 8300 5600 50  0000 L CNN
+F 1 "100n" H 8075 5400 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 8313 5350 50  0001 C CNN
+F 3 "" H 8275 5500 50  0001 C CNN
+	1    8275 5500
 	0    1    1    0   
 $EndComp
 $Comp
 L C C11
 U 1 1 5B31F8CC
-P 7800 5725
-F 0 "C11" H 7825 5825 50  0000 L CNN
-F 1 "100n" H 7600 5625 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 7838 5575 50  0001 C CNN
-F 3 "" H 7800 5725 50  0001 C CNN
-	1    7800 5725
+P 8275 5725
+F 0 "C11" H 8300 5825 50  0000 L CNN
+F 1 "100n" H 8075 5625 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 8313 5575 50  0001 C CNN
+F 3 "" H 8275 5725 50  0001 C CNN
+	1    8275 5725
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	7625 4575 7625 5275
+	8100 4575 8100 5275
 Wire Wire Line
-	7600 5500 7650 5500
+	8075 5500 8125 5500
 Wire Wire Line
-	7600 4675 7600 5500
+	8075 4675 8075 5500
 Wire Wire Line
-	7575 5725 7650 5725
+	8050 5725 8125 5725
 Wire Wire Line
-	7575 4775 7575 5725
+	8050 4775 8050 5725
 Wire Wire Line
-	7950 5050 7950 5725
-Connection ~ 7950 5275
-Connection ~ 7950 5500
+	8425 5050 8425 5725
+Connection ~ 8425 5275
+Connection ~ 8425 5500
 Wire Wire Line
-	7950 5725 8075 5725
+	8425 5725 8550 5725
 $Comp
 L GND #PWR039
 U 1 1 5B320203
-P 8075 5725
-F 0 "#PWR039" H 8075 5475 50  0001 C CNN
-F 1 "GND" H 8075 5575 50  0000 C CNN
-F 2 "" H 8075 5725 50  0001 C CNN
-F 3 "" H 8075 5725 50  0001 C CNN
-	1    8075 5725
+P 8550 5725
+F 0 "#PWR039" H 8550 5475 50  0001 C CNN
+F 1 "GND" H 8550 5575 50  0000 C CNN
+F 2 "" H 8550 5725 50  0001 C CNN
+F 3 "" H 8550 5725 50  0001 C CNN
+	1    8550 5725
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6075 5175 6900 5175
+	6075 5175 7525 5175
 Wire Wire Line
-	6075 5075 6900 5075
+	6075 5075 7525 5075
 Wire Wire Line
-	6075 4975 6900 4975
+	6075 4975 7525 4975
 Wire Wire Line
-	6900 4875 6075 4875
+	6075 4875 7525 4875
 Wire Wire Line
-	7625 5275 7650 5275
-Connection ~ 7575 4775
-Connection ~ 7600 4675
-Connection ~ 7625 4575
+	8100 5275 8125 5275
+Connection ~ 8050 4775
+Connection ~ 8075 4675
+Connection ~ 8100 4575
 Wire Wire Line
-	7650 5050 7650 4475
-Connection ~ 7650 4475
+	8125 5050 8125 4475
+Connection ~ 8125 4475
 $Comp
 L IDC-14 CON3
 U 1 1 5B32800D
-P 9800 5500
-F 0 "CON3" H 9630 5830 50  0000 C CNN
-F 1 "IDC-14" H 9525 4900 50  0000 L BNN
-F 2 "Connectors_IDC:IDC-Header_2x07_Pitch2.54mm_Straight" V 9050 5550 50  0001 C CNN
-F 3 "" H 9800 5500 50  0001 C CNN
-	1    9800 5500
+P 10100 5475
+F 0 "CON3" H 9930 5805 50  0000 C CNN
+F 1 "IDC-14" H 9825 4875 50  0000 L BNN
+F 2 "Connectors_IDC:IDC-Header_2x07_Pitch2.54mm_Straight" V 9350 5525 50  0001 C CNN
+F 3 "" H 10100 5475 50  0001 C CNN
+	1    10100 5475
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	10000 6000 10000 5900
+	10300 5975 10300 5875
 Wire Wire Line
-	10000 5900 9850 5900
+	10300 5875 10150 5875
 Wire Wire Line
-	9450 5900 9600 5900
+	9750 5875 9900 5875
 Wire Wire Line
-	9200 5700 9600 5700
+	9500 5675 9900 5675
 Wire Wire Line
-	9200 5800 9600 5800
+	9500 5775 9900 5775
 Wire Wire Line
-	10150 5700 9850 5700
+	10450 5675 10150 5675
 Wire Wire Line
-	9850 5800 10150 5800
+	10150 5775 10450 5775
 Text GLabel 2300 6650 2    60   Input ~ 0
 slide-pot-1
 Text GLabel 1350 6650 0    60   Input ~ 0
@@ -1352,13 +1352,13 @@ Wire Wire Line
 	2300 6750 2000 6750
 Wire Wire Line
 	2000 6850 2300 6850
-Text GLabel 2050 5425 0    60   Input ~ 0
-button-1
-Text GLabel 2050 5525 0    60   Input ~ 0
-button-2
 Text GLabel 2050 5625 0    60   Input ~ 0
-button-3
+button-1
 Text GLabel 2050 5725 0    60   Input ~ 0
+button-2
+Text GLabel 2050 5425 0    60   Input ~ 0
+button-3
+Text GLabel 2050 5525 0    60   Input ~ 0
 button-4
 $Comp
 L Screw_Terminal_01x12 J1
@@ -1371,39 +1371,39 @@ F 3 "" H 2250 5125 50  0001 C CNN
 	1    2250 5125
 	1    0    0    -1  
 $EndComp
-Text GLabel 9200 5600 0    60   Input ~ 0
+Text GLabel 9500 5575 0    60   Input ~ 0
 slide-pot-2
-Text GLabel 9200 5500 0    60   Input ~ 0
+Text GLabel 9500 5475 0    60   Input ~ 0
 knob-pot-2
-Text GLabel 9200 5400 0    60   Input ~ 0
+Text GLabel 9500 5375 0    60   Input ~ 0
 knob-pot-4
-Text GLabel 9200 5300 0    60   Input ~ 0
+Text GLabel 9500 5275 0    60   Input ~ 0
 joystick-pot-2
-Text GLabel 9200 5800 0    60   Input ~ 0
+Text GLabel 9500 5775 0    60   Input ~ 0
 button-1
-Text GLabel 10150 5800 2    60   Input ~ 0
+Text GLabel 10450 5775 2    60   Input ~ 0
 button-2
-Text GLabel 10150 5600 2    60   Input ~ 0
+Text GLabel 10450 5575 2    60   Input ~ 0
 slide-pot-1
-Text GLabel 10150 5500 2    60   Input ~ 0
+Text GLabel 10450 5475 2    60   Input ~ 0
 knob-pot-1
-Text GLabel 10150 5400 2    60   Input ~ 0
+Text GLabel 10450 5375 2    60   Input ~ 0
 knob-pot-3
-Text GLabel 10150 5300 2    60   Input ~ 0
+Text GLabel 10450 5275 2    60   Input ~ 0
 joystick-pot-1
-Text GLabel 9200 5700 0    60   Input ~ 0
+Text GLabel 9500 5675 0    60   Input ~ 0
 button-3
-Text GLabel 10150 5700 2    60   Input ~ 0
+Text GLabel 10450 5675 2    60   Input ~ 0
 button-4
 $Comp
-L R R?
+L R R6
 U 1 1 5B34137C
-P 1900 4825
-F 0 "R?" V 1850 4650 50  0000 C CNN
-F 1 "330" V 1900 4825 50  0000 C CNN
-F 2 "" V 1830 4825 50  0001 C CNN
-F 3 "" H 1900 4825 50  0001 C CNN
-	1    1900 4825
+P 1900 5325
+F 0 "R6" V 1850 5150 50  0000 C CNN
+F 1 "330" V 1900 5325 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 5325 50  0001 C CNN
+F 3 "" H 1900 5325 50  0001 C CNN
+	1    1900 5325
 	0    1    1    0   
 $EndComp
 Wire Wire Line
@@ -1411,70 +1411,142 @@ Wire Wire Line
 Wire Wire Line
 	1025 4450 900  4450
 $Comp
-L R R?
+L R R7
 U 1 1 5B342758
-P 1900 4925
-F 0 "R?" V 1850 4750 50  0000 C CNN
-F 1 "330" V 1900 4925 50  0000 C CNN
-F 2 "" V 1830 4925 50  0001 C CNN
-F 3 "" H 1900 4925 50  0001 C CNN
-	1    1900 4925
-	0    1    1    0   
-$EndComp
-$Comp
-L R R?
-U 1 1 5B342C8C
-P 1900 5025
-F 0 "R?" V 1850 4850 50  0000 C CNN
-F 1 "330" V 1900 5025 50  0000 C CNN
-F 2 "" V 1830 5025 50  0001 C CNN
-F 3 "" H 1900 5025 50  0001 C CNN
-	1    1900 5025
-	0    1    1    0   
-$EndComp
-$Comp
-L R R?
-U 1 1 5B342C92
-P 1900 5125
-F 0 "R?" V 1850 4950 50  0000 C CNN
-F 1 "330" V 1900 5125 50  0000 C CNN
-F 2 "" V 1830 5125 50  0001 C CNN
-F 3 "" H 1900 5125 50  0001 C CNN
-	1    1900 5125
-	0    1    1    0   
-$EndComp
-$Comp
-L R R?
-U 1 1 5B342D6E
 P 1900 5225
-F 0 "R?" V 1850 5050 50  0000 C CNN
+F 0 "R7" V 1850 5050 50  0000 C CNN
 F 1 "330" V 1900 5225 50  0000 C CNN
-F 2 "" V 1830 5225 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 5225 50  0001 C CNN
 F 3 "" H 1900 5225 50  0001 C CNN
 	1    1900 5225
 	0    1    1    0   
 $EndComp
 $Comp
-L R R?
+L R R10
+U 1 1 5B342C8C
+P 1900 5125
+F 0 "R10" V 1850 4950 50  0000 C CNN
+F 1 "330" V 1900 5125 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 5125 50  0001 C CNN
+F 3 "" H 1900 5125 50  0001 C CNN
+	1    1900 5125
+	0    1    1    0   
+$EndComp
+$Comp
+L R R11
+U 1 1 5B342C92
+P 1900 5025
+F 0 "R11" V 1850 4850 50  0000 C CNN
+F 1 "330" V 1900 5025 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 5025 50  0001 C CNN
+F 3 "" H 1900 5025 50  0001 C CNN
+	1    1900 5025
+	0    1    1    0   
+$EndComp
+$Comp
+L R R12
+U 1 1 5B342D6E
+P 1900 4925
+F 0 "R12" V 1850 4750 50  0000 C CNN
+F 1 "330" V 1900 4925 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 4925 50  0001 C CNN
+F 3 "" H 1900 4925 50  0001 C CNN
+	1    1900 4925
+	0    1    1    0   
+$EndComp
+$Comp
+L R R13
 U 1 1 5B342D74
-P 1900 5325
-F 0 "R?" V 1850 5150 50  0000 C CNN
-F 1 "330" V 1900 5325 50  0000 C CNN
-F 2 "" V 1830 5325 50  0001 C CNN
-F 3 "" H 1900 5325 50  0001 C CNN
-	1    1900 5325
+P 1900 4825
+F 0 "R13" V 1850 4650 50  0000 C CNN
+F 1 "330" V 1900 4825 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 1830 4825 50  0001 C CNN
+F 3 "" H 1900 4825 50  0001 C CNN
+	1    1900 4825
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	1750 4825 1625 4825
+	1750 5325 1625 5325
 Wire Wire Line
-	1625 4925 1750 4925
+	1625 5225 1750 5225
 Wire Wire Line
-	1750 5025 1625 5025
+	1750 5125 1625 5125
 Wire Wire Line
-	1625 5125 1750 5125
+	1625 5025 1750 5025
 Wire Wire Line
-	1750 5225 1625 5225
+	1750 4925 1625 4925
 Wire Wire Line
-	1625 5325 1750 5325
+	1625 4825 1750 4825
+$Comp
+L R R?
+U 1 1 5B40F987
+P 6950 5425
+F 0 "R?" V 7030 5425 50  0000 C CNN
+F 1 "10k" V 6950 5425 50  0000 C CNN
+F 2 "" V 6880 5425 50  0001 C CNN
+F 3 "" H 6950 5425 50  0001 C CNN
+	1    6950 5425
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 5B40FFB0
+P 7125 5425
+F 0 "R?" V 7205 5425 50  0000 C CNN
+F 1 "10k" V 7125 5425 50  0000 C CNN
+F 2 "" V 7055 5425 50  0001 C CNN
+F 3 "" H 7125 5425 50  0001 C CNN
+	1    7125 5425
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 5B41005E
+P 7300 5425
+F 0 "R?" V 7380 5425 50  0000 C CNN
+F 1 "10k" V 7300 5425 50  0000 C CNN
+F 2 "" V 7230 5425 50  0001 C CNN
+F 3 "" H 7300 5425 50  0001 C CNN
+	1    7300 5425
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R?
+U 1 1 5B410148
+P 7475 5425
+F 0 "R?" V 7555 5425 50  0000 C CNN
+F 1 "10k" V 7475 5425 50  0000 C CNN
+F 2 "" V 7405 5425 50  0001 C CNN
+F 3 "" H 7475 5425 50  0001 C CNN
+	1    7475 5425
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6950 5275 6950 4875
+Connection ~ 6950 4875
+Wire Wire Line
+	7125 5275 7125 4975
+Connection ~ 7125 4975
+Wire Wire Line
+	7300 5275 7300 5075
+Connection ~ 7300 5075
+Wire Wire Line
+	7475 5275 7475 5175
+Connection ~ 7475 5175
+$Comp
+L GND #PWR?
+U 1 1 5B4108D2
+P 7225 5575
+F 0 "#PWR?" H 7225 5325 50  0001 C CNN
+F 1 "GND" H 7225 5425 50  0000 C CNN
+F 2 "" H 7225 5575 50  0001 C CNN
+F 3 "" H 7225 5575 50  0001 C CNN
+	1    7225 5575
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6950 5575 7475 5575
+Connection ~ 7125 5575
+Connection ~ 7225 5575
+Connection ~ 7300 5575
 $EndSCHEMATC
