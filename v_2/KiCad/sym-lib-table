@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name midi-v2-circuit-rescue)(type Legacy)(uri ${KIPRJMOD}/midi-v2-circuit-rescue.lib)(options "")(descr ""))
+)

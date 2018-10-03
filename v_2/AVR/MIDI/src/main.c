@@ -19,10 +19,9 @@ int main(void)
 
         LCD_GoTo(0,0);
         LCD_WriteText(adc_display);
-        //_delay_ms(10);
 
-        //if(ADCW > 128)
-        //LCD_WriteText("jadymy!");
+        if(ADCW > 128)
+        LCD_WriteText("jadymy!");
 
 
         if(!(note_PIN & note_1))
