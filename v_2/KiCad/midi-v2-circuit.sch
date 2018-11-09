@@ -15,7 +15,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L atmel:ATMEGA32-16AU U1
+L midi-v2-circuit-rescue:ATMEGA32-16AU-atmel U1
 U 1 1 5B2AD854
 P 5075 5275
 F 0 "U1" H 4225 7155 50  0000 L BNN
@@ -107,7 +107,7 @@ button-3
 Text GLabel 8250 4775 2    60   Input ~ 0
 button-4
 $Comp
-L conn:Conn_01x17 J4
+L midi-v2-circuit-rescue:Conn_01x17-conn J4
 U 1 1 5B2AEA28
 P 10400 3925
 F 0 "J4" H 10400 4825 50  0000 C CNN
@@ -152,7 +152,7 @@ note-12
 Text GLabel 10200 3125 0    60   Input ~ 0
 note-13
 $Comp
-L atmel:AVR-ISP-10 CON2
+L midi-v2-circuit-rescue:AVR-ISP-10-atmel CON2
 U 1 1 5B2AEEE8
 P 6175 1350
 F 0 "CON2" H 6005 1680 50  0000 C CNN
@@ -216,7 +216,7 @@ F 3 "" H 10300 5975 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C5
+L midi-v2-circuit-rescue:C-device C5
 U 1 1 5B2B8A3A
 P 5075 2875
 F 0 "C5" H 5100 2975 50  0000 L CNN
@@ -249,7 +249,7 @@ F 3 "" H 4925 2975 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C6
+L midi-v2-circuit-rescue:C-device C6
 U 1 1 5B2B8C4B
 P 5525 2875
 F 0 "C6" H 5550 2975 50  0000 L CNN
@@ -282,7 +282,7 @@ F 3 "" H 5375 2975 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C7
+L midi-v2-circuit-rescue:C-device C7
 U 1 1 5B2B8C9C
 P 5975 2875
 F 0 "C7" H 6000 2975 50  0000 L CNN
@@ -337,7 +337,7 @@ F 3 "" H 4775 2775 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C4
+L midi-v2-circuit-rescue:C-device C4
 U 1 1 5B2B7A4D
 P 4625 2875
 F 0 "C4" H 4650 2975 50  0000 L CNN
@@ -350,7 +350,7 @@ $EndComp
 Text GLabel 4075 3575 1    60   Input ~ 0
 RST
 $Comp
-L switches:SW_Push SW2
+L midi-v2-circuit-rescue:SW_Push-switches SW2
 U 1 1 5B2B95B3
 P 3575 3575
 F 0 "SW2" H 3625 3675 50  0000 L CNN
@@ -361,7 +361,7 @@ F 3 "" H 3575 3775 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R1
+L midi-v2-circuit-rescue:R-device R1
 U 1 1 5B2B99E0
 P 3825 3425
 F 0 "R1" V 3905 3425 50  0000 C CNN
@@ -394,7 +394,7 @@ F 3 "" H 3275 3575 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:Crystal Y1
+L midi-v2-circuit-rescue:Crystal-device Y1
 U 1 1 5B2BA77D
 P 3875 4175
 F 0 "Y1" H 3875 4325 50  0000 C CNN
@@ -405,7 +405,7 @@ F 3 "" H 3875 4175 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L device:C C1
+L midi-v2-circuit-rescue:C-device C1
 U 1 1 5B2BAED4
 P 3525 3975
 F 0 "C1" H 3550 4075 50  0000 L CNN
@@ -416,7 +416,7 @@ F 3 "" H 3525 3975 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L device:C C2
+L midi-v2-circuit-rescue:C-device C2
 U 1 1 5B2BAF8F
 P 3525 4375
 F 0 "C2" H 3550 4475 50  0000 L CNN
@@ -438,7 +438,7 @@ F 3 "" H 3275 4525 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:C C3
+L midi-v2-circuit-rescue:C-device C3
 U 1 1 5B2BBEE0
 P 3925 4775
 F 0 "C3" H 3950 4875 50  0000 L CNN
@@ -460,7 +460,7 @@ F 3 "" H 3675 4825 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:L L1
+L midi-v2-circuit-rescue:L-device L1
 U 1 1 5B2BC3A2
 P 6275 2875
 F 0 "L1" V 6225 2875 50  0000 C CNN
@@ -475,7 +475,7 @@ SDA
 Text GLabel 7325 3200 0    60   Input ~ 0
 SCL
 $Comp
-L conn:Conn_01x04 J2
+L midi-v2-circuit-rescue:Conn_01x04-conn J2
 U 1 1 5B2C07E4
 P 7925 3200
 F 0 "J2" H 7925 3400 50  0000 C CNN
@@ -508,7 +508,7 @@ F 3 "" H 7625 3450 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R2
+L midi-v2-circuit-rescue:R-device R2
 U 1 1 5B2C1345
 P 7375 2750
 F 0 "R2" V 7455 2750 50  0000 C CNN
@@ -519,7 +519,7 @@ F 3 "" H 7375 2750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R3
+L midi-v2-circuit-rescue:R-device R3
 U 1 1 5B2C1C9B
 P 7575 2750
 F 0 "R3" V 7655 2750 50  0000 C CNN
@@ -552,7 +552,7 @@ F 3 "" H 7575 2600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R4
+L midi-v2-circuit-rescue:R-device R4
 U 1 1 5B2D2B8E
 P 3575 1225
 F 0 "R4" V 3655 1225 50  0000 C CNN
@@ -576,7 +576,7 @@ F 3 "" H 3950 975 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R5
+L midi-v2-circuit-rescue:R-device R5
 U 1 1 5B2D55DF
 P 4975 1225
 F 0 "R5" V 5055 1225 50  0000 C CNN
@@ -695,7 +695,7 @@ NoConn ~ 1675 3025
 NoConn ~ 2275 3025
 NoConn ~ 2275 3175
 $Comp
-L conn:DIN-8 J3
+L midi-v2-circuit-rescue:DIN-8-conn J3
 U 1 1 5B2EB01F
 P 4200 1325
 F 0 "J3" H 4325 1550 50  0000 C CNN
@@ -711,7 +711,7 @@ NoConn ~ 4500 1325
 NoConn ~ 4500 1425
 NoConn ~ 4200 1625
 $Comp
-L conn:USB_B J6
+L midi-v2-circuit-rescue:USB_B-conn J6
 U 1 1 5B302844
 P 1325 1350
 F 0 "J6" H 1125 1800 50  0000 L CNN
@@ -744,7 +744,7 @@ F 3 "" H 1625 1150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L conn:Conn_01x04 J7
+L midi-v2-circuit-rescue:Conn_01x04-conn J7
 U 1 1 5B3041BE
 P 2375 1250
 F 0 "J7" H 2375 1450 50  0000 C CNN
@@ -766,7 +766,7 @@ F 3 "" H 2025 1100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L conn:Conn_01x03 J8
+L midi-v2-circuit-rescue:Conn_01x03-conn J8
 U 1 1 5B306C6E
 P 4675 2050
 F 0 "J8" H 4675 2250 50  0000 C CNN
@@ -788,7 +788,7 @@ F 3 "" H 3200 2050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L conn:Conn_01x02 J9
+L midi-v2-circuit-rescue:Conn_01x02-conn J9
 U 1 1 5B30BFB9
 P 7700 1300
 F 0 "J9" H 7700 1400 50  0000 C CNN
@@ -832,7 +832,7 @@ F 3 "" H 2175 1150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:LED D1
+L midi-v2-circuit-rescue:LED-device D1
 U 1 1 5B3116B9
 P 7375 1850
 F 0 "D1" H 7375 1950 50  0000 C CNN
@@ -843,7 +843,7 @@ F 3 "" H 7375 1850 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L device:R R8
+L midi-v2-circuit-rescue:R-device R8
 U 1 1 5B312423
 P 7375 1550
 F 0 "R8" V 7455 1550 50  0000 C CNN
@@ -854,7 +854,7 @@ F 3 "" H 7375 1550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:LED D2
+L midi-v2-circuit-rescue:LED-device D2
 U 1 1 5B313961
 P 8450 1650
 F 0 "D2" H 8450 1750 50  0000 C CNN
@@ -865,7 +865,7 @@ F 3 "" H 8450 1650 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L device:R R9
+L midi-v2-circuit-rescue:R-device R9
 U 1 1 5B313D52
 P 8450 1350
 F 0 "R9" V 8530 1350 50  0000 C CNN
@@ -1114,7 +1114,7 @@ midi-raw-signal-power
 Text GLabel 8575 1200 2    60   Input ~ 0
 midi-raw-signal-data
 $Comp
-L device:C C8
+L midi-v2-circuit-rescue:C-device C8
 U 1 1 5B31F54F
 P 8275 5050
 F 0 "C8" H 8300 5150 50  0000 L CNN
@@ -1125,7 +1125,7 @@ F 3 "" H 8275 5050 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L device:C C9
+L midi-v2-circuit-rescue:C-device C9
 U 1 1 5B31F7B1
 P 8275 5275
 F 0 "C9" H 8300 5375 50  0000 L CNN
@@ -1136,7 +1136,7 @@ F 3 "" H 8275 5275 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L device:C C10
+L midi-v2-circuit-rescue:C-device C10
 U 1 1 5B31F842
 P 8275 5500
 F 0 "C10" H 8300 5600 50  0000 L CNN
@@ -1147,7 +1147,7 @@ F 3 "" H 8275 5500 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L device:C C11
+L midi-v2-circuit-rescue:C-device C11
 U 1 1 5B31F8CC
 P 8275 5725
 F 0 "C11" H 8300 5825 50  0000 L CNN
@@ -1327,7 +1327,7 @@ button-3
 Text GLabel 2050 5525 0    60   Input ~ 0
 button-4
 $Comp
-L conn:Screw_Terminal_01x12 J1
+L midi-v2-circuit-rescue:Screw_Terminal_01x12-conn J1
 U 1 1 5B315AAE
 P 2250 5125
 F 0 "J1" H 2250 5725 50  0000 C CNN
@@ -1362,7 +1362,7 @@ button-3
 Text GLabel 10450 5675 2    60   Input ~ 0
 button-4
 $Comp
-L device:R R6
+L midi-v2-circuit-rescue:R-device R6
 U 1 1 5B34137C
 P 1900 5325
 F 0 "R6" V 1850 5150 50  0000 C CNN
@@ -1377,7 +1377,7 @@ Wire Wire Line
 Wire Wire Line
 	1025 4450 900  4450
 $Comp
-L device:R R7
+L midi-v2-circuit-rescue:R-device R7
 U 1 1 5B342758
 P 1900 5225
 F 0 "R7" V 1850 5050 50  0000 C CNN
@@ -1388,7 +1388,7 @@ F 3 "" H 1900 5225 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L device:R R10
+L midi-v2-circuit-rescue:R-device R10
 U 1 1 5B342C8C
 P 1900 5125
 F 0 "R10" V 1850 4950 50  0000 C CNN
@@ -1399,7 +1399,7 @@ F 3 "" H 1900 5125 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L device:R R11
+L midi-v2-circuit-rescue:R-device R11
 U 1 1 5B342C92
 P 1900 5025
 F 0 "R11" V 1850 4850 50  0000 C CNN
@@ -1410,7 +1410,7 @@ F 3 "" H 1900 5025 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L device:R R12
+L midi-v2-circuit-rescue:R-device R12
 U 1 1 5B342D6E
 P 1900 4925
 F 0 "R12" V 1850 4750 50  0000 C CNN
@@ -1421,7 +1421,7 @@ F 3 "" H 1900 4925 50  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L device:R R13
+L midi-v2-circuit-rescue:R-device R13
 U 1 1 5B342D74
 P 1900 4825
 F 0 "R13" V 1850 4650 50  0000 C CNN
@@ -1444,7 +1444,7 @@ Wire Wire Line
 Wire Wire Line
 	1625 4825 1750 4825
 $Comp
-L device:R R14
+L midi-v2-circuit-rescue:R-device R14
 U 1 1 5B40F987
 P 6950 5425
 F 0 "R14" V 7030 5425 50  0000 C CNN
@@ -1455,7 +1455,7 @@ F 3 "" H 6950 5425 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R15
+L midi-v2-circuit-rescue:R-device R15
 U 1 1 5B40FFB0
 P 7125 5425
 F 0 "R15" V 7205 5425 50  0000 C CNN
@@ -1466,7 +1466,7 @@ F 3 "" H 7125 5425 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R16
+L midi-v2-circuit-rescue:R-device R16
 U 1 1 5B41005E
 P 7300 5425
 F 0 "R16" V 7380 5425 50  0000 C CNN
@@ -1477,7 +1477,7 @@ F 3 "" H 7300 5425 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L device:R R17
+L midi-v2-circuit-rescue:R-device R17
 U 1 1 5B410148
 P 7475 5425
 F 0 "R17" V 7555 5425 50  0000 C CNN

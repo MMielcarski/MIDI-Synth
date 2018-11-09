@@ -40,7 +40,7 @@
 
 
 # MCU name		|znacznik| HEAD
-MCU = atmega328p
+MCU = atmega32
 
 
 # Processor frequency.	|znacznik|
@@ -48,7 +48,7 @@ MCU = atmega328p
 #     processor frequency. You can then use this symbol in your source code to 
 #     calculate timings. Do NOT tack on a 'UL' at the end, this will be done
 #     automatically to create a 32-bit value in your source code.
-F_CPU = 1000000
+F_CPU = 16000000
 
 
 # Output format. (can be srec, ihex, binary)
@@ -59,8 +59,8 @@ FORMAT = ihex
 TARGET = main
 
 
-# List C source files here. (C dependencies are automatically generated.)       |znacznik|
-SRC = src/$(TARGET).c
+# List C source files here. (C dependencies are automatically generated.) |znacznik|
+SRC = $(TARGET).c 
 
 
 # List Assembler source files here.
@@ -321,7 +321,7 @@ all: begin gccversion sizebefore build sizeafter end
 
 build: elf hex eep lss sym
 
-elf: $(TARGET).elf
+elf: $(TARGET).elf                             
 hex: $(TARGET).hex
 eep: $(TARGET).eep
 lss: $(TARGET).lss 
