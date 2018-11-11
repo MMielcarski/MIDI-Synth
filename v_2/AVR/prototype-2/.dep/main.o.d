@@ -4,7 +4,7 @@ main.o: main.c /usr/lib/avr/include/avr/io.h \
  /usr/lib/avr/include/avr/iom32.h /usr/lib/avr/include/avr/portpins.h \
  /usr/lib/avr/include/avr/common.h /usr/lib/avr/include/avr/version.h \
  /usr/lib/avr/include/avr/fuse.h /usr/lib/avr/include/avr/lock.h \
- /usr/lib/avr/include/util/setbaud.h
+ /usr/lib/avr/include/avr/interrupt.h /usr/lib/avr/include/util/setbaud.h
 
 /usr/lib/avr/include/avr/io.h:
 
@@ -27,5 +27,7 @@ main.o: main.c /usr/lib/avr/include/avr/io.h \
 /usr/lib/avr/include/avr/fuse.h:
 
 /usr/lib/avr/include/avr/lock.h:
+
+/usr/lib/avr/include/avr/interrupt.h:
 
 /usr/lib/avr/include/util/setbaud.h:

@@ -3,10 +3,14 @@
 
 #define F_CPU 16000000UL
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #define FOSC 16000000UL
 #define BAUD 9600
 #define MYUBRR FOSC/16/BAUD-1	// ubrr = 103	normal asynch. mode
 #include <util/setbaud.h>
+#define TIM1_PSC 1024		// TIMER 1 prescaler value
+#define TIM1_PER 100		// TIMER 1 desired period in miliseconds
+
 
 #define note1 PD0 
 #define note2 PD2 //
@@ -31,13 +35,20 @@ int NOTES_tab[13] = {note1,note2,note3,note4,note5,note6,note7,note8,note9,note1
 int OCTAVES_tab[4] = {octave1,octave2,octave3,octave4};
 int PRESSED_BUTTON_tab[13][4]={0};
 
-void PORT_Init()
+int adc_0 = 0, adc_1=0, adc_6=0;
+
+// ------------------------- TIMER ----------------------------------------
+
+void TIM1_Init()	// enable interrupts
 {
-	MCUCSR = (1<<JTD);			//disabling JTAG
-	MCUCSR = (1<<JTD);			//
-	DDRD = 0xFF;
-	DDRC = 0xFF;
+    OCR1A = (((F_CPU/1000) / TIM1_PSC) * TIM1_PER) - 1;	// counter size
+    TCCR1B |= (1 << WGM12);							// Mode 4, CTC on OCR1A
+    TIMSK |= (1 << OCIE1A);						// Set interrupt on compare match	
+    TCCR1B |= (1 << CS12) | (1 << CS10);			// set prescaler to 1024 and start the timer
+    sei();	
 }
+
+// ------------------------- USART ----------------------------------------
 
 void USART_Init(unsigned int ubrr)		
 {
@@ -77,6 +88,40 @@ void uart_putint(int value)
 	uart_putstring(tab);
 }
 
+// ------------------------- ADC ----------------------------------------
+
+void ADC_Init()
+{
+	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // Set ADC prescaler to 128 - 125KHz sample rate @ 16MHz
+	ADMUX |= (1 << REFS0); 	// Set ADC reference to AVCC
+	
+	ADCSRA |= (1 << ADEN);  // Enable ADC
+	//ADCSRA |= (1 << ADSC);  // Start A2D Conversions
+	//ADCSRA |= (1 << ADATE);	// for free running mode
+}
+
+uint16_t ADC_read(uint8_t channel)		
+{
+	channel &= 0x07;					// AND operation with 7 (will keep channel between 0-7) 
+	ADMUX = (ADMUX & 0xF8) | channel;	// clears 3 first bits before OR
+
+	ADCSRA |= (1 << ADSC);				// start single convesrion
+	while(ADCSRA & (1 << ADSC));		// wait for conversion to complete
+	return ADCW;
+}
+
+// ------------------------- OTHER ----------------------------------------
+
+
+
+void PORT_Init()
+{
+	MCUCSR = (1<<JTD);			//disabling JTAG
+	MCUCSR = (1<<JTD);			//
+	DDRD = 0xFF;
+	DDRC = 0xFF;
+}
+
 void note_on(int key, int oct)
 {
 	//uart_putchar('N');
@@ -94,15 +139,42 @@ void note_off(int key, int oct)
 
 }
 
+ISR(TIMER1_COMPA_vect)	// timer1 overflow interrupt
+{
+	// ------- ADC test -------
+	// adc_0 = ADC_read(0);
+	// uart_putstring("\nADC0:");
+	// uart_putint(adc_0);
+	// //uart_putchar('K');
+
+	adc_1 = ADC_read(1);
+	uart_putstring("\nADC1:");
+	uart_putint(adc_1);
+
+	// adc_6 = ADC_read(6);
+	// uart_putstring("\nADC6:");
+	// uart_putint(adc_6);
+}
+
+// ------------------------- MAIN ----------------------------------------
+
 int main(void)
 {
 	USART_Init(MYUBRR);
 	PORT_Init();
+	ADC_Init();
+	TIM1_Init();
 
 	while(1)
 	{
-		
-		for(int i=0; i<13; i++)		// notes loop
+		// ------- ADC test -------
+		//adc_1 = ADC_read(6);
+		//uart_putstring("\nADC1:")
+		//uart_putint(adc_1);
+
+		// ----- keyboard handle -> working without last key --------
+
+	/*	for(int i=0; i<13; i++)		// notes loop
 		{
 			if(i < 7)	// PORTD
 			{
@@ -149,6 +221,6 @@ int main(void)
 			{
 				PORTC &= ~(1<<NOTES_tab[i]);
 			}
-		}
+		}*/
 	}
 }
