@@ -33,6 +33,8 @@ int PRESSED_BUTTON_tab[13][4]={0};
 
 void PORT_Init()
 {
+	MCUCSR = (1<<JTD);			//disabling JTAG
+	MCUCSR = (1<<JTD);			//
 	DDRD = 0xFF;
 	DDRC = 0xFF;
 }
@@ -41,7 +43,7 @@ void USART_Init(unsigned int ubrr)
 {
    UBRRH = (unsigned char)(ubrr>>8);	// set baud rate to 9600
    UBRRL = (unsigned char)ubrr;		//
-   UCSRB = (1<<RXEN)|(1<<TXEN);		// Enable receiver and transmitter 
+   UCSRB = (1<<TXEN);		// Enable transmitter 
    UCSRC = (1<<URSEL)|(1<<USBS)|(3<<UCSZ0);		// Set frame format: 8data, 2stop bit
 }
 
@@ -77,11 +79,13 @@ void uart_putint(int value)
 
 void note_on(int key, int oct)
 {
-	uart_putchar('N');
-	uart_putchar('-');
+	//uart_putchar('N');
+	//uart_putchar('-');
+	uart_putstring("\nkey:");
 	uart_putint(key);
-	uart_putchar('O');
-	uart_putchar('-');
+	//uart_putchar('O');
+	//uart_putchar('-');
+	uart_putstring("\noct");
 	uart_putint(oct);
 }
 
@@ -92,64 +96,59 @@ void note_off(int key, int oct)
 
 int main(void)
 {
-	PORT_Init();
 	USART_Init(MYUBRR);
-	//int zm = 107;
-	//LED_1_DDR |= (1<<LED_1_PIN);					// led pin set as output
-	PORTD = 0xFF;
-	PORTC = 0xFF;
+	PORT_Init();
+
 	while(1)
 	{
-		/*
+		
 		for(int i=0; i<13; i++)		// notes loop
 		{
-			if(i <= 7)	// PORTD
+			if(i < 7)	// PORTD
 			{
 				PORTD |= (1<<NOTES_tab[i]);
-				//if(PIND & (1<<NOTES_tab[j]))
 			}
 			else		// PORTC
 			{
 				PORTC |= (1<<NOTES_tab[i]);
 			}
 
+			// if(i == 12)		// last key case
+			// {
+			// 	if(PINC & (1<<NOTES_tab[12]) && !(PRESSED_BUTTON_tab[12][0]) )
+			// 	{
+			// 		PRESSED_BUTTON_tab[12][0] = 1;
+			// 		note_on(12,0);
+			// 	}
+			// 	else if( !(PINC & (1<<NOTES_tab[12])) && PRESSED_BUTTON_tab[12][0])
+			// 	{
+			// 		PRESSED_BUTTON_tab[12][0] = 0;
+			// 		note_off(12,0);
+			// 	}
+			// }
+
 			for(int j=0; j<4; j++)		// octaves loop
 			{
-				if( PINB & (1<<OCTAVES_tab[j]) && !(PRESSED_BUTTON_tab[NOTES_tab[i]][OCTAVES_tab[j]]) )
+				if( PINB & (1<<OCTAVES_tab[j]) && !(PRESSED_BUTTON_tab[i][j]) )
 				{
-					PRESSED_BUTTON_tab[NOTES_tab[i]][OCTAVES_tab[j]] = 1;
-					note_on(NOTES_tab[i],OCTAVES_tab[j]);
+					PRESSED_BUTTON_tab[i][j] = 1;
+					note_on(i,j);
 				}
-				else if( !(PINB & (1<<OCTAVES_tab[j])) && PRESSED_BUTTON_tab[NOTES_tab[i]][OCTAVES_tab[j]] )
+				else if( !(PINB & (1<<OCTAVES_tab[j])) && PRESSED_BUTTON_tab[i][j] )
 				{
-					PRESSED_BUTTON_tab[NOTES_tab[i]][OCTAVES_tab[j]] = 0;
-					note_off(NOTES_tab[i],OCTAVES_tab[j]);
+					PRESSED_BUTTON_tab[i][j] = 0;
+					note_off(i,j);
 				}
 			}
 			
-			if(i <= 7)	// PORTD
+			if(i < 7)	// PORTD
 			{
 				PORTD &= ~(1<<NOTES_tab[i]);
-				//if(PIND & (1<<NOTES_tab[j]))
 			}
 			else		// PORT C
 			{
 				PORTC &= ~(1<<NOTES_tab[i]);
 			}
-		}*/
-
-		//uart_putchar('D');
-			uart_putchar(PINB);
-			//uart_putchar(PINC);
-		//uart_putchar('C');
-			//uart_putchar(PINC);
-		//uart_putchar('B');
-			//uart_putchar(PINB);
-
-		//uart_putint(zm);
-		//uart_putchar(0x18);
-		//uart_putchar(0x21);
-		 //Toggle_LED();
-		 //delay_ms(1000);
+		}
 	}
 }
