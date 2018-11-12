@@ -1,24 +1,29 @@
 // device: 	AtMega 32
 // author:  Maciej Mielcarski
+// Midi v2
 
 #define F_CPU 16000000UL
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #define FOSC 16000000UL
-#define BAUD 9600
-#define MYUBRR FOSC/16/BAUD-1	// ubrr = 103	normal asynch. mode
+#define BAUD 31250
+#define MYUBRR FOSC/16/BAUD-1	// ubrr = 31	normal asynch. mode
 #include <util/setbaud.h>
 #define TIM1_PSC 1024		// TIMER 1 prescaler value
 #define TIM1_PER 100		// TIMER 1 desired period in miliseconds
 
+#define NOTE_ON_CMD 0x90
+#define NOTE_OFF_CMD 0x80
+
+#define VEL_DEF_CMD		0x40	// default 64 velocity
 
 #define note1 PD0 
-#define note2 PD2 //
-#define note3 PD3 //
-#define note4 PD4 //
-#define note5 PD5 //
-#define note6 PD6 //
-#define note7 PD7 //
+#define note2 PD2 
+#define note3 PD3 
+#define note4 PD4 
+#define note5 PD5 
+#define note6 PD6 
+#define note7 PD7 
 #define note8 PC2 
 #define note9 PC3 
 #define note10 PC4 
@@ -52,7 +57,7 @@ void TIM1_Init()	// enable interrupts
 
 void USART_Init(unsigned int ubrr)		
 {
-   UBRRH = (unsigned char)(ubrr>>8);	// set baud rate to 9600
+   UBRRH = (unsigned char)(ubrr>>8);	// set baud rate to 31250
    UBRRL = (unsigned char)ubrr;		//
    UCSRB = (1<<TXEN);		// Enable transmitter 
    UCSRC = (1<<URSEL)|(1<<USBS)|(3<<UCSZ0);		// Set frame format: 8data, 2stop bit
@@ -124,32 +129,31 @@ void PORT_Init()
 
 void note_on(int key, int oct)
 {
-	//uart_putchar('N');
-	//uart_putchar('-');
-	uart_putstring("\nkey:");
-	uart_putint(key);
-	//uart_putchar('O');
-	//uart_putchar('-');
-	uart_putstring("\noct");
-	uart_putint(oct);
+	uart_putchar(NOTE_ON_CMD);		// note on
+	uart_putchar(key + oct * 12);
+	uart_putchar(VEL_DEF_CMD);
 }
 
 void note_off(int key, int oct)
 {
-
+	uart_putchar(NOTE_OFF_CMD);		// note off
+	uart_putchar(key + oct * 12);
+	uart_putchar(VEL_DEF_CMD);
 }
 
 ISR(TIMER1_COMPA_vect)	// timer1 overflow interrupt
 {
+	// ------- MIDI test ------
+
 	// ------- ADC test -------
 	// adc_0 = ADC_read(0);
 	// uart_putstring("\nADC0:");
 	// uart_putint(adc_0);
 	// //uart_putchar('K');
 
-	adc_1 = ADC_read(1);
-	uart_putstring("\nADC1:");
-	uart_putint(adc_1);
+	//adc_1 = ADC_read(1);
+	//uart_putstring("\nADC1:");
+	//uart_putint(adc_1);
 
 	// adc_6 = ADC_read(6);
 	// uart_putstring("\nADC6:");
@@ -174,7 +178,7 @@ int main(void)
 
 		// ----- keyboard handle -> working without last key --------
 
-	/*	for(int i=0; i<13; i++)		// notes loop
+		for(int i=0; i<13; i++)		// notes loop
 		{
 			if(i < 7)	// PORTD
 			{
@@ -221,6 +225,6 @@ int main(void)
 			{
 				PORTC &= ~(1<<NOTES_tab[i]);
 			}
-		}*/
+		}
 	}
 }
