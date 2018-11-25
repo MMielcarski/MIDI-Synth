@@ -1,0 +1,1038 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/mnt/82849C02849BF73F/Projects/MIDI-Synth/v_2/KiCad/midi-v2-circuit.sch</source>
+    <date>wto, 20 lis 2018, 14:25:27</date>
+    <tool>Eeschema 5.0.1-33cea8e~68~ubuntu18.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>midi-v2-circuit.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="U1">
+      <value>ATMEGA32-16AU</value>
+      <footprint>Housings_QFP:LQFP-44_10x10mm_Pitch0.8mm</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="ATMEGA32-16AU-atmel" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2AD854</tstamp>
+    </comp>
+    <comp ref="J4">
+      <value>Conn_01x17</value>
+      <footprint>Connectors_IDC:IDC-Header_2x10_Pitch2.54mm_Angled</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="Conn_01x17-conn" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2AEA28</tstamp>
+    </comp>
+    <comp ref="CON2">
+      <value>AVR-ISP-10</value>
+      <footprint>Connectors_IDC:IDC-Header_2x05_Pitch2.54mm_Angled</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="AVR-ISP-10-atmel" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2AEEE8</tstamp>
+    </comp>
+    <comp ref="C5">
+      <value>100n</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2B8A3A</tstamp>
+    </comp>
+    <comp ref="C6">
+      <value>100n</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2B8C4B</tstamp>
+    </comp>
+    <comp ref="C7">
+      <value>100n</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2B8C9C</tstamp>
+    </comp>
+    <comp ref="C4">
+      <value>100n</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2B7A4D</tstamp>
+    </comp>
+    <comp ref="SW2">
+      <value>SW_Push</value>
+      <footprint>Buttons_Switches_THT:SW_Tactile_Straight_KSA0Axx1LFTR</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="SW_Push-switches" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2B95B3</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2B99E0</tstamp>
+    </comp>
+    <comp ref="Y1">
+      <value>Crystal</value>
+      <footprint>Crystals:Crystal_HC18-U_Vertical</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="Crystal-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2BA77D</tstamp>
+    </comp>
+    <comp ref="C1">
+      <value>22p</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2BAED4</tstamp>
+    </comp>
+    <comp ref="C2">
+      <value>22p</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2BAF8F</tstamp>
+    </comp>
+    <comp ref="C3">
+      <value>100n</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2BBEE0</tstamp>
+    </comp>
+    <comp ref="L1">
+      <value>10uH</value>
+      <footprint>Inductors_SMD:L_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="L-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2BC3A2</tstamp>
+    </comp>
+    <comp ref="J2">
+      <value>Conn_01x04</value>
+      <footprint>Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="Conn_01x04-conn" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2C07E4</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>4.7k</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2C1345</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>4.7k</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2C1C9B</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>220</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2D2B8E</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>220</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2D55DF</tstamp>
+    </comp>
+    <comp ref="RV1">
+      <value>Joystick-switch-POT_Dual</value>
+      <footprint>SparkFun-Electromechanical:JOYSTICK</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="Joystick-switch-POT_Dual" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2E8139</tstamp>
+    </comp>
+    <comp ref="J3">
+      <value>DIN-8</value>
+      <footprint>misc-1-midi-din-8:MIDI-DIN-8</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="DIN-8-conn" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B2EB01F</tstamp>
+    </comp>
+    <comp ref="J6">
+      <value>USB_B</value>
+      <footprint>Connectors:USB_B</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="USB_B-conn" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B302844</tstamp>
+    </comp>
+    <comp ref="J7">
+      <value>to_midi_adapter_USB</value>
+      <footprint>Pin_Headers:Pin_Header_Straight_1x04_Pitch2.54mm</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="Conn_01x04-conn" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B3041BE</tstamp>
+    </comp>
+    <comp ref="J8">
+      <value>to_midi_adapter_MIDI</value>
+      <footprint>Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="Conn_01x03-conn" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B306C6E</tstamp>
+    </comp>
+    <comp ref="J9">
+      <value>to_power_switch</value>
+      <footprint>Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="Conn_01x02-conn" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B30BFB9</tstamp>
+    </comp>
+    <comp ref="D1">
+      <value>power_LED</value>
+      <footprint>LEDs:LED_D3.0mm</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="LED-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B3116B9</tstamp>
+    </comp>
+    <comp ref="R8">
+      <value>1k</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B312423</tstamp>
+    </comp>
+    <comp ref="D2">
+      <value>data_LED</value>
+      <footprint>LEDs:LED_D3.0mm</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="LED-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B313961</tstamp>
+    </comp>
+    <comp ref="R9">
+      <value>1k</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B313D52</tstamp>
+    </comp>
+    <comp ref="C8">
+      <value>100n</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B31F54F</tstamp>
+    </comp>
+    <comp ref="C9">
+      <value>100n</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B31F7B1</tstamp>
+    </comp>
+    <comp ref="C10">
+      <value>100n</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B31F842</tstamp>
+    </comp>
+    <comp ref="C11">
+      <value>100n</value>
+      <footprint>Capacitors_SMD:C_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="C-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B31F8CC</tstamp>
+    </comp>
+    <comp ref="CON3">
+      <value>IDC-14</value>
+      <footprint>Connectors_IDC:IDC-Header_2x07_Pitch2.54mm_Straight</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="IDC-14" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B32800D</tstamp>
+    </comp>
+    <comp ref="CON1">
+      <value>IDC-14</value>
+      <footprint>Connectors_IDC:IDC-Header_2x07_Pitch2.54mm_Angled</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="IDC-14" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B32A50D</tstamp>
+    </comp>
+    <comp ref="J1">
+      <value>Screw_Terminal_01x12</value>
+      <footprint>TerminalBlocks_Phoenix:TerminalBlock_Phoenix_MPT-2.54mm_12pol</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="Screw_Terminal_01x12-conn" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B315AAE</tstamp>
+    </comp>
+    <comp ref="R6">
+      <value>330</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B34137C</tstamp>
+    </comp>
+    <comp ref="R7">
+      <value>330</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B342758</tstamp>
+    </comp>
+    <comp ref="R10">
+      <value>330</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B342C8C</tstamp>
+    </comp>
+    <comp ref="R11">
+      <value>330</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B342C92</tstamp>
+    </comp>
+    <comp ref="R12">
+      <value>330</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B342D6E</tstamp>
+    </comp>
+    <comp ref="R13">
+      <value>330</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B342D74</tstamp>
+    </comp>
+    <comp ref="R14">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B40F987</tstamp>
+    </comp>
+    <comp ref="R15">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B40FFB0</tstamp>
+    </comp>
+    <comp ref="R16">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B41005E</tstamp>
+    </comp>
+    <comp ref="R17">
+      <value>10k</value>
+      <footprint>Resistors_SMD:R_0805_HandSoldering</footprint>
+      <libsource lib="midi-v2-circuit-rescue" part="R-device" description=""/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5B410148</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="midi-v2-circuit-rescue" part="ATMEGA32-16AU-atmel">
+      <footprints>
+        <fp>TQFP44</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">ATMEGA32-16AU-atmel</field>
+        <field name="Footprint">TQFP44</field>
+      </fields>
+      <pins>
+        <pin num="1" name="(MOSI)PB5" type="BiDi"/>
+        <pin num="2" name="(MISO)PB6" type="BiDi"/>
+        <pin num="3" name="(SCK)PB7" type="BiDi"/>
+        <pin num="4" name="~RESET" type="input"/>
+        <pin num="5" name="VCC" type="power_in"/>
+        <pin num="6" name="GND" type="power_in"/>
+        <pin num="7" name="XTAL2" type="BiDi"/>
+        <pin num="8" name="XTAL1" type="BiDi"/>
+        <pin num="9" name="(RXD)PD0" type="BiDi"/>
+        <pin num="10" name="(TXD)PD1" type="BiDi"/>
+        <pin num="11" name="(INT0)PD2" type="BiDi"/>
+        <pin num="12" name="(INT1)PD3" type="BiDi"/>
+        <pin num="13" name="(OC1B)PD4" type="BiDi"/>
+        <pin num="14" name="(OC1A)PD5" type="BiDi"/>
+        <pin num="15" name="(ICP)PD6" type="BiDi"/>
+        <pin num="16" name="(OC2)PD7" type="BiDi"/>
+        <pin num="17" name="VCC" type="power_in"/>
+        <pin num="18" name="GND" type="power_in"/>
+        <pin num="19" name="(SCL)PC0" type="BiDi"/>
+        <pin num="20" name="(SDA)PC1" type="BiDi"/>
+        <pin num="21" name="(TCK)PC2" type="BiDi"/>
+        <pin num="22" name="(TMS)PC3" type="BiDi"/>
+        <pin num="23" name="(TDO)PC4" type="BiDi"/>
+        <pin num="24" name="(TDI)PC5" type="BiDi"/>
+        <pin num="25" name="(TOSC1)PC6" type="BiDi"/>
+        <pin num="26" name="(TOSC2)PC7" type="BiDi"/>
+        <pin num="27" name="AVCC" type="power_in"/>
+        <pin num="28" name="GND" type="power_in"/>
+        <pin num="29" name="AREF" type="power_in"/>
+        <pin num="30" name="(ADC7)PA7" type="BiDi"/>
+        <pin num="31" name="(ADC6)PA6" type="BiDi"/>
+        <pin num="32" name="(ADC5)PA5" type="BiDi"/>
+        <pin num="33" name="(ADC4)PA4" type="BiDi"/>
+        <pin num="34" name="(ADC3)PA3" type="BiDi"/>
+        <pin num="35" name="(ADC2)PA2" type="BiDi"/>
+        <pin num="36" name="(ADC1)PA1" type="BiDi"/>
+        <pin num="37" name="(ADC0)PA0" type="BiDi"/>
+        <pin num="38" name="VCC" type="power_in"/>
+        <pin num="39" name="GND" type="power_in"/>
+        <pin num="40" name="(T0/XCK)PB0" type="BiDi"/>
+        <pin num="41" name="(T1)PB1" type="BiDi"/>
+        <pin num="42" name="(AIN0/INT2)PB2" type="BiDi"/>
+        <pin num="43" name="(AIN1/OC0)PB3" type="BiDi"/>
+        <pin num="44" name="(~SS~)PB4" type="BiDi"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="AVR-ISP-10-atmel">
+      <fields>
+        <field name="Reference">CON</field>
+        <field name="Value">AVR-ISP-10-atmel</field>
+        <field name="Footprint">AVR-ISP-10</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+        <pin num="3" name="~" type="passive"/>
+        <pin num="4" name="~" type="passive"/>
+        <pin num="5" name="~" type="passive"/>
+        <pin num="6" name="~" type="passive"/>
+        <pin num="7" name="~" type="passive"/>
+        <pin num="8" name="~" type="passive"/>
+        <pin num="9" name="~" type="passive"/>
+        <pin num="10" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="C-device">
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C-device</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="Conn_01x02-conn">
+      <footprints>
+        <fp>Connector*:*_??x*mm*</fp>
+        <fp>Connector*:*1x??x*mm*</fp>
+        <fp>Pin?Header?Straight?1X*</fp>
+        <fp>Pin?Header?Angled?1X*</fp>
+        <fp>Socket?Strip?Straight?1X*</fp>
+        <fp>Socket?Strip?Angled?1X*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02-conn</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="Conn_01x03-conn">
+      <footprints>
+        <fp>Connector*:*_??x*mm*</fp>
+        <fp>Connector*:*1x??x*mm*</fp>
+        <fp>Pin?Header?Straight?1X*</fp>
+        <fp>Pin?Header?Angled?1X*</fp>
+        <fp>Socket?Strip?Straight?1X*</fp>
+        <fp>Socket?Strip?Angled?1X*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03-conn</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="Conn_01x04-conn">
+      <footprints>
+        <fp>Connector*:*_??x*mm*</fp>
+        <fp>Connector*:*1x??x*mm*</fp>
+        <fp>Pin?Header?Straight?1X*</fp>
+        <fp>Pin?Header?Angled?1X*</fp>
+        <fp>Socket?Strip?Straight?1X*</fp>
+        <fp>Socket?Strip?Angled?1X*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x04-conn</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="Conn_01x17-conn">
+      <footprints>
+        <fp>Connector*:*_??x*mm*</fp>
+        <fp>Connector*:*1x??x*mm*</fp>
+        <fp>Pin?Header?Straight?1X*</fp>
+        <fp>Pin?Header?Angled?1X*</fp>
+        <fp>Socket?Strip?Straight?1X*</fp>
+        <fp>Socket?Strip?Angled?1X*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x17-conn</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+        <pin num="13" name="Pin_13" type="passive"/>
+        <pin num="14" name="Pin_14" type="passive"/>
+        <pin num="15" name="Pin_15" type="passive"/>
+        <pin num="16" name="Pin_16" type="passive"/>
+        <pin num="17" name="Pin_17" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="Crystal-device">
+      <footprints>
+        <fp>Crystal*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">Y</field>
+        <field name="Value">Crystal-device</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="DIN-8-conn">
+      <footprints>
+        <fp>DIN*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">DIN-8-conn</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+        <pin num="3" name="~" type="passive"/>
+        <pin num="4" name="~" type="passive"/>
+        <pin num="5" name="~" type="passive"/>
+        <pin num="6" name="~" type="passive"/>
+        <pin num="7" name="~" type="passive"/>
+        <pin num="8" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="IDC-14">
+      <fields>
+        <field name="Reference">CON</field>
+        <field name="Value">IDC-14</field>
+        <field name="Footprint">IDC-14</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+        <pin num="3" name="~" type="passive"/>
+        <pin num="4" name="~" type="passive"/>
+        <pin num="5" name="~" type="passive"/>
+        <pin num="6" name="~" type="passive"/>
+        <pin num="7" name="~" type="passive"/>
+        <pin num="8" name="~" type="passive"/>
+        <pin num="9" name="~" type="passive"/>
+        <pin num="10" name="~" type="passive"/>
+        <pin num="11" name="~" type="input"/>
+        <pin num="12" name="~" type="input"/>
+        <pin num="13" name="~" type="input"/>
+        <pin num="14" name="~" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="Joystick-switch-POT_Dual">
+      <footprints>
+        <fp>Potentiometer*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">RV</field>
+        <field name="Value">Joystick-switch-POT_Dual</field>
+      </fields>
+      <pins>
+        <pin num="B1A" name="B1A" type="input"/>
+        <pin num="B1B" name="B1B" type="input"/>
+        <pin num="B2A" name="B2A" type="input"/>
+        <pin num="B2B" name="B2B" type="input"/>
+        <pin num="H1" name="H1" type="passive"/>
+        <pin num="H2" name="H2" type="passive"/>
+        <pin num="H3" name="H3" type="passive"/>
+        <pin num="V1" name="V1" type="passive"/>
+        <pin num="V2" name="V2" type="passive"/>
+        <pin num="V3" name="V3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="L-device">
+      <footprints>
+        <fp>Choke_*</fp>
+        <fp>*Coil*</fp>
+        <fp>Inductor_*</fp>
+        <fp>L_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">L</field>
+        <field name="Value">L-device</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="LED-device">
+      <footprints>
+        <fp>LED*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED-device</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="R-device">
+      <footprints>
+        <fp>R_*</fp>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R-device</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="SW_Push-switches">
+      <fields>
+        <field name="Reference">SW</field>
+        <field name="Value">SW_Push-switches</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="Screw_Terminal_01x12-conn">
+      <footprints>
+        <fp>Connector*Terminal*Block*:*</fp>
+        <fp>TerminalBlock*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Screw_Terminal_01x12-conn</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+        <pin num="7" name="Pin_7" type="passive"/>
+        <pin num="8" name="Pin_8" type="passive"/>
+        <pin num="9" name="Pin_9" type="passive"/>
+        <pin num="10" name="Pin_10" type="passive"/>
+        <pin num="11" name="Pin_11" type="passive"/>
+        <pin num="12" name="Pin_12" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="midi-v2-circuit-rescue" part="USB_B-conn">
+      <footprints>
+        <fp>USB*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">USB_B-conn</field>
+      </fields>
+      <pins>
+        <pin num="1" name="VBUS" type="power_out"/>
+        <pin num="2" name="D-" type="passive"/>
+        <pin num="3" name="D+" type="passive"/>
+        <pin num="4" name="GND" type="power_out"/>
+        <pin num="5" name="Shield" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="midi-v2-circuit-rescue">
+      <uri>/mnt/82849C02849BF73F/Projects/MIDI-Synth/v_2/KiCad/midi-v2-circuit-rescue.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="midi-raw-signal-data">
+      <node ref="J3" pin="4"/>
+      <node ref="R9" pin="1"/>
+      <node ref="J8" pin="3"/>
+      <node ref="R4" pin="1"/>
+    </net>
+    <net code="2" name="GND">
+      <node ref="CON2" pin="10"/>
+      <node ref="C6" pin="2"/>
+      <node ref="C5" pin="2"/>
+      <node ref="U1" pin="39"/>
+      <node ref="U1" pin="6"/>
+      <node ref="U1" pin="18"/>
+      <node ref="U1" pin="28"/>
+      <node ref="CON2" pin="8"/>
+      <node ref="CON2" pin="6"/>
+      <node ref="CON2" pin="4"/>
+      <node ref="C7" pin="2"/>
+      <node ref="R17" pin="2"/>
+      <node ref="R14" pin="2"/>
+      <node ref="R15" pin="2"/>
+      <node ref="R16" pin="2"/>
+      <node ref="J1" pin="2"/>
+      <node ref="CON1" pin="14"/>
+      <node ref="J2" pin="4"/>
+      <node ref="C3" pin="2"/>
+      <node ref="C8" pin="1"/>
+      <node ref="C2" pin="2"/>
+      <node ref="C1" pin="2"/>
+      <node ref="D1" pin="1"/>
+      <node ref="CON3" pin="14"/>
+      <node ref="C10" pin="1"/>
+      <node ref="C9" pin="1"/>
+      <node ref="C11" pin="1"/>
+      <node ref="SW2" pin="1"/>
+      <node ref="C4" pin="2"/>
+      <node ref="J3" pin="2"/>
+      <node ref="J8" pin="2"/>
+      <node ref="D2" pin="1"/>
+      <node ref="J7" pin="2"/>
+      <node ref="RV1" pin="V3"/>
+      <node ref="RV1" pin="H3"/>
+      <node ref="J6" pin="5"/>
+      <node ref="J6" pin="4"/>
+    </net>
+    <net code="3" name="Net-(J6-Pad3)">
+      <node ref="J6" pin="3"/>
+      <node ref="J7" pin="3"/>
+    </net>
+    <net code="4" name="Net-(J6-Pad2)">
+      <node ref="J6" pin="2"/>
+      <node ref="J7" pin="4"/>
+    </net>
+    <net code="5" name="button-1">
+      <node ref="J1" pin="11"/>
+      <node ref="CON1" pin="11"/>
+      <node ref="U1" pin="40"/>
+      <node ref="CON3" pin="11"/>
+      <node ref="C8" pin="2"/>
+    </net>
+    <net code="6" name="button-2">
+      <node ref="U1" pin="41"/>
+      <node ref="C9" pin="2"/>
+      <node ref="CON3" pin="12"/>
+      <node ref="CON1" pin="12"/>
+      <node ref="J1" pin="12"/>
+    </net>
+    <net code="7" name="button-3">
+      <node ref="CON1" pin="9"/>
+      <node ref="J1" pin="9"/>
+      <node ref="U1" pin="42"/>
+      <node ref="CON3" pin="9"/>
+      <node ref="C10" pin="2"/>
+    </net>
+    <net code="8" name="MISO">
+      <node ref="J4" pin="15"/>
+      <node ref="R16" pin="1"/>
+      <node ref="CON2" pin="9"/>
+      <node ref="U1" pin="2"/>
+    </net>
+    <net code="9" name="MOSI">
+      <node ref="J4" pin="16"/>
+      <node ref="CON2" pin="1"/>
+      <node ref="R15" pin="1"/>
+      <node ref="U1" pin="1"/>
+    </net>
+    <net code="10" name="SCK">
+      <node ref="U1" pin="3"/>
+      <node ref="J4" pin="14"/>
+      <node ref="R17" pin="1"/>
+      <node ref="CON2" pin="7"/>
+    </net>
+    <net code="11" name="RST">
+      <node ref="SW2" pin="2"/>
+      <node ref="R1" pin="2"/>
+      <node ref="CON2" pin="5"/>
+      <node ref="U1" pin="4"/>
+    </net>
+    <net code="12" name="Net-(C7-Pad1)">
+      <node ref="L1" pin="1"/>
+      <node ref="U1" pin="27"/>
+      <node ref="C7" pin="1"/>
+    </net>
+    <net code="13" name="Net-(C1-Pad1)">
+      <node ref="Y1" pin="1"/>
+      <node ref="C1" pin="1"/>
+      <node ref="U1" pin="7"/>
+    </net>
+    <net code="14" name="Net-(C2-Pad1)">
+      <node ref="U1" pin="8"/>
+      <node ref="C2" pin="1"/>
+      <node ref="Y1" pin="2"/>
+    </net>
+    <net code="15" name="Net-(J1-Pad5)">
+      <node ref="J1" pin="5"/>
+      <node ref="R11" pin="1"/>
+    </net>
+    <net code="16" name="button-4">
+      <node ref="C11" pin="2"/>
+      <node ref="J1" pin="10"/>
+      <node ref="CON3" pin="10"/>
+      <node ref="U1" pin="43"/>
+      <node ref="CON1" pin="10"/>
+    </net>
+    <net code="17" name="Net-(J1-Pad8)">
+      <node ref="R6" pin="1"/>
+      <node ref="J1" pin="8"/>
+    </net>
+    <net code="18" name="Net-(J1-Pad7)">
+      <node ref="J1" pin="7"/>
+      <node ref="R7" pin="1"/>
+    </net>
+    <net code="19" name="Net-(J1-Pad6)">
+      <node ref="R10" pin="1"/>
+      <node ref="J1" pin="6"/>
+    </net>
+    <net code="20" name="Net-(J1-Pad4)">
+      <node ref="R12" pin="1"/>
+      <node ref="J1" pin="4"/>
+    </net>
+    <net code="21" name="Net-(J1-Pad3)">
+      <node ref="R13" pin="1"/>
+      <node ref="J1" pin="3"/>
+    </net>
+    <net code="22" name="knob-pot-3">
+      <node ref="CON3" pin="4"/>
+      <node ref="U1" pin="33"/>
+      <node ref="R12" pin="2"/>
+      <node ref="CON1" pin="4"/>
+    </net>
+    <net code="23" name="knob-pot-1">
+      <node ref="CON3" pin="6"/>
+      <node ref="R10" pin="2"/>
+      <node ref="U1" pin="35"/>
+      <node ref="CON1" pin="6"/>
+    </net>
+    <net code="24" name="slide-pot-1">
+      <node ref="R6" pin="2"/>
+      <node ref="U1" pin="37"/>
+      <node ref="CON3" pin="8"/>
+      <node ref="CON1" pin="8"/>
+    </net>
+    <net code="25" name="joystick-pot-1">
+      <node ref="CON1" pin="2"/>
+      <node ref="U1" pin="31"/>
+      <node ref="RV1" pin="V2"/>
+      <node ref="CON3" pin="2"/>
+    </net>
+    <net code="26" name="+5V">
+      <node ref="C4" pin="1"/>
+      <node ref="R8" pin="1"/>
+      <node ref="U1" pin="38"/>
+      <node ref="J7" pin="1"/>
+      <node ref="RV1" pin="V1"/>
+      <node ref="U1" pin="5"/>
+      <node ref="U1" pin="17"/>
+      <node ref="R1" pin="1"/>
+      <node ref="CON1" pin="13"/>
+      <node ref="C6" pin="1"/>
+      <node ref="C5" pin="1"/>
+      <node ref="R5" pin="1"/>
+      <node ref="J1" pin="1"/>
+      <node ref="RV1" pin="H1"/>
+      <node ref="J9" pin="2"/>
+      <node ref="J2" pin="3"/>
+      <node ref="L1" pin="2"/>
+      <node ref="CON3" pin="13"/>
+      <node ref="R2" pin="1"/>
+      <node ref="CON2" pin="2"/>
+      <node ref="R3" pin="1"/>
+    </net>
+    <net code="27" name="joystick-pot-2">
+      <node ref="CON3" pin="1"/>
+      <node ref="U1" pin="30"/>
+      <node ref="CON1" pin="1"/>
+      <node ref="RV1" pin="H2"/>
+    </net>
+    <net code="28" name="slide-pot-2">
+      <node ref="CON3" pin="7"/>
+      <node ref="R7" pin="2"/>
+      <node ref="U1" pin="36"/>
+      <node ref="CON1" pin="7"/>
+    </net>
+    <net code="29" name="knob-pot-2">
+      <node ref="CON3" pin="5"/>
+      <node ref="U1" pin="34"/>
+      <node ref="CON1" pin="5"/>
+      <node ref="R11" pin="2"/>
+    </net>
+    <net code="30" name="knob-pot-4">
+      <node ref="U1" pin="32"/>
+      <node ref="CON3" pin="3"/>
+      <node ref="R13" pin="2"/>
+      <node ref="CON1" pin="3"/>
+    </net>
+    <net code="31" name="note-5">
+      <node ref="J4" pin="9"/>
+      <node ref="U1" pin="14"/>
+    </net>
+    <net code="32" name="note-6">
+      <node ref="J4" pin="8"/>
+      <node ref="U1" pin="15"/>
+    </net>
+    <net code="33" name="note-13">
+      <node ref="J4" pin="1"/>
+      <node ref="U1" pin="26"/>
+    </net>
+    <net code="34" name="note-4">
+      <node ref="U1" pin="13"/>
+      <node ref="J4" pin="10"/>
+    </net>
+    <net code="35" name="note-3">
+      <node ref="J4" pin="11"/>
+      <node ref="U1" pin="12"/>
+    </net>
+    <net code="36" name="note-2">
+      <node ref="U1" pin="11"/>
+      <node ref="J4" pin="12"/>
+    </net>
+    <net code="37" name="note-1">
+      <node ref="U1" pin="9"/>
+      <node ref="J4" pin="13"/>
+    </net>
+    <net code="38" name="octave-1">
+      <node ref="J4" pin="17"/>
+      <node ref="R14" pin="1"/>
+      <node ref="U1" pin="44"/>
+    </net>
+    <net code="39" name="note-12">
+      <node ref="J4" pin="2"/>
+      <node ref="U1" pin="25"/>
+    </net>
+    <net code="40" name="note-11">
+      <node ref="J4" pin="3"/>
+      <node ref="U1" pin="24"/>
+    </net>
+    <net code="41" name="note-10">
+      <node ref="U1" pin="23"/>
+      <node ref="J4" pin="4"/>
+    </net>
+    <net code="42" name="note-9">
+      <node ref="J4" pin="5"/>
+      <node ref="U1" pin="22"/>
+    </net>
+    <net code="43" name="note-8">
+      <node ref="U1" pin="21"/>
+      <node ref="J4" pin="6"/>
+    </net>
+    <net code="44" name="note-7">
+      <node ref="J4" pin="7"/>
+      <node ref="U1" pin="16"/>
+    </net>
+    <net code="45" name="Net-(CON2-Pad3)">
+      <node ref="CON2" pin="3"/>
+    </net>
+    <net code="46" name="Net-(C3-Pad1)">
+      <node ref="C3" pin="1"/>
+      <node ref="U1" pin="29"/>
+    </net>
+    <net code="47" name="SCL">
+      <node ref="J2" pin="2"/>
+      <node ref="R3" pin="2"/>
+      <node ref="U1" pin="19"/>
+    </net>
+    <net code="48" name="midi-data-pin">
+      <node ref="U1" pin="10"/>
+      <node ref="R4" pin="2"/>
+    </net>
+    <net code="49" name="SDA">
+      <node ref="R2" pin="2"/>
+      <node ref="U1" pin="20"/>
+      <node ref="J2" pin="1"/>
+    </net>
+    <net code="50" name="VCC">
+      <node ref="J9" pin="1"/>
+      <node ref="J6" pin="1"/>
+    </net>
+    <net code="51" name="Net-(J3-Pad6)">
+      <node ref="J3" pin="6"/>
+    </net>
+    <net code="52" name="Net-(J3-Pad7)">
+      <node ref="J3" pin="7"/>
+    </net>
+    <net code="53" name="Net-(J3-Pad8)">
+      <node ref="J3" pin="8"/>
+    </net>
+    <net code="54" name="Net-(J3-Pad1)">
+      <node ref="J3" pin="1"/>
+    </net>
+    <net code="55" name="Net-(J3-Pad3)">
+      <node ref="J3" pin="3"/>
+    </net>
+    <net code="56" name="Net-(RV1-PadB2A)">
+      <node ref="RV1" pin="B2A"/>
+    </net>
+    <net code="57" name="Net-(RV1-PadB1A)">
+      <node ref="RV1" pin="B1A"/>
+    </net>
+    <net code="58" name="Net-(RV1-PadB1B)">
+      <node ref="RV1" pin="B1B"/>
+    </net>
+    <net code="59" name="Net-(RV1-PadB2B)">
+      <node ref="RV1" pin="B2B"/>
+    </net>
+    <net code="60" name="Net-(D1-Pad2)">
+      <node ref="R8" pin="2"/>
+      <node ref="D1" pin="2"/>
+    </net>
+    <net code="61" name="Net-(D2-Pad2)">
+      <node ref="R9" pin="2"/>
+      <node ref="D2" pin="2"/>
+    </net>
+    <net code="62" name="midi-raw-signal-power">
+      <node ref="R5" pin="2"/>
+      <node ref="J3" pin="5"/>
+      <node ref="J8" pin="1"/>
+    </net>
+  </nets>
+</export>

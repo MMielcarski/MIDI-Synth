@@ -28,79 +28,97 @@
   15:main.c        **** #define NOTE_ON_CMD 0x90
   16:main.c        **** #define NOTE_OFF_CMD 0x80
   17:main.c        **** #define CC_CMD 0xB0
-  18:main.c        **** #define PITCH_BEND_CMD 0xE0
-  19:main.c        **** 
-  20:main.c        **** #define VEL_DEF_CMD		0x40	// default 64 velocity
-  21:main.c        **** 
-  22:main.c        **** #define CC_VOLUME 0x07	// main volume control (0-127)
-  23:main.c        **** 
-  24:main.c        **** #define note1 PD0 
-  25:main.c        **** #define note2 PD2 
-  26:main.c        **** #define note3 PD3 
-  27:main.c        **** #define note4 PD4 
-  28:main.c        **** #define note5 PD5 
-  29:main.c        **** #define note6 PD6 
-  30:main.c        **** #define note7 PD7 
-  31:main.c        **** #define note8 PC2 
-  32:main.c        **** #define note9 PC3 
-  33:main.c        **** #define note10 PC4 
-  34:main.c        **** #define note11 PC5 
-  35:main.c        **** #define note12 PC6 
-  36:main.c        **** #define note13 PC7 
-  37:main.c        **** 
-  38:main.c        **** #define octave1 PB4 
-  39:main.c        **** #define octave2 PB5 
-  40:main.c        **** #define octave3 PB6 
-  41:main.c        **** #define octave4 PB7 
-  42:main.c        **** 
-  43:main.c        ****  int NOTES_tab[13] = {note1,note2,note3,note4,note5,note6,note7,note8,note9,note10,note11,note12,no
-  44:main.c        ****  int OCTAVES_tab[4] = {octave1,octave2,octave3,octave4};
-  45:main.c        ****  int PRESSED_BUTTON_tab[13][4]={0};
-  46:main.c        **** 
-  47:main.c        ****  int adc_read[8] = {};
-  48:main.c        ****  int adc_prev_read[8] = {};
-  49:main.c        **** 
-  50:main.c        ****  int adc_0 = 0, adc_1=0, adc_6=0;
-  51:main.c        ****  int adc_0_prev = 0;
-  52:main.c        **** int pitch_bend = 0;
-  53:main.c        **** 
-  54:main.c        **** //double control_value = 0;
-  55:main.c        **** //double control_prev_value = 0;
-  56:main.c        **** 
-  57:main.c        **** // ------------------------- TIMER ----------------------------------------
-  58:main.c        **** void TIM1_Init(void)	// enable interrupts
-  59:main.c        **** {
-  15               		.loc 1 59 0
+  18:main.c        **** 
+  19:main.c        **** #define PITCH_BEND_CMD 0xE0
+  20:main.c        **** #define MODULATION_WHEEL_CMD 0x01
+  21:main.c        **** #define BREATH_CONTROLLER_CMD 0x02
+  22:main.c        **** #define MAIN_VOLUME_CMD 0x07	
+  23:main.c        **** #define GEN_PURP_CTRL_1_CMD 0x10
+  24:main.c        **** #define GEN_PURP_CTRL_2_CMD 0x11
+  25:main.c        **** #define GEN_PURP_CTRL_3_CMD 0x12
+  26:main.c        **** #define GEN_PURP_CTRL_4_CMD 0x13
+  27:main.c        **** 
+  28:main.c        **** #define SOUND_CTRL_6_DECAY_CMD 0x4B
+  29:main.c        **** 
+  30:main.c        **** #define VEL_DEF_CMD		0x40	// default 64 velocity
+  31:main.c        **** 
+  32:main.c        **** 
+  33:main.c        **** 
+  34:main.c        **** #define note1 PD0 
+  35:main.c        **** #define note2 PD2 
+  36:main.c        **** #define note3 PD3 
+  37:main.c        **** #define note4 PD4 
+  38:main.c        **** #define note5 PD5 
+  39:main.c        **** #define note6 PD6 
+  40:main.c        **** #define note7 PD7 
+  41:main.c        **** #define note8 PC2 
+  42:main.c        **** #define note9 PC3 
+  43:main.c        **** #define note10 PC4 
+  44:main.c        **** #define note11 PC5 
+  45:main.c        **** #define note12 PC6 
+  46:main.c        **** #define note13 PC7 
+  47:main.c        **** 
+  48:main.c        **** #define octave1 PB4 
+  49:main.c        **** #define octave2 PB5 
+  50:main.c        **** #define octave3 PB6 
+  51:main.c        **** #define octave4 PB7 
+  52:main.c        **** 
+  53:main.c        **** #define button_pin_port PINB 
+  54:main.c        **** #define button1 PB0
+  55:main.c        **** #define button2 PB1
+  56:main.c        **** #define button3 PB2
+  57:main.c        **** #define button4 PB3
+  58:main.c        **** 
+  59:main.c        **** int NOTES_tab[13] = {note1,note2,note3,note4,note5,note6,note7,note8,note9,note10,note11,note12,not
+  60:main.c        **** int OCTAVES_tab[4] = {octave1,octave2,octave3,octave4};
+  61:main.c        **** int PRESSED_KEY_tab[13][4]={0};
+  62:main.c        **** 
+  63:main.c        **** int BUTTON_tab = {button1, button2, button3, button4};
+  64:main.c        **** int PRESSED_BUTTON_tab[4] = {};
+  65:main.c        **** 
+  66:main.c        **** int adc_read[8] = {};
+  67:main.c        **** int adc_prev_read[8] = {};	
+  68:main.c        **** 
+  69:main.c        **** const float EMA_a = 0.6;
+  70:main.c        **** int EMA[8] = {};
+  71:main.c        **** int EMA_prev[8] = {};
+  72:main.c        **** 
+  73:main.c        **** int octave_change = 3;
+  74:main.c        **** 
+  75:main.c        **** // ------------------------- TIMER ----------------------------------------
+  76:main.c        **** void TIM1_Init(void)	// enable interrupts
+  77:main.c        **** {
+  15               		.loc 1 77 0
   16               		.cfi_startproc
   17               	/* prologue: function */
   18               	/* frame size = 0 */
   19               	/* stack size = 0 */
   20               	.L__stack_usage = 0
-  60:main.c        ****     OCR1A = (((F_CPU/1000) / TIM1_PSC) * TIM1_PER) - 1;	// counter size
-  21               		.loc 1 60 0
+  78:main.c        ****     OCR1A = (((F_CPU/1000) / TIM1_PSC) * TIM1_PER) - 1;	// counter size
+  21               		.loc 1 78 0
   22 0000 85E9      		ldi r24,lo8(-107)
   23 0002 90E0      		ldi r25,0
   24 0004 9BBD      		out 0x2a+1,r25
   25 0006 8ABD      		out 0x2a,r24
-  61:main.c        ****     TCCR1B |= (1 << WGM12);							// Mode 4, CTC on OCR1A
-  26               		.loc 1 61 0
+  79:main.c        ****     TCCR1B |= (1 << WGM12);							// Mode 4, CTC on OCR1A
+  26               		.loc 1 79 0
   27 0008 8EB5      		in r24,0x2e
   28 000a 8860      		ori r24,lo8(8)
   29 000c 8EBD      		out 0x2e,r24
-  62:main.c        ****     TIMSK |= (1 << OCIE1A);						// Set interrupt on compare match	
-  30               		.loc 1 62 0
+  80:main.c        ****     TIMSK |= (1 << OCIE1A);						// Set interrupt on compare match	
+  30               		.loc 1 80 0
   31 000e 89B7      		in r24,0x39
   32 0010 8061      		ori r24,lo8(16)
   33 0012 89BF      		out 0x39,r24
-  63:main.c        ****     TCCR1B |= (1 << CS12) | (1 << CS10);			// set prescaler to 1024 and start the timer
-  34               		.loc 1 63 0
+  81:main.c        ****     TCCR1B |= (1 << CS12) | (1 << CS10);			// set prescaler to 1024 and start the timer
+  34               		.loc 1 81 0
   35 0014 8EB5      		in r24,0x2e
   36 0016 8560      		ori r24,lo8(5)
   37 0018 8EBD      		out 0x2e,r24
-  64:main.c        ****     sei();	
-  38               		.loc 1 64 0
+  82:main.c        ****     sei();	
+  38               		.loc 1 82 0
   39               	/* #APP */
-  40               	 ;  64 "main.c" 1
+  40               	 ;  82 "main.c" 1
   41 001a 7894      		sei
   42               	 ;  0 "" 2
   43               	/* #NOAPP */
@@ -110,31 +128,31 @@
   48               	.global	USART_Init
   50               	USART_Init:
   51               	.LFB1:
-  65:main.c        **** }
-  66:main.c        **** 
-  67:main.c        **** // ------------------------- USART ----------------------------------------
-  68:main.c        **** void USART_Init(unsigned int ubrr)		
-  69:main.c        **** {
-  52               		.loc 1 69 0
+  83:main.c        **** }
+  84:main.c        **** 
+  85:main.c        **** // ------------------------- USART ----------------------------------------
+  86:main.c        **** void USART_Init(unsigned int ubrr)		
+  87:main.c        **** {
+  52               		.loc 1 87 0
   53               		.cfi_startproc
   54               	.LVL0:
   55               	/* prologue: function */
   56               	/* frame size = 0 */
   57               	/* stack size = 0 */
   58               	.L__stack_usage = 0
-  70:main.c        ****    UBRRH = (unsigned char)(ubrr>>8);	// set baud rate to 31250
-  59               		.loc 1 70 0
+  88:main.c        ****    UBRRH = (unsigned char)(ubrr>>8);	// set baud rate to 31250
+  59               		.loc 1 88 0
   60 001e 90BD      		out 0x20,r25
-  71:main.c        ****    UBRRL = (unsigned char)ubrr;		//
-  61               		.loc 1 71 0
+  89:main.c        ****    UBRRL = (unsigned char)ubrr;		//
+  61               		.loc 1 89 0
   62 0020 89B9      		out 0x9,r24
-  72:main.c        ****    UCSRB = (1<<TXEN);		// Enable transmitter 
-  63               		.loc 1 72 0
+  90:main.c        ****    UCSRB = (1<<TXEN);		// Enable transmitter 
+  63               		.loc 1 90 0
   64 0022 88E0      		ldi r24,lo8(8)
   65               	.LVL1:
   66 0024 8AB9      		out 0xa,r24
-  73:main.c        ****    UCSRC = (1<<URSEL)|(1<<USBS)|(3<<UCSZ0);		// Set frame format: 8data, 2stop bit
-  67               		.loc 1 73 0
+  91:main.c        ****    UCSRC = (1<<URSEL)|(1<<USBS)|(3<<UCSZ0);		// Set frame format: 8data, 2stop bit
+  67               		.loc 1 91 0
   68 0026 8EE8      		ldi r24,lo8(-114)
   69 0028 80BD      		out 0x20,r24
   70 002a 0895      		ret
@@ -143,11 +161,11 @@
   74               	.global	uart_putchar
   76               	uart_putchar:
   77               	.LFB2:
-  74:main.c        **** }
-  75:main.c        **** 
-  76:main.c        **** void uart_putchar(char c) 
-  77:main.c        **** {
-  78               		.loc 1 77 0
+  92:main.c        **** }
+  93:main.c        **** 
+  94:main.c        **** void uart_putchar(char c) 
+  95:main.c        **** {
+  78               		.loc 1 95 0
   79               		.cfi_startproc
   80               	/* prologue: function */
   81               	/* frame size = 0 */
@@ -155,13 +173,13 @@
   83               	.L__stack_usage = 0
   84               	.LVL2:
   85               	.L4:
-  78:main.c        **** 	while ( !(UCSRA & (1<<UDRE)) )	// Wait for empty transmit buffer 
-  86               		.loc 1 78 0 discriminator 1
+  96:main.c        **** 	while ( !(UCSRA & (1<<UDRE)) )	// Wait for empty transmit buffer 
+  86               		.loc 1 96 0 discriminator 1
   87 002c 5D9B      		sbis 0xb,5
   88 002e 00C0      		rjmp .L4
-  79:main.c        **** 	;
-  80:main.c        ****     UDR = c;							// Put data into buffer, sends the data 
-  89               		.loc 1 80 0
+  97:main.c        **** 	;
+  98:main.c        ****     UDR = c;							// Put data into buffer, sends the data 
+  89               		.loc 1 98 0
   90 0030 8CB9      		out 0xc,r24
   91 0032 0895      		ret
   92               		.cfi_endproc
@@ -169,11 +187,11 @@
   95               	.global	uart_putstring
   97               	uart_putstring:
   98               	.LFB3:
-  81:main.c        **** }
-  82:main.c        **** 
-  83:main.c        **** void uart_putstring(char tab[])
-  84:main.c        **** {
-  99               		.loc 1 84 0
+  99:main.c        **** }
+ 100:main.c        **** 
+ 101:main.c        **** void uart_putstring(char tab[])
+ 102:main.c        **** {
+  99               		.loc 1 102 0
  100               		.cfi_startproc
  101               	.LVL3:
  102 0034 CF93      		push r28
@@ -189,31 +207,31 @@
  112               	/* stack size = 2 */
  113               	.L__stack_usage = 2
  114               	.L9:
-  85:main.c        **** 	int i =0;
-  86:main.c        **** 	while (( UCSRA & (1<<UDRE))  == 0){};
- 115               		.loc 1 86 0 discriminator 1
+ 103:main.c        **** 	int i =0;
+ 104:main.c        **** 	while (( UCSRA & (1<<UDRE))  == 0){};
+ 115               		.loc 1 104 0 discriminator 1
  116 0038 5D9B      		sbis 0xb,5
  117 003a 00C0      		rjmp .L9
  118 003c EC01      		movw r28,r24
  119               	.LVL4:
  120               	.L10:
-  87:main.c        ****         while (tab[i] != 0x00)
- 121               		.loc 1 87 0
+ 105:main.c        ****         while (tab[i] != 0x00)
+ 121               		.loc 1 105 0
  122 003e 8991      		ld r24,Y+
  123 0040 8823      		tst r24
  124 0042 01F0      		breq .L14
-  88:main.c        **** 		{ 
-  89:main.c        ****             uart_putchar(tab[i]);
- 125               		.loc 1 89 0
+ 106:main.c        **** 		{ 
+ 107:main.c        ****             uart_putchar(tab[i]);
+ 125               		.loc 1 107 0
  126 0044 0E94 0000 		call uart_putchar
  127               	.LVL5:
  128 0048 00C0      		rjmp .L10
  129               	.L14:
  130               	/* epilogue start */
-  90:main.c        **** 			i++; 
-  91:main.c        ****         }
-  92:main.c        **** }
- 131               		.loc 1 92 0
+ 108:main.c        **** 			i++; 
+ 109:main.c        ****         }
+ 110:main.c        **** }
+ 131               		.loc 1 110 0
  132 004a DF91      		pop r29
  133 004c CF91      		pop r28
  134 004e 0895      		ret
@@ -222,10 +240,10 @@
  138               	.global	uart_putint
  140               	uart_putint:
  141               	.LFB4:
-  93:main.c        **** 
-  94:main.c        **** void uart_putint(int value)
-  95:main.c        **** {
- 142               		.loc 1 95 0
+ 111:main.c        **** 
+ 112:main.c        **** void uart_putint(int value)
+ 113:main.c        **** {
+ 142               		.loc 1 113 0
  143               		.cfi_startproc
  144               	.LVL6:
  145 0050 CF93      		push r28
@@ -252,9 +270,9 @@
  166               	/* frame size = 16 */
  167               	/* stack size = 18 */
  168               	.L__stack_usage = 18
-  96:main.c        **** 	char tab[16];
-  97:main.c        **** 	itoa(value,tab,10);
- 169               		.loc 1 97 0
+ 114:main.c        **** 	char tab[16];
+ 115:main.c        **** 	itoa(value,tab,10);
+ 169               		.loc 1 115 0
  170 0064 4AE0      		ldi r20,lo8(10)
  171 0066 50E0      		ldi r21,0
  172 0068 BE01      		movw r22,r28
@@ -262,15 +280,15 @@
  174 006c 7F4F      		sbci r23,-1
  175 006e 0E94 0000 		call itoa
  176               	.LVL7:
-  98:main.c        **** 	uart_putstring(tab);
- 177               		.loc 1 98 0
+ 116:main.c        **** 	uart_putstring(tab);
+ 177               		.loc 1 116 0
  178 0072 CE01      		movw r24,r28
  179 0074 0196      		adiw r24,1
  180 0076 0E94 0000 		call uart_putstring
  181               	.LVL8:
  182               	/* epilogue start */
-  99:main.c        **** }
- 183               		.loc 1 99 0
+ 117:main.c        **** }
+ 183               		.loc 1 117 0
  184 007a 6096      		adiw r28,16
  185 007c 0FB6      		in __tmp_reg__,__SREG__
  186 007e F894      		cli
@@ -285,26 +303,26 @@
  196               	.global	ADC_Init
  198               	ADC_Init:
  199               	.LFB5:
- 100:main.c        **** 
- 101:main.c        **** // ------------------------- ADC ----------------------------------------
- 102:main.c        **** void ADC_Init(void)
- 103:main.c        **** {
- 200               		.loc 1 103 0
+ 118:main.c        **** 
+ 119:main.c        **** // ------------------------- ADC ----------------------------------------
+ 120:main.c        **** void ADC_Init(void)
+ 121:main.c        **** {
+ 200               		.loc 1 121 0
  201               		.cfi_startproc
  202               	/* prologue: function */
  203               	/* frame size = 0 */
  204               	/* stack size = 0 */
  205               	.L__stack_usage = 0
- 104:main.c        **** 	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // Set ADC prescaler to 128 - 125KHz sample 
- 206               		.loc 1 104 0
+ 122:main.c        **** 	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // Set ADC prescaler to 128 - 125KHz sample 
+ 206               		.loc 1 122 0
  207 008c 86B1      		in r24,0x6
  208 008e 8760      		ori r24,lo8(7)
  209 0090 86B9      		out 0x6,r24
- 105:main.c        **** 	ADMUX |= (1 << REFS0); 	// Set ADC reference to AVCC
- 210               		.loc 1 105 0
+ 123:main.c        **** 	ADMUX |= (1 << REFS0); 	// Set ADC reference to AVCC
+ 210               		.loc 1 123 0
  211 0092 3E9A      		sbi 0x7,6
- 106:main.c        **** 	ADCSRA |= (1 << ADEN);  // Enable ADC
- 212               		.loc 1 106 0
+ 124:main.c        **** 	ADCSRA |= (1 << ADEN);  // Enable ADC
+ 212               		.loc 1 124 0
  213 0094 379A      		sbi 0x6,7
  214 0096 0895      		ret
  215               		.cfi_endproc
@@ -312,20 +330,20 @@
  218               	.global	ADC_read
  220               	ADC_read:
  221               	.LFB6:
- 107:main.c        **** }
- 108:main.c        **** 
- 109:main.c        **** uint16_t ADC_read(uint8_t channel)		
- 110:main.c        **** {
- 222               		.loc 1 110 0
+ 125:main.c        **** }
+ 126:main.c        **** 
+ 127:main.c        **** uint16_t ADC_read(uint8_t channel)		
+ 128:main.c        **** {
+ 222               		.loc 1 128 0
  223               		.cfi_startproc
  224               	.LVL9:
  225               	/* prologue: function */
  226               	/* frame size = 0 */
  227               	/* stack size = 0 */
  228               	.L__stack_usage = 0
- 111:main.c        **** 	channel &= 0x07;					// AND operation with 7 (will keep channel between 0-7) 
- 112:main.c        **** 	ADMUX = (ADMUX & 0xF8) | channel;	// clears 3 first bits before OR
- 229               		.loc 1 112 0
+ 129:main.c        **** 	channel &= 0x07;					// AND operation with 7 (will keep channel between 0-7) 
+ 130:main.c        **** 	ADMUX = (ADMUX & 0xF8) | channel;	// clears 3 first bits before OR
+ 229               		.loc 1 130 0
  230 0098 97B1      		in r25,0x7
  231 009a 987F      		andi r25,lo8(-8)
  232 009c 8770      		andi r24,lo8(7)
@@ -333,815 +351,1332 @@
  234 009e 892B      		or r24,r25
  235               	.LVL11:
  236 00a0 87B9      		out 0x7,r24
- 113:main.c        **** 	ADCSRA |= (1 << ADSC);				// start single convesrion
- 237               		.loc 1 113 0
+ 131:main.c        **** 	ADCSRA |= (1 << ADSC);				// start single convesrion
+ 237               		.loc 1 131 0
  238 00a2 369A      		sbi 0x6,6
  239               	.L18:
- 114:main.c        **** 	while(ADCSRA & (1 << ADSC));		// wait for conversion to complete
- 240               		.loc 1 114 0 discriminator 1
+ 132:main.c        **** 	while(ADCSRA & (1 << ADSC));		// wait for conversion to complete
+ 240               		.loc 1 132 0 discriminator 1
  241 00a4 3699      		sbic 0x6,6
  242 00a6 00C0      		rjmp .L18
- 115:main.c        **** 	return ADCW;
- 243               		.loc 1 115 0
+ 133:main.c        **** 	return ADCW;
+ 243               		.loc 1 133 0
  244 00a8 84B1      		in r24,0x4
  245 00aa 95B1      		in r25,0x4+1
- 116:main.c        **** }
- 246               		.loc 1 116 0
+ 134:main.c        **** }
+ 246               		.loc 1 134 0
  247 00ac 0895      		ret
  248               		.cfi_endproc
  249               	.LFE6:
  251               	.global	PORT_Init
  253               	PORT_Init:
  254               	.LFB7:
- 117:main.c        **** // ------------------------- OTHER ----------------------------------------
- 118:main.c        **** 
- 119:main.c        **** void PORT_Init(void)
- 120:main.c        **** {
- 255               		.loc 1 120 0
+ 135:main.c        **** // ------------------------- OTHER ----------------------------------------
+ 136:main.c        **** 
+ 137:main.c        **** void PORT_Init(void)
+ 138:main.c        **** {
+ 255               		.loc 1 138 0
  256               		.cfi_startproc
  257               	/* prologue: function */
  258               	/* frame size = 0 */
  259               	/* stack size = 0 */
  260               	.L__stack_usage = 0
- 121:main.c        **** 	MCUCSR = (1<<JTD);			//disabling JTAG
- 261               		.loc 1 121 0
+ 139:main.c        **** 	MCUCSR = (1<<JTD);			//disabling JTAG
+ 261               		.loc 1 139 0
  262 00ae 80E8      		ldi r24,lo8(-128)
  263 00b0 84BF      		out 0x34,r24
- 122:main.c        **** 	MCUCSR = (1<<JTD);			//
- 264               		.loc 1 122 0
+ 140:main.c        **** 	MCUCSR = (1<<JTD);			//
+ 264               		.loc 1 140 0
  265 00b2 84BF      		out 0x34,r24
- 123:main.c        **** 	DDRD = 0xFF;
- 266               		.loc 1 123 0
+ 141:main.c        **** 	DDRD = 0xFF;
+ 266               		.loc 1 141 0
  267 00b4 8FEF      		ldi r24,lo8(-1)
  268 00b6 81BB      		out 0x11,r24
- 124:main.c        **** 	DDRC = 0xFF;
- 269               		.loc 1 124 0
+ 142:main.c        **** 	DDRC = 0xFF;
+ 269               		.loc 1 142 0
  270 00b8 84BB      		out 0x14,r24
- 271 00ba 0895      		ret
- 272               		.cfi_endproc
- 273               	.LFE7:
- 275               	.global	note_on
- 277               	note_on:
- 278               	.LFB8:
- 125:main.c        **** }
- 126:main.c        **** 
- 127:main.c        **** void note_on(int key, int oct)
- 128:main.c        **** {
- 279               		.loc 1 128 0
- 280               		.cfi_startproc
- 281               	.LVL12:
- 282 00bc CF93      		push r28
- 283               	.LCFI6:
- 284               		.cfi_def_cfa_offset 3
- 285               		.cfi_offset 28, -2
- 286 00be DF93      		push r29
- 287               	.LCFI7:
- 288               		.cfi_def_cfa_offset 4
- 289               		.cfi_offset 29, -3
- 290               	/* prologue: function */
- 291               	/* frame size = 0 */
- 292               	/* stack size = 2 */
- 293               	.L__stack_usage = 2
- 294 00c0 C82F      		mov r28,r24
- 295 00c2 D62F      		mov r29,r22
- 129:main.c        **** 	uart_putchar(NOTE_ON_CMD);		// note on
- 296               		.loc 1 129 0
- 297 00c4 80E9      		ldi r24,lo8(-112)
- 298               	.LVL13:
- 299 00c6 0E94 0000 		call uart_putchar
- 300               	.LVL14:
- 130:main.c        **** 	uart_putchar(key + oct * 12);
- 301               		.loc 1 130 0
- 302 00ca 8C2F      		mov r24,r28
- 303 00cc 9CE0      		ldi r25,lo8(12)
- 304 00ce D99F      		mul r29,r25
- 305 00d0 800D      		add r24,r0
- 306 00d2 1124      		clr __zero_reg__
- 307 00d4 0E94 0000 		call uart_putchar
- 308               	.LVL15:
- 131:main.c        **** 	uart_putchar(VEL_DEF_CMD);
- 309               		.loc 1 131 0
- 310 00d8 80E4      		ldi r24,lo8(64)
- 311               	/* epilogue start */
- 132:main.c        **** }
- 312               		.loc 1 132 0
- 313 00da DF91      		pop r29
- 314 00dc CF91      		pop r28
- 131:main.c        **** 	uart_putchar(VEL_DEF_CMD);
- 315               		.loc 1 131 0
- 316 00de 0C94 0000 		jmp uart_putchar
- 317               	.LVL16:
- 318               		.cfi_endproc
- 319               	.LFE8:
- 321               	.global	note_off
- 323               	note_off:
- 324               	.LFB9:
- 133:main.c        **** 
- 134:main.c        **** void note_off(int key, int oct)
- 135:main.c        **** {
- 325               		.loc 1 135 0
- 326               		.cfi_startproc
- 327               	.LVL17:
- 328 00e2 CF93      		push r28
- 329               	.LCFI8:
- 330               		.cfi_def_cfa_offset 3
- 331               		.cfi_offset 28, -2
- 332 00e4 DF93      		push r29
- 333               	.LCFI9:
- 334               		.cfi_def_cfa_offset 4
- 335               		.cfi_offset 29, -3
- 336               	/* prologue: function */
- 337               	/* frame size = 0 */
- 338               	/* stack size = 2 */
- 339               	.L__stack_usage = 2
- 340 00e6 C82F      		mov r28,r24
- 341 00e8 D62F      		mov r29,r22
- 136:main.c        **** 	uart_putchar(NOTE_OFF_CMD);		// note off
- 342               		.loc 1 136 0
- 343 00ea 80E8      		ldi r24,lo8(-128)
- 344               	.LVL18:
- 345 00ec 0E94 0000 		call uart_putchar
- 346               	.LVL19:
- 137:main.c        **** 	uart_putchar(key + oct * 12);
- 347               		.loc 1 137 0
- 348 00f0 8C2F      		mov r24,r28
- 349 00f2 9CE0      		ldi r25,lo8(12)
- 350 00f4 D99F      		mul r29,r25
- 351 00f6 800D      		add r24,r0
- 352 00f8 1124      		clr __zero_reg__
- 353 00fa 0E94 0000 		call uart_putchar
- 354               	.LVL20:
- 138:main.c        **** 	uart_putchar(VEL_DEF_CMD);
- 355               		.loc 1 138 0
- 356 00fe 80E4      		ldi r24,lo8(64)
- 357               	/* epilogue start */
- 139:main.c        **** }
- 358               		.loc 1 139 0
- 359 0100 DF91      		pop r29
- 360 0102 CF91      		pop r28
- 138:main.c        **** 	uart_putchar(VEL_DEF_CMD);
- 361               		.loc 1 138 0
- 362 0104 0C94 0000 		jmp uart_putchar
- 363               	.LVL21:
- 364               		.cfi_endproc
- 365               	.LFE9:
- 367               	.global	CC_send_ADC
- 369               	CC_send_ADC:
- 370               	.LFB10:
- 140:main.c        **** 
- 141:main.c        **** void CC_send_ADC(uint8_t control_num,  unsigned int channel)
- 142:main.c        **** {
- 371               		.loc 1 142 0
- 372               		.cfi_startproc
- 373               	.LVL22:
- 374 0108 FF92      		push r15
- 375               	.LCFI10:
- 376               		.cfi_def_cfa_offset 3
- 377               		.cfi_offset 15, -2
- 378 010a 0F93      		push r16
- 379               	.LCFI11:
- 380               		.cfi_def_cfa_offset 4
- 381               		.cfi_offset 16, -3
- 382 010c 1F93      		push r17
- 383               	.LCFI12:
- 384               		.cfi_def_cfa_offset 5
- 385               		.cfi_offset 17, -4
- 386 010e CF93      		push r28
- 387               	.LCFI13:
- 388               		.cfi_def_cfa_offset 6
- 389               		.cfi_offset 28, -5
- 390 0110 DF93      		push r29
- 391               	.LCFI14:
- 392               		.cfi_def_cfa_offset 7
- 393               		.cfi_offset 29, -6
- 394               	/* prologue: function */
- 395               	/* frame size = 0 */
- 396               	/* stack size = 5 */
- 397               	.L__stack_usage = 5
- 398 0112 F82E      		mov r15,r24
- 143:main.c        **** 	adc_prev_read[channel] = adc_read[channel];
- 399               		.loc 1 143 0
- 400 0114 EB01      		movw r28,r22
- 401 0116 CC0F      		lsl r28
- 402 0118 DD1F      		rol r29
- 403               	.LVL23:
- 404 011a 8E01      		movw r16,r28
- 405 011c 0050      		subi r16,lo8(-(adc_prev_read))
- 406 011e 1040      		sbci r17,hi8(-(adc_prev_read))
- 407 0120 C050      		subi r28,lo8(-(adc_read))
- 408 0122 D040      		sbci r29,hi8(-(adc_read))
- 409 0124 8881      		ld r24,Y
- 410 0126 9981      		ldd r25,Y+1
- 411 0128 F801      		movw r30,r16
- 412 012a 9183      		std Z+1,r25
- 413 012c 8083      		st Z,r24
- 144:main.c        **** 	adc_read[channel] = ADC_read(channel);
- 414               		.loc 1 144 0
- 415 012e 862F      		mov r24,r22
- 416 0130 0E94 0000 		call ADC_read
- 417               	.LVL24:
- 418 0134 9983      		std Y+1,r25
- 419 0136 8883      		st Y,r24
- 145:main.c        **** 
- 146:main.c        **** 	//value = value*127/1024;
- 147:main.c        **** 	//prev_value = prev_value*127/1024;
- 148:main.c        **** 
- 149:main.c        **** 	uint8_t adc_7bit = (adc_read[channel] >> 3);
- 420               		.loc 1 149 0
- 421 0138 EC01      		movw r28,r24
- 422 013a 93E0      		ldi r25,3
- 423               		1:
- 424 013c D595      		asr r29
- 425 013e C795      		ror r28
- 426 0140 9A95      		dec r25
- 427 0142 01F4      		brne 1b
- 428               	.LVL25:
- 150:main.c        **** 	uint8_t adc_prev_7bit = (adc_prev_read[channel] >> 3);
- 151:main.c        **** 
- 152:main.c        **** 	//uart_putint(test1);
- 153:main.c        **** 	//uart_putstring("\n");
- 154:main.c        **** 
- 155:main.c        **** 	if((int)adc_7bit != (int)adc_prev_7bit)
- 429               		.loc 1 155 0
- 430 0144 F801      		movw r30,r16
- 431 0146 8081      		ld r24,Z
- 432 0148 9181      		ldd r25,Z+1
- 433 014a 23E0      		ldi r18,3
- 434               		1:
- 435 014c 9595      		asr r25
- 436 014e 8795      		ror r24
- 437 0150 2A95      		dec r18
- 438 0152 01F4      		brne 1b
- 439 0154 C817      		cp r28,r24
- 440 0156 01F0      		breq .L23
- 156:main.c        **** 	{
- 157:main.c        **** 		uart_putchar(CC_CMD);
- 441               		.loc 1 157 0
- 442 0158 80EB      		ldi r24,lo8(-80)
- 443 015a 0E94 0000 		call uart_putchar
- 444               	.LVL26:
- 158:main.c        **** 		uart_putchar(control_num);
- 445               		.loc 1 158 0
- 446 015e 8F2D      		mov r24,r15
- 447 0160 0E94 0000 		call uart_putchar
- 448               	.LVL27:
- 159:main.c        **** 		uart_putchar(adc_7bit);
- 449               		.loc 1 159 0
- 450 0164 8C2F      		mov r24,r28
- 451               	/* epilogue start */
- 160:main.c        **** 	}
- 161:main.c        **** }
- 452               		.loc 1 161 0
- 453 0166 DF91      		pop r29
- 454 0168 CF91      		pop r28
- 455               	.LVL28:
- 456 016a 1F91      		pop r17
- 457 016c 0F91      		pop r16
- 458 016e FF90      		pop r15
- 459               	.LVL29:
- 159:main.c        **** 		uart_putchar(adc_7bit);
- 460               		.loc 1 159 0
- 461 0170 0C94 0000 		jmp uart_putchar
+ 143:main.c        **** 	
+ 144:main.c        **** 	PORTB |= (1<<button1)|(1<<button2)|(1<<button3)|(1<<button4);	// pull-up on buttons
+ 271               		.loc 1 144 0
+ 272 00ba 88B3      		in r24,0x18
+ 273 00bc 8F60      		ori r24,lo8(15)
+ 274 00be 88BB      		out 0x18,r24
+ 275 00c0 0895      		ret
+ 276               		.cfi_endproc
+ 277               	.LFE7:
+ 279               	.global	note_on
+ 281               	note_on:
+ 282               	.LFB8:
+ 145:main.c        **** }
+ 146:main.c        **** 
+ 147:main.c        **** void note_on(int key, int oct)
+ 148:main.c        **** {
+ 283               		.loc 1 148 0
+ 284               		.cfi_startproc
+ 285               	.LVL12:
+ 286 00c2 0F93      		push r16
+ 287               	.LCFI6:
+ 288               		.cfi_def_cfa_offset 3
+ 289               		.cfi_offset 16, -2
+ 290 00c4 1F93      		push r17
+ 291               	.LCFI7:
+ 292               		.cfi_def_cfa_offset 4
+ 293               		.cfi_offset 17, -3
+ 294 00c6 CF93      		push r28
+ 295               	.LCFI8:
+ 296               		.cfi_def_cfa_offset 5
+ 297               		.cfi_offset 28, -4
+ 298               	/* prologue: function */
+ 299               	/* frame size = 0 */
+ 300               	/* stack size = 3 */
+ 301               	.L__stack_usage = 3
+ 302 00c8 C82F      		mov r28,r24
+ 303 00ca 8B01      		movw r16,r22
+ 149:main.c        **** 	uart_putchar(NOTE_ON_CMD);		// note on
+ 304               		.loc 1 149 0
+ 305 00cc 80E9      		ldi r24,lo8(-112)
+ 306               	.LVL13:
+ 307 00ce 0E94 0000 		call uart_putchar
+ 308               	.LVL14:
+ 150:main.c        **** 	uart_putchar(key + (oct+octave_change) * 12);
+ 309               		.loc 1 150 0
+ 310 00d2 6091 0000 		lds r22,octave_change
+ 311 00d6 7091 0000 		lds r23,octave_change+1
+ 312 00da 600F      		add r22,r16
+ 313 00dc 711F      		adc r23,r17
+ 314 00de 8C2F      		mov r24,r28
+ 315 00e0 9CE0      		ldi r25,lo8(12)
+ 316 00e2 699F      		mul r22,r25
+ 317 00e4 800D      		add r24,r0
+ 318 00e6 1124      		clr __zero_reg__
+ 319 00e8 0E94 0000 		call uart_putchar
+ 320               	.LVL15:
+ 151:main.c        **** 	uart_putchar(VEL_DEF_CMD);
+ 321               		.loc 1 151 0
+ 322 00ec 80E4      		ldi r24,lo8(64)
+ 323               	/* epilogue start */
+ 152:main.c        **** }
+ 324               		.loc 1 152 0
+ 325 00ee CF91      		pop r28
+ 326 00f0 1F91      		pop r17
+ 327 00f2 0F91      		pop r16
+ 328               	.LVL16:
+ 151:main.c        **** 	uart_putchar(VEL_DEF_CMD);
+ 329               		.loc 1 151 0
+ 330 00f4 0C94 0000 		jmp uart_putchar
+ 331               	.LVL17:
+ 332               		.cfi_endproc
+ 333               	.LFE8:
+ 335               	.global	note_off
+ 337               	note_off:
+ 338               	.LFB9:
+ 153:main.c        **** 
+ 154:main.c        **** void note_off(int key, int oct)
+ 155:main.c        **** {
+ 339               		.loc 1 155 0
+ 340               		.cfi_startproc
+ 341               	.LVL18:
+ 342 00f8 0F93      		push r16
+ 343               	.LCFI9:
+ 344               		.cfi_def_cfa_offset 3
+ 345               		.cfi_offset 16, -2
+ 346 00fa 1F93      		push r17
+ 347               	.LCFI10:
+ 348               		.cfi_def_cfa_offset 4
+ 349               		.cfi_offset 17, -3
+ 350 00fc CF93      		push r28
+ 351               	.LCFI11:
+ 352               		.cfi_def_cfa_offset 5
+ 353               		.cfi_offset 28, -4
+ 354               	/* prologue: function */
+ 355               	/* frame size = 0 */
+ 356               	/* stack size = 3 */
+ 357               	.L__stack_usage = 3
+ 358 00fe C82F      		mov r28,r24
+ 359 0100 8B01      		movw r16,r22
+ 156:main.c        **** 	uart_putchar(NOTE_OFF_CMD);		// note off
+ 360               		.loc 1 156 0
+ 361 0102 80E8      		ldi r24,lo8(-128)
+ 362               	.LVL19:
+ 363 0104 0E94 0000 		call uart_putchar
+ 364               	.LVL20:
+ 157:main.c        **** 	uart_putchar(key + (oct+octave_change) * 12);
+ 365               		.loc 1 157 0
+ 366 0108 6091 0000 		lds r22,octave_change
+ 367 010c 7091 0000 		lds r23,octave_change+1
+ 368 0110 600F      		add r22,r16
+ 369 0112 711F      		adc r23,r17
+ 370 0114 8C2F      		mov r24,r28
+ 371 0116 9CE0      		ldi r25,lo8(12)
+ 372 0118 699F      		mul r22,r25
+ 373 011a 800D      		add r24,r0
+ 374 011c 1124      		clr __zero_reg__
+ 375 011e 0E94 0000 		call uart_putchar
+ 376               	.LVL21:
+ 158:main.c        **** 	uart_putchar(VEL_DEF_CMD);
+ 377               		.loc 1 158 0
+ 378 0122 80E4      		ldi r24,lo8(64)
+ 379               	/* epilogue start */
+ 159:main.c        **** }
+ 380               		.loc 1 159 0
+ 381 0124 CF91      		pop r28
+ 382 0126 1F91      		pop r17
+ 383 0128 0F91      		pop r16
+ 384               	.LVL22:
+ 158:main.c        **** 	uart_putchar(VEL_DEF_CMD);
+ 385               		.loc 1 158 0
+ 386 012a 0C94 0000 		jmp uart_putchar
+ 387               	.LVL23:
+ 388               		.cfi_endproc
+ 389               	.LFE9:
+ 391               	.global	button_pressed
+ 393               	button_pressed:
+ 394               	.LFB10:
+ 160:main.c        **** 
+ 161:main.c        **** int button_pressed(int pin_port, int pin)
+ 162:main.c        **** {
+ 395               		.loc 1 162 0
+ 396               		.cfi_startproc
+ 397               	.LVL24:
+ 398               	/* prologue: function */
+ 399               	/* frame size = 0 */
+ 400               	/* stack size = 0 */
+ 401               	.L__stack_usage = 0
+ 402 012e 00C0      		rjmp 2f
+ 403               		1:
+ 404 0130 9595      		asr r25
+ 405 0132 8795      		ror r24
+ 406               		2:
+ 407 0134 6A95      		dec r22
+ 408 0136 02F4      		brpl 1b
+ 409               	.LVL25:
+ 410 0138 8170      		andi r24,1
+ 411 013a 9927      		clr r25
+ 163:main.c        **** 	if(!(pin_port & (1<<pin)) )
+ 164:main.c        **** 		return 1;
+ 165:main.c        **** 	else 
+ 166:main.c        **** 		return 0;
+ 167:main.c        **** }
+ 412               		.loc 1 167 0
+ 413 013c 21E0      		ldi r18,1
+ 414 013e 8227      		eor r24,r18
+ 415 0140 0895      		ret
+ 416               		.cfi_endproc
+ 417               	.LFE10:
+ 419               	.global	CC_send_BUTTON
+ 421               	CC_send_BUTTON:
+ 422               	.LFB11:
+ 168:main.c        **** 
+ 169:main.c        **** void CC_send_BUTTON(uint8_t data1, uint8_t data2, int button_pin)
+ 170:main.c        **** {
+ 423               		.loc 1 170 0
+ 424               		.cfi_startproc
+ 425               	.LVL26:
+ 426 0142 CF93      		push r28
+ 427               	.LCFI12:
+ 428               		.cfi_def_cfa_offset 3
+ 429               		.cfi_offset 28, -2
+ 430 0144 DF93      		push r29
+ 431               	.LCFI13:
+ 432               		.cfi_def_cfa_offset 4
+ 433               		.cfi_offset 29, -3
+ 434               	/* prologue: function */
+ 435               	/* frame size = 0 */
+ 436               	/* stack size = 2 */
+ 437               	.L__stack_usage = 2
+ 171:main.c        **** 	if(button_pressed(button_pin_port,button_pin) && !(PRESSED_BUTTON_tab[button_pin]))
+ 438               		.loc 1 171 0
+ 439 0146 26B3      		in r18,0x16
+ 440               	.LVL27:
+ 441               	.LBB21:
+ 442               	.LBB22:
+ 163:main.c        **** 	if(!(pin_port & (1<<pin)) )
+ 443               		.loc 1 163 0
+ 444 0148 30E0      		ldi r19,0
+ 445 014a 042E      		mov r0,r20
+ 446 014c 00C0      		rjmp 2f
+ 447               		1:
+ 448 014e 3595      		asr r19
+ 449 0150 2795      		ror r18
+ 450               		2:
+ 451 0152 0A94      		dec r0
+ 452 0154 02F4      		brpl 1b
+ 453               	.LVL28:
+ 454 0156 20FF      		sbrs r18,0
+ 455 0158 00C0      		rjmp .L25
+ 456               	.LVL29:
+ 457               	.L26:
+ 458               	.LBE22:
+ 459               	.LBE21:
+ 172:main.c        **** 	{
+ 173:main.c        **** 		PRESSED_BUTTON_tab[button_pin] = 1;
+ 174:main.c        **** 		uart_putchar(CC_CMD);
+ 175:main.c        **** 		uart_putchar(data1);		
+ 176:main.c        **** 		uart_putchar(data2);
+ 177:main.c        **** 	}
+ 178:main.c        **** 	else if(!(button_pressed(button_pin_port,button_pin)))
+ 460               		.loc 1 178 0
+ 461 015a 86B3      		in r24,0x16
  462               	.LVL30:
- 463               	.L23:
- 464               	/* epilogue start */
- 465               		.loc 1 161 0
- 466 0174 DF91      		pop r29
- 467 0176 CF91      		pop r28
- 468               	.LVL31:
- 469 0178 1F91      		pop r17
- 470 017a 0F91      		pop r16
- 471               	.LVL32:
- 472 017c FF90      		pop r15
- 473               	.LVL33:
- 474 017e 0895      		ret
- 475               		.cfi_endproc
- 476               	.LFE10:
- 478               	.global	__vector_7
- 480               	__vector_7:
- 481               	.LFB11:
- 162:main.c        **** 
- 163:main.c        **** ISR(TIMER1_COMPA_vect)	// timer1 overflow interrupt
- 164:main.c        **** {
- 482               		.loc 1 164 0
- 483               		.cfi_startproc
- 484 0180 1F92      		push r1
- 485               	.LCFI15:
- 486               		.cfi_def_cfa_offset 3
- 487               		.cfi_offset 1, -2
- 488 0182 0F92      		push r0
- 489               	.LCFI16:
- 490               		.cfi_def_cfa_offset 4
- 491               		.cfi_offset 0, -3
- 492 0184 0FB6      		in r0,__SREG__
- 493 0186 0F92      		push r0
- 494 0188 1124      		clr __zero_reg__
- 495 018a 2F93      		push r18
- 496               	.LCFI17:
- 497               		.cfi_def_cfa_offset 5
- 498               		.cfi_offset 18, -4
- 499 018c 3F93      		push r19
- 500               	.LCFI18:
- 501               		.cfi_def_cfa_offset 6
- 502               		.cfi_offset 19, -5
- 503 018e 4F93      		push r20
- 504               	.LCFI19:
- 505               		.cfi_def_cfa_offset 7
- 506               		.cfi_offset 20, -6
- 507 0190 5F93      		push r21
- 508               	.LCFI20:
- 509               		.cfi_def_cfa_offset 8
- 510               		.cfi_offset 21, -7
- 511 0192 6F93      		push r22
- 512               	.LCFI21:
- 513               		.cfi_def_cfa_offset 9
- 514               		.cfi_offset 22, -8
- 515 0194 7F93      		push r23
- 516               	.LCFI22:
- 517               		.cfi_def_cfa_offset 10
- 518               		.cfi_offset 23, -9
- 519 0196 8F93      		push r24
- 520               	.LCFI23:
- 521               		.cfi_def_cfa_offset 11
- 522               		.cfi_offset 24, -10
- 523 0198 9F93      		push r25
- 524               	.LCFI24:
- 525               		.cfi_def_cfa_offset 12
- 526               		.cfi_offset 25, -11
- 527 019a AF93      		push r26
- 528               	.LCFI25:
- 529               		.cfi_def_cfa_offset 13
- 530               		.cfi_offset 26, -12
- 531 019c BF93      		push r27
- 532               	.LCFI26:
- 533               		.cfi_def_cfa_offset 14
- 534               		.cfi_offset 27, -13
- 535 019e EF93      		push r30
- 536               	.LCFI27:
- 537               		.cfi_def_cfa_offset 15
- 538               		.cfi_offset 30, -14
- 539 01a0 FF93      		push r31
- 540               	.LCFI28:
- 541               		.cfi_def_cfa_offset 16
- 542               		.cfi_offset 31, -15
- 543               	/* prologue: Signal */
- 544               	/* frame size = 0 */
- 545               	/* stack size = 15 */
- 546               	.L__stack_usage = 15
- 165:main.c        **** 		 //adc_0_prev = adc_0;
- 166:main.c        **** 	 //adc_0 = ADC_read(0);
- 167:main.c        **** 
- 168:main.c        **** 	//if(adc_0 <= (adc_0_prev - 5) || adc_0 >= (adc_0_prev + 5))
- 169:main.c        **** 	//{
- 170:main.c        **** 		CC_send_ADC(CC_VOLUME, 0);	// slide 1
- 547               		.loc 1 170 0
- 548 01a2 60E0      		ldi r22,0
- 549 01a4 70E0      		ldi r23,0
- 550 01a6 87E0      		ldi r24,lo8(7)
- 551 01a8 0E94 0000 		call CC_send_ADC
- 552               	.LVL34:
- 171:main.c        **** 		CC_send_ADC(CC_VOLUME, 4);	// knob 3
- 553               		.loc 1 171 0
- 554 01ac 64E0      		ldi r22,lo8(4)
- 555 01ae 70E0      		ldi r23,0
- 556 01b0 87E0      		ldi r24,lo8(7)
- 557 01b2 0E94 0000 		call CC_send_ADC
- 558               	.LVL35:
- 172:main.c        **** 		CC_send_ADC(CC_VOLUME, 6);	// joystick 1
- 559               		.loc 1 172 0
- 560 01b6 66E0      		ldi r22,lo8(6)
- 561 01b8 70E0      		ldi r23,0
- 562 01ba 87E0      		ldi r24,lo8(7)
- 563 01bc 0E94 0000 		call CC_send_ADC
- 564               	.LVL36:
- 173:main.c        **** 		CC_send_ADC(CC_VOLUME, 7);	// joystick 2
- 565               		.loc 1 173 0
- 566 01c0 67E0      		ldi r22,lo8(7)
- 567 01c2 70E0      		ldi r23,0
- 568 01c4 87E0      		ldi r24,lo8(7)
- 569 01c6 0E94 0000 		call CC_send_ADC
- 570               	.LVL37:
- 571               	/* epilogue start */
- 174:main.c        **** 	//}
- 175:main.c        **** 	
- 176:main.c        **** 	//uart_putchar(CC_CMD);
- 177:main.c        **** 	//uart_putchar(CC_VOLUME);
- 178:main.c        **** 	//uart_putchar(adc_0*127/1024);
- 179:main.c        **** 	// uart_putchar(PITCH_BEND_CMD);
- 180:main.c        **** 	// pitch_bend = 16384 / adc_6;
- 181:main.c        **** 	// uart_putchar((unsigned char)(pitch_bend>>7));
- 182:main.c        **** 	// uart_putchar((unsigned char)pitch_bend);
+ 463               	.LBB23:
+ 464               	.LBB24:
+ 163:main.c        **** 		return 1;
+ 465               		.loc 1 163 0
+ 466 015c 90E0      		ldi r25,0
+ 467 015e 042E      		mov r0,r20
+ 468 0160 00C0      		rjmp 2f
+ 469               		1:
+ 470 0162 9595      		asr r25
+ 471 0164 8795      		ror r24
+ 472               		2:
+ 473 0166 0A94      		dec r0
+ 474 0168 02F4      		brpl 1b
+ 475               	.LVL31:
+ 476 016a 80FF      		sbrs r24,0
+ 477 016c 00C0      		rjmp .L24
+ 478               	.LVL32:
+ 479               	.LBE24:
+ 480               	.LBE23:
+ 179:main.c        **** 	{
+ 180:main.c        **** 		PRESSED_BUTTON_tab[button_pin] = 0;
+ 481               		.loc 1 180 0
+ 482 016e 440F      		lsl r20
+ 483 0170 551F      		rol r21
+ 484               	.LVL33:
+ 485 0172 FA01      		movw r30,r20
+ 486 0174 E050      		subi r30,lo8(-(PRESSED_BUTTON_tab))
+ 487 0176 F040      		sbci r31,hi8(-(PRESSED_BUTTON_tab))
+ 488 0178 1182      		std Z+1,__zero_reg__
+ 489 017a 1082      		st Z,__zero_reg__
+ 490 017c 00C0      		rjmp .L24
+ 491               	.LVL34:
+ 492               	.L25:
+ 171:main.c        **** 	{
+ 493               		.loc 1 171 0
+ 494 017e FA01      		movw r30,r20
+ 495 0180 EE0F      		lsl r30
+ 496 0182 FF1F      		rol r31
+ 497 0184 E050      		subi r30,lo8(-(PRESSED_BUTTON_tab))
+ 498 0186 F040      		sbci r31,hi8(-(PRESSED_BUTTON_tab))
+ 499 0188 2081      		ld r18,Z
+ 500 018a 3181      		ldd r19,Z+1
+ 501 018c 232B      		or r18,r19
+ 502 018e 01F4      		brne .L26
+ 503 0190 D62F      		mov r29,r22
+ 504 0192 C82F      		mov r28,r24
+ 505               	.LVL35:
+ 506               	.LBB25:
+ 507               	.LBB26:
+ 173:main.c        **** 		uart_putchar(CC_CMD);
+ 508               		.loc 1 173 0
+ 509 0194 81E0      		ldi r24,lo8(1)
+ 510 0196 90E0      		ldi r25,0
+ 511               	.LVL36:
+ 512 0198 9183      		std Z+1,r25
+ 513 019a 8083      		st Z,r24
+ 174:main.c        **** 		uart_putchar(data1);		
+ 514               		.loc 1 174 0
+ 515 019c 80EB      		ldi r24,lo8(-80)
+ 516 019e 0E94 0000 		call uart_putchar
+ 517               	.LVL37:
+ 175:main.c        **** 		uart_putchar(data2);
+ 518               		.loc 1 175 0
+ 519 01a2 8C2F      		mov r24,r28
+ 520 01a4 0E94 0000 		call uart_putchar
+ 521               	.LVL38:
+ 176:main.c        **** 	}
+ 522               		.loc 1 176 0
+ 523 01a8 8D2F      		mov r24,r29
+ 524               	/* epilogue start */
+ 525               	.LBE26:
+ 526               	.LBE25:
+ 181:main.c        **** 	}
+ 182:main.c        **** }
+ 527               		.loc 1 182 0
+ 528 01aa DF91      		pop r29
+ 529               	.LVL39:
+ 530 01ac CF91      		pop r28
+ 531               	.LVL40:
+ 532               	.LBB28:
+ 533               	.LBB27:
+ 176:main.c        **** 	}
+ 534               		.loc 1 176 0
+ 535 01ae 0C94 0000 		jmp uart_putchar
+ 536               	.LVL41:
+ 537               	.L24:
+ 538               	/* epilogue start */
+ 539               	.LBE27:
+ 540               	.LBE28:
+ 541               		.loc 1 182 0
+ 542 01b2 DF91      		pop r29
+ 543 01b4 CF91      		pop r28
+ 544 01b6 0895      		ret
+ 545               		.cfi_endproc
+ 546               	.LFE11:
+ 548               	.global	__floatsisf
+ 549               	.global	__mulsf3
+ 550               	.global	__addsf3
+ 551               	.global	__fixsfsi
+ 552               	.global	CC_send_ADC
+ 554               	CC_send_ADC:
+ 555               	.LFB12:
  183:main.c        **** 
- 184:main.c        **** 	// ------- ADC test -------
- 185:main.c        **** 
- 186:main.c        **** 	// uart_putstring("\nADC0:");
- 187:main.c        **** 	// uart_putint(adc_0);
- 188:main.c        **** 	// //uart_putchar('K');
- 189:main.c        **** 
- 190:main.c        **** 	//adc_1 = ADC_read(1);
- 191:main.c        **** 	//uart_putstring("\nADC1:");
- 192:main.c        **** 	//uart_putint(adc_1);
+ 184:main.c        **** void CC_send_ADC(uint8_t control_num,  unsigned int channel)
+ 185:main.c        **** {
+ 556               		.loc 1 185 0
+ 557               		.cfi_startproc
+ 558               	.LVL42:
+ 559 01b8 4F92      		push r4
+ 560               	.LCFI14:
+ 561               		.cfi_def_cfa_offset 3
+ 562               		.cfi_offset 4, -2
+ 563 01ba 5F92      		push r5
+ 564               	.LCFI15:
+ 565               		.cfi_def_cfa_offset 4
+ 566               		.cfi_offset 5, -3
+ 567 01bc 6F92      		push r6
+ 568               	.LCFI16:
+ 569               		.cfi_def_cfa_offset 5
+ 570               		.cfi_offset 6, -4
+ 571 01be 7F92      		push r7
+ 572               	.LCFI17:
+ 573               		.cfi_def_cfa_offset 6
+ 574               		.cfi_offset 7, -5
+ 575 01c0 BF92      		push r11
+ 576               	.LCFI18:
+ 577               		.cfi_def_cfa_offset 7
+ 578               		.cfi_offset 11, -6
+ 579 01c2 CF92      		push r12
+ 580               	.LCFI19:
+ 581               		.cfi_def_cfa_offset 8
+ 582               		.cfi_offset 12, -7
+ 583 01c4 DF92      		push r13
+ 584               	.LCFI20:
+ 585               		.cfi_def_cfa_offset 9
+ 586               		.cfi_offset 13, -8
+ 587 01c6 EF92      		push r14
+ 588               	.LCFI21:
+ 589               		.cfi_def_cfa_offset 10
+ 590               		.cfi_offset 14, -9
+ 591 01c8 FF92      		push r15
+ 592               	.LCFI22:
+ 593               		.cfi_def_cfa_offset 11
+ 594               		.cfi_offset 15, -10
+ 595 01ca 0F93      		push r16
+ 596               	.LCFI23:
+ 597               		.cfi_def_cfa_offset 12
+ 598               		.cfi_offset 16, -11
+ 599 01cc 1F93      		push r17
+ 600               	.LCFI24:
+ 601               		.cfi_def_cfa_offset 13
+ 602               		.cfi_offset 17, -12
+ 603 01ce CF93      		push r28
+ 604               	.LCFI25:
+ 605               		.cfi_def_cfa_offset 14
+ 606               		.cfi_offset 28, -13
+ 607 01d0 DF93      		push r29
+ 608               	.LCFI26:
+ 609               		.cfi_def_cfa_offset 15
+ 610               		.cfi_offset 29, -14
+ 611               	/* prologue: function */
+ 612               	/* frame size = 0 */
+ 613               	/* stack size = 13 */
+ 614               	.L__stack_usage = 13
+ 615 01d2 B82E      		mov r11,r24
+ 616 01d4 7B01      		movw r14,r22
+ 186:main.c        **** 	adc_prev_read[channel] = adc_read[channel];
+ 617               		.loc 1 186 0
+ 618 01d6 6B01      		movw r12,r22
+ 619 01d8 CC0C      		lsl r12
+ 620 01da DD1C      		rol r13
+ 621 01dc F601      		movw r30,r12
+ 622 01de E050      		subi r30,lo8(-(adc_prev_read))
+ 623 01e0 F040      		sbci r31,hi8(-(adc_prev_read))
+ 624 01e2 D601      		movw r26,r12
+ 625 01e4 A050      		subi r26,lo8(-(adc_read))
+ 626 01e6 B040      		sbci r27,hi8(-(adc_read))
+ 627 01e8 8D91      		ld r24,X+
+ 628 01ea 9C91      		ld r25,X
+ 629               	.LVL43:
+ 630 01ec 9183      		std Z+1,r25
+ 631 01ee 8083      		st Z,r24
+ 632               	.LVL44:
+ 633 01f0 00E1      		ldi r16,lo8(16)
+ 634 01f2 10E0      		ldi r17,0
+ 187:main.c        **** 	int adc_sum = 0;
+ 635               		.loc 1 187 0
+ 636 01f4 C0E0      		ldi r28,0
+ 637 01f6 D0E0      		ldi r29,0
+ 638               	.LVL45:
+ 639               	.L31:
+ 640               	.LBB33:
+ 188:main.c        **** 	for(int i=0;i<16;i++)
+ 189:main.c        **** 	{
+ 190:main.c        **** 		adc_sum += ADC_read(channel);
+ 641               		.loc 1 190 0 discriminator 3
+ 642 01f8 8E2D      		mov r24,r14
+ 643 01fa 0E94 0000 		call ADC_read
+ 644               	.LVL46:
+ 645 01fe C80F      		add r28,r24
+ 646 0200 D91F      		adc r29,r25
+ 647               	.LVL47:
+ 648 0202 0150      		subi r16,1
+ 649 0204 1109      		sbc r17,__zero_reg__
+ 650               	.LVL48:
+ 188:main.c        **** 	for(int i=0;i<16;i++)
+ 651               		.loc 1 188 0 discriminator 3
+ 652 0206 01F4      		brne .L31
+ 653               	.LBE33:
+ 191:main.c        **** 	}
+ 192:main.c        **** 	adc_read[channel] = adc_sum/16;
+ 654               		.loc 1 192 0
+ 655 0208 BE01      		movw r22,r28
+ 656 020a D7FF      		sbrs r29,7
+ 657 020c 00C0      		rjmp .L32
+ 658 020e 615F      		subi r22,-15
+ 659 0210 7F4F      		sbci r23,-1
+ 660               	.L32:
+ 661 0212 CB01      		movw r24,r22
+ 662 0214 24E0      		ldi r18,4
+ 663               		1:
+ 664 0216 9595      		asr r25
+ 665 0218 8795      		ror r24
+ 666 021a 2A95      		dec r18
+ 667 021c 01F4      		brne 1b
+ 668 021e F601      		movw r30,r12
+ 669 0220 E050      		subi r30,lo8(-(adc_read))
+ 670 0222 F040      		sbci r31,hi8(-(adc_read))
+ 671 0224 9183      		std Z+1,r25
+ 672 0226 8083      		st Z,r24
  193:main.c        **** 
- 194:main.c        **** 	//  adc_6 = ADC_read(6);
- 195:main.c        **** 	//  uart_putstring("\nADC6:");
- 196:main.c        **** 	//  uart_putint(adc_6);
- 197:main.c        **** }
- 572               		.loc 1 197 0
- 573 01ca FF91      		pop r31
- 574 01cc EF91      		pop r30
- 575 01ce BF91      		pop r27
- 576 01d0 AF91      		pop r26
- 577 01d2 9F91      		pop r25
- 578 01d4 8F91      		pop r24
- 579 01d6 7F91      		pop r23
- 580 01d8 6F91      		pop r22
- 581 01da 5F91      		pop r21
- 582 01dc 4F91      		pop r20
- 583 01de 3F91      		pop r19
- 584 01e0 2F91      		pop r18
- 585 01e2 0F90      		pop r0
- 586 01e4 0FBE      		out __SREG__,r0
- 587 01e6 0F90      		pop r0
- 588 01e8 1F90      		pop r1
- 589 01ea 1895      		reti
- 590               		.cfi_endproc
- 591               	.LFE11:
- 593               		.section	.text.startup,"ax",@progbits
- 594               	.global	main
- 596               	main:
- 597               	.LFB12:
- 198:main.c        **** 
- 199:main.c        **** // ------------------------- MAIN ----------------------------------------
- 200:main.c        **** 
- 201:main.c        **** int main(void)
- 202:main.c        **** {
- 598               		.loc 1 202 0
- 599               		.cfi_startproc
- 600               	/* prologue: function */
- 601               	/* frame size = 0 */
- 602               	/* stack size = 0 */
- 603               	.L__stack_usage = 0
- 203:main.c        **** 	USART_Init(MYUBRR);
- 604               		.loc 1 203 0
- 605 0000 8FE1      		ldi r24,lo8(31)
- 606 0002 90E0      		ldi r25,0
- 607 0004 0E94 0000 		call USART_Init
- 608               	.LVL38:
- 204:main.c        **** 	PORT_Init();
- 609               		.loc 1 204 0
- 610 0008 0E94 0000 		call PORT_Init
- 611               	.LVL39:
- 205:main.c        **** 	ADC_Init();
- 612               		.loc 1 205 0
- 613 000c 0E94 0000 		call ADC_Init
- 614               	.LVL40:
- 206:main.c        **** 	TIM1_Init();
- 615               		.loc 1 206 0
- 616 0010 0E94 0000 		call TIM1_Init
- 617               	.LVL41:
- 618               	.LBB2:
- 207:main.c        **** 
- 208:main.c        **** 	while(1)
- 209:main.c        **** 	{
- 210:main.c        **** 		// ----- keyboard handle -> working without last key --------
- 211:main.c        **** 
- 212:main.c        **** 		for(int i=0; i<13; i++)		// notes loop
- 213:main.c        **** 		{
- 214:main.c        **** 			if(i < 7)	// PORTD
- 215:main.c        **** 			{
- 216:main.c        **** 				PORTD |= (1<<NOTES_tab[i]);
- 217:main.c        **** 			}
- 218:main.c        **** 			else		// PORTC
- 219:main.c        **** 			{
- 220:main.c        **** 				PORTC |= (1<<NOTES_tab[i]);
- 619               		.loc 1 220 0
- 620 0014 CC24      		clr r12
- 621 0016 C394      		inc r12
- 622 0018 D12C      		mov r13,__zero_reg__
- 623               	.L35:
- 624               	.LVL42:
- 625 001a 00E0      		ldi r16,lo8(NOTES_tab)
- 626 001c 10E0      		ldi r17,hi8(NOTES_tab)
- 627 001e 90E0      		ldi r25,lo8(PRESSED_BUTTON_tab)
- 628 0020 692E      		mov r6,r25
- 629 0022 90E0      		ldi r25,hi8(PRESSED_BUTTON_tab)
- 630 0024 792E      		mov r7,r25
- 212:main.c        **** 		{
- 631               		.loc 1 212 0
- 632 0026 C0E0      		ldi r28,0
- 633 0028 D0E0      		ldi r29,0
- 634               	.LVL43:
- 635               	.L34:
- 214:main.c        **** 			{
- 636               		.loc 1 214 0
- 637 002a C730      		cpi r28,7
- 638 002c D105      		cpc r29,__zero_reg__
- 639 002e 04F4      		brge .L27
- 216:main.c        **** 			}
- 640               		.loc 1 216 0
- 641 0030 22B3      		in r18,0x12
- 642 0032 C601      		movw r24,r12
- 643 0034 F801      		movw r30,r16
- 644 0036 0080      		ld r0,Z
- 645 0038 00C0      		rjmp 2f
- 646               		1:
- 647 003a 880F      		lsl r24
- 648 003c 991F      		rol r25
- 649               		2:
- 650 003e 0A94      		dec r0
- 651 0040 02F4      		brpl 1b
- 652 0042 822B      		or r24,r18
- 653 0044 82BB      		out 0x12,r24
- 654 0046 00C0      		rjmp .L28
- 655               	.L27:
- 656               		.loc 1 220 0
- 657 0048 25B3      		in r18,0x15
- 658 004a C601      		movw r24,r12
- 659 004c F801      		movw r30,r16
- 660 004e 0080      		ld r0,Z
- 661 0050 00C0      		rjmp 2f
- 662               		1:
- 663 0052 880F      		lsl r24
- 664 0054 991F      		rol r25
- 665               		2:
- 666 0056 0A94      		dec r0
- 667 0058 02F4      		brpl 1b
- 668 005a 822B      		or r24,r18
- 669 005c 85BB      		out 0x15,r24
- 670               	.L28:
- 671               	.LVL44:
- 672 005e 80E0      		ldi r24,lo8(OCTAVES_tab)
- 673 0060 A82E      		mov r10,r24
- 674 0062 80E0      		ldi r24,hi8(OCTAVES_tab)
- 675 0064 B82E      		mov r11,r24
- 212:main.c        **** 		{
- 676               		.loc 1 212 0 discriminator 1
- 677 0066 7301      		movw r14,r6
- 678 0068 812C      		mov r8,__zero_reg__
- 679 006a 912C      		mov r9,__zero_reg__
- 680               	.LVL45:
- 681               	.L31:
- 682               	.LBB3:
- 221:main.c        **** 			}
- 222:main.c        **** 
- 223:main.c        **** 			// if(i == 12)		// last key case
- 224:main.c        **** 			// {
- 225:main.c        **** 			// 	if(PINC & (1<<NOTES_tab[12]) && !(PRESSED_BUTTON_tab[12][0]) )
- 226:main.c        **** 			// 	{
- 227:main.c        **** 			// 		PRESSED_BUTTON_tab[12][0] = 1;
- 228:main.c        **** 			// 		note_on(12,0);
- 229:main.c        **** 			// 	}
- 230:main.c        **** 			// 	else if( !(PINC & (1<<NOTES_tab[12])) && PRESSED_BUTTON_tab[12][0])
- 231:main.c        **** 			// 	{
- 232:main.c        **** 			// 		PRESSED_BUTTON_tab[12][0] = 0;
- 233:main.c        **** 			// 		note_off(12,0);
- 234:main.c        **** 			// 	}
- 235:main.c        **** 			// }
+ 194:main.c        **** 	uint8_t adc_7bit = (adc_read[channel] >> 3);
+ 673               		.loc 1 194 0
+ 674 0228 660F      		lsl r22
+ 675 022a 672F      		mov r22,r23
+ 676 022c 661F      		rol r22
+ 677 022e 770B      		sbc r23,r23
+ 678               	.LVL49:
+ 195:main.c        **** 	uint8_t adc_prev_7bit = (adc_prev_read[channel] >> 3);
+ 679               		.loc 1 195 0
+ 680 0230 F601      		movw r30,r12
+ 681 0232 E050      		subi r30,lo8(-(adc_prev_read))
+ 682 0234 F040      		sbci r31,hi8(-(adc_prev_read))
+ 683 0236 C081      		ld r28,Z
+ 684 0238 D181      		ldd r29,Z+1
+ 685               	.LVL50:
+ 686 023a 43E0      		ldi r20,3
+ 687               		1:
+ 688 023c D595      		asr r29
+ 689 023e C795      		ror r28
+ 690 0240 4A95      		dec r20
+ 691 0242 01F4      		brne 1b
+ 692               	.LVL51:
+ 196:main.c        **** 
+ 197:main.c        **** 	if((int)adc_7bit != (int)adc_prev_7bit)
+ 693               		.loc 1 197 0
+ 694 0244 6C17      		cp r22,r28
+ 695 0246 01F4      		brne .+2
+ 696 0248 00C0      		rjmp .L30
+ 198:main.c        **** 	{
+ 199:main.c        **** 		EMA_prev[channel] = EMA[channel];
+ 697               		.loc 1 199 0
+ 698 024a 8601      		movw r16,r12
+ 699               	.LVL52:
+ 700 024c 0050      		subi r16,lo8(-(EMA))
+ 701 024e 1040      		sbci r17,hi8(-(EMA))
+ 702 0250 F801      		movw r30,r16
+ 703 0252 E080      		ld r14,Z
+ 704 0254 F180      		ldd r15,Z+1
+ 705               	.LVL53:
+ 706 0256 F601      		movw r30,r12
+ 707 0258 E050      		subi r30,lo8(-(EMA_prev))
+ 708 025a F040      		sbci r31,hi8(-(EMA_prev))
+ 709 025c F182      		std Z+1,r15
+ 710 025e E082      		st Z,r14
+ 200:main.c        **** 		EMA[channel] = (EMA_a*adc_7bit) + (1-EMA_a)*adc_prev_7bit;
+ 711               		.loc 1 200 0
+ 712 0260 7727      		clr r23
+ 713               	.LVL54:
+ 714 0262 072E      		mov __tmp_reg__,r23
+ 715 0264 000C      		lsl r0
+ 716 0266 880B      		sbc r24,r24
+ 717 0268 990B      		sbc r25,r25
+ 718 026a 0E94 0000 		call __floatsisf
+ 719               	.LVL55:
+ 720 026e 2AE9      		ldi r18,lo8(-102)
+ 721 0270 39E9      		ldi r19,lo8(-103)
+ 722 0272 49E1      		ldi r20,lo8(25)
+ 723 0274 5FE3      		ldi r21,lo8(63)
+ 724 0276 0E94 0000 		call __mulsf3
+ 725               	.LVL56:
+ 726 027a 2B01      		movw r4,r22
+ 727 027c 3C01      		movw r6,r24
+ 728 027e DD27      		clr r29
+ 729               	.LVL57:
+ 730 0280 BE01      		movw r22,r28
+ 731 0282 DD0F      		lsl r29
+ 732 0284 880B      		sbc r24,r24
+ 733 0286 990B      		sbc r25,r25
+ 734 0288 0E94 0000 		call __floatsisf
+ 735               	.LVL58:
+ 736 028c 2CEC      		ldi r18,lo8(-52)
+ 737 028e 3CEC      		ldi r19,lo8(-52)
+ 738 0290 4CEC      		ldi r20,lo8(-52)
+ 739 0292 5EE3      		ldi r21,lo8(62)
+ 740 0294 0E94 0000 		call __mulsf3
+ 741               	.LVL59:
+ 742 0298 9B01      		movw r18,r22
+ 743 029a AC01      		movw r20,r24
+ 744 029c C301      		movw r24,r6
+ 745 029e B201      		movw r22,r4
+ 746 02a0 0E94 0000 		call __addsf3
+ 747               	.LVL60:
+ 748 02a4 0E94 0000 		call __fixsfsi
+ 749               	.LVL61:
+ 750 02a8 F801      		movw r30,r16
+ 751 02aa 7183      		std Z+1,r23
+ 752 02ac 6083      		st Z,r22
+ 201:main.c        **** 		if(EMA[channel] != EMA_prev[channel])
+ 753               		.loc 1 201 0
+ 754 02ae E616      		cp r14,r22
+ 755 02b0 F706      		cpc r15,r23
+ 756 02b2 01F0      		breq .L30
+ 757               	.LVL62:
+ 758               	.LBB34:
+ 759               	.LBB35:
+ 202:main.c        **** 		{
+ 203:main.c        **** 			uart_putchar(CC_CMD);
+ 760               		.loc 1 203 0
+ 761 02b4 80EB      		ldi r24,lo8(-80)
+ 762 02b6 0E94 0000 		call uart_putchar
+ 763               	.LVL63:
+ 204:main.c        **** 			uart_putchar(control_num);
+ 764               		.loc 1 204 0
+ 765 02ba 8B2D      		mov r24,r11
+ 766 02bc 0E94 0000 		call uart_putchar
+ 767               	.LVL64:
+ 205:main.c        **** 			uart_putchar(EMA[channel]);
+ 768               		.loc 1 205 0
+ 769 02c0 F801      		movw r30,r16
+ 770 02c2 8081      		ld r24,Z
+ 771               	/* epilogue start */
+ 772               	.LBE35:
+ 773               	.LBE34:
+ 206:main.c        **** 		}
+ 207:main.c        **** 	}
+ 208:main.c        **** }
+ 774               		.loc 1 208 0
+ 775 02c4 DF91      		pop r29
+ 776 02c6 CF91      		pop r28
+ 777 02c8 1F91      		pop r17
+ 778 02ca 0F91      		pop r16
+ 779 02cc FF90      		pop r15
+ 780 02ce EF90      		pop r14
+ 781 02d0 DF90      		pop r13
+ 782 02d2 CF90      		pop r12
+ 783 02d4 BF90      		pop r11
+ 784               	.LVL65:
+ 785 02d6 7F90      		pop r7
+ 786 02d8 6F90      		pop r6
+ 787 02da 5F90      		pop r5
+ 788 02dc 4F90      		pop r4
+ 789               	.LBB37:
+ 790               	.LBB36:
+ 205:main.c        **** 			uart_putchar(EMA[channel]);
+ 791               		.loc 1 205 0
+ 792 02de 0C94 0000 		jmp uart_putchar
+ 793               	.LVL66:
+ 794               	.L30:
+ 795               	/* epilogue start */
+ 796               	.LBE36:
+ 797               	.LBE37:
+ 798               		.loc 1 208 0
+ 799 02e2 DF91      		pop r29
+ 800 02e4 CF91      		pop r28
+ 801 02e6 1F91      		pop r17
+ 802 02e8 0F91      		pop r16
+ 803 02ea FF90      		pop r15
+ 804 02ec EF90      		pop r14
+ 805 02ee DF90      		pop r13
+ 806 02f0 CF90      		pop r12
+ 807 02f2 BF90      		pop r11
+ 808               	.LVL67:
+ 809 02f4 7F90      		pop r7
+ 810 02f6 6F90      		pop r6
+ 811 02f8 5F90      		pop r5
+ 812 02fa 4F90      		pop r4
+ 813 02fc 0895      		ret
+ 814               		.cfi_endproc
+ 815               	.LFE12:
+ 817               	.global	__vector_7
+ 819               	__vector_7:
+ 820               	.LFB13:
+ 209:main.c        **** 
+ 210:main.c        **** ISR(TIMER1_COMPA_vect)	// timer1 overflow interrupt
+ 211:main.c        **** {
+ 821               		.loc 1 211 0
+ 822               		.cfi_startproc
+ 823 02fe 1F92      		push r1
+ 824               	.LCFI27:
+ 825               		.cfi_def_cfa_offset 3
+ 826               		.cfi_offset 1, -2
+ 827 0300 0F92      		push r0
+ 828               	.LCFI28:
+ 829               		.cfi_def_cfa_offset 4
+ 830               		.cfi_offset 0, -3
+ 831 0302 0FB6      		in r0,__SREG__
+ 832 0304 0F92      		push r0
+ 833 0306 1124      		clr __zero_reg__
+ 834 0308 6F92      		push r6
+ 835               	.LCFI29:
+ 836               		.cfi_def_cfa_offset 5
+ 837               		.cfi_offset 6, -4
+ 838 030a 7F92      		push r7
+ 839               	.LCFI30:
+ 840               		.cfi_def_cfa_offset 6
+ 841               		.cfi_offset 7, -5
+ 842 030c 8F92      		push r8
+ 843               	.LCFI31:
+ 844               		.cfi_def_cfa_offset 7
+ 845               		.cfi_offset 8, -6
+ 846 030e 9F92      		push r9
+ 847               	.LCFI32:
+ 848               		.cfi_def_cfa_offset 8
+ 849               		.cfi_offset 9, -7
+ 850 0310 AF92      		push r10
+ 851               	.LCFI33:
+ 852               		.cfi_def_cfa_offset 9
+ 853               		.cfi_offset 10, -8
+ 854 0312 BF92      		push r11
+ 855               	.LCFI34:
+ 856               		.cfi_def_cfa_offset 10
+ 857               		.cfi_offset 11, -9
+ 858 0314 CF92      		push r12
+ 859               	.LCFI35:
+ 860               		.cfi_def_cfa_offset 11
+ 861               		.cfi_offset 12, -10
+ 862 0316 DF92      		push r13
+ 863               	.LCFI36:
+ 864               		.cfi_def_cfa_offset 12
+ 865               		.cfi_offset 13, -11
+ 866 0318 EF92      		push r14
+ 867               	.LCFI37:
+ 868               		.cfi_def_cfa_offset 13
+ 869               		.cfi_offset 14, -12
+ 870 031a FF92      		push r15
+ 871               	.LCFI38:
+ 872               		.cfi_def_cfa_offset 14
+ 873               		.cfi_offset 15, -13
+ 874 031c 0F93      		push r16
+ 875               	.LCFI39:
+ 876               		.cfi_def_cfa_offset 15
+ 877               		.cfi_offset 16, -14
+ 878 031e 1F93      		push r17
+ 879               	.LCFI40:
+ 880               		.cfi_def_cfa_offset 16
+ 881               		.cfi_offset 17, -15
+ 882 0320 2F93      		push r18
+ 883               	.LCFI41:
+ 884               		.cfi_def_cfa_offset 17
+ 885               		.cfi_offset 18, -16
+ 886 0322 3F93      		push r19
+ 887               	.LCFI42:
+ 888               		.cfi_def_cfa_offset 18
+ 889               		.cfi_offset 19, -17
+ 890 0324 4F93      		push r20
+ 891               	.LCFI43:
+ 892               		.cfi_def_cfa_offset 19
+ 893               		.cfi_offset 20, -18
+ 894 0326 5F93      		push r21
+ 895               	.LCFI44:
+ 896               		.cfi_def_cfa_offset 20
+ 897               		.cfi_offset 21, -19
+ 898 0328 6F93      		push r22
+ 899               	.LCFI45:
+ 900               		.cfi_def_cfa_offset 21
+ 901               		.cfi_offset 22, -20
+ 902 032a 7F93      		push r23
+ 903               	.LCFI46:
+ 904               		.cfi_def_cfa_offset 22
+ 905               		.cfi_offset 23, -21
+ 906 032c 8F93      		push r24
+ 907               	.LCFI47:
+ 908               		.cfi_def_cfa_offset 23
+ 909               		.cfi_offset 24, -22
+ 910 032e 9F93      		push r25
+ 911               	.LCFI48:
+ 912               		.cfi_def_cfa_offset 24
+ 913               		.cfi_offset 25, -23
+ 914 0330 AF93      		push r26
+ 915               	.LCFI49:
+ 916               		.cfi_def_cfa_offset 25
+ 917               		.cfi_offset 26, -24
+ 918 0332 BF93      		push r27
+ 919               	.LCFI50:
+ 920               		.cfi_def_cfa_offset 26
+ 921               		.cfi_offset 27, -25
+ 922 0334 CF93      		push r28
+ 923               	.LCFI51:
+ 924               		.cfi_def_cfa_offset 27
+ 925               		.cfi_offset 28, -26
+ 926 0336 DF93      		push r29
+ 927               	.LCFI52:
+ 928               		.cfi_def_cfa_offset 28
+ 929               		.cfi_offset 29, -27
+ 930 0338 EF93      		push r30
+ 931               	.LCFI53:
+ 932               		.cfi_def_cfa_offset 29
+ 933               		.cfi_offset 30, -28
+ 934 033a FF93      		push r31
+ 935               	.LCFI54:
+ 936               		.cfi_def_cfa_offset 30
+ 937               		.cfi_offset 31, -29
+ 938               	/* prologue: Signal */
+ 939               	/* frame size = 0 */
+ 940               	/* stack size = 29 */
+ 941               	.L__stack_usage = 29
+ 212:main.c        **** 		CC_send_BUTTON(5,6,button1);	// todo: tab with pin numbers
+ 942               		.loc 1 212 0
+ 943 033c 40E0      		ldi r20,0
+ 944 033e 50E0      		ldi r21,0
+ 945 0340 66E0      		ldi r22,lo8(6)
+ 946 0342 85E0      		ldi r24,lo8(5)
+ 947 0344 0E94 0000 		call CC_send_BUTTON
+ 948               	.LVL68:
+ 213:main.c        **** 		CC_send_BUTTON(7,6,button2);
+ 949               		.loc 1 213 0
+ 950 0348 41E0      		ldi r20,lo8(1)
+ 951 034a 50E0      		ldi r21,0
+ 952 034c 66E0      		ldi r22,lo8(6)
+ 953 034e 87E0      		ldi r24,lo8(7)
+ 954 0350 0E94 0000 		call CC_send_BUTTON
+ 955               	.LVL69:
+ 214:main.c        **** 		CC_send_BUTTON(8,6,button3);
+ 956               		.loc 1 214 0
+ 957 0354 42E0      		ldi r20,lo8(2)
+ 958 0356 50E0      		ldi r21,0
+ 959 0358 66E0      		ldi r22,lo8(6)
+ 960 035a 88E0      		ldi r24,lo8(8)
+ 961 035c 0E94 0000 		call CC_send_BUTTON
+ 962               	.LVL70:
+ 215:main.c        **** 		CC_send_BUTTON(9,6,button4);
+ 963               		.loc 1 215 0
+ 964 0360 43E0      		ldi r20,lo8(3)
+ 965 0362 50E0      		ldi r21,0
+ 966 0364 66E0      		ldi r22,lo8(6)
+ 967 0366 89E0      		ldi r24,lo8(9)
+ 968 0368 0E94 0000 		call CC_send_BUTTON
+ 969               	.LVL71:
+ 216:main.c        **** 
+ 217:main.c        **** 	// octave change:
+ 218:main.c        **** 	/*if(button_pressed(button_pin_port,button3) && !(PRESSED_BUTTON_tab[button3]))
+ 219:main.c        **** 	{
+ 220:main.c        **** 		octave_change++;
+ 221:main.c        **** 	}
+ 222:main.c        **** 	else if(!(button_pressed(button_pin_port,button3)))
+ 223:main.c        **** 	{
+ 224:main.c        **** 		PRESSED_BUTTON_tab[button3] = 0;
+ 225:main.c        **** 	}
+ 226:main.c        **** 
+ 227:main.c        **** 	if(button_pressed(button_pin_port,button4) && !(PRESSED_BUTTON_tab[button4]))
+ 228:main.c        **** 	{
+ 229:main.c        **** 		if(octave_change > 0)
+ 230:main.c        **** 		octave_change--;
+ 231:main.c        **** 	}
+ 232:main.c        **** 	else if(!(button_pressed(button_pin_port,button4)))
+ 233:main.c        **** 	{
+ 234:main.c        **** 		PRESSED_BUTTON_tab[button4] = 0;
+ 235:main.c        **** 	}*/
  236:main.c        **** 
- 237:main.c        **** 			for(int j=0; j<4; j++)		// octaves loop
- 238:main.c        **** 			{
- 239:main.c        **** 				if( PINB & (1<<OCTAVES_tab[j]) && !(PRESSED_BUTTON_tab[i][j]) )
- 683               		.loc 1 239 0
- 684 006c 86B3      		in r24,0x16
- 685 006e F501      		movw r30,r10
- 686 0070 2081      		ld r18,Z
- 687 0072 F2E0      		ldi r31,2
- 688 0074 AF0E      		add r10,r31
- 689 0076 B11C      		adc r11,__zero_reg__
- 690 0078 90E0      		ldi r25,0
- 691 007a 022E      		mov r0,r18
- 692 007c 00C0      		rjmp 2f
- 693               		1:
- 694 007e 9595      		asr r25
- 695 0080 8795      		ror r24
- 696               		2:
- 697 0082 0A94      		dec r0
- 698 0084 02F4      		brpl 1b
- 699 0086 80FF      		sbrs r24,0
- 700 0088 00C0      		rjmp .L29
- 701               		.loc 1 239 0 is_stmt 0 discriminator 1
- 702 008a F701      		movw r30,r14
- 703 008c 8081      		ld r24,Z
- 704 008e 9181      		ldd r25,Z+1
- 705 0090 892B      		or r24,r25
- 706 0092 01F4      		brne .L29
- 240:main.c        **** 				{
- 241:main.c        **** 					PRESSED_BUTTON_tab[i][j] = 1;
- 707               		.loc 1 241 0 is_stmt 1
- 708 0094 D182      		std Z+1,r13
- 709 0096 C082      		st Z,r12
- 242:main.c        **** 					note_on(i,j);
- 710               		.loc 1 242 0
- 711 0098 B401      		movw r22,r8
- 712 009a CE01      		movw r24,r28
- 713 009c 0E94 0000 		call note_on
- 714               	.LVL46:
- 715 00a0 00C0      		rjmp .L30
- 716               	.L29:
- 243:main.c        **** 				}
- 244:main.c        **** 				else if( !(PINB & (1<<OCTAVES_tab[j])) && PRESSED_BUTTON_tab[i][j] )
- 717               		.loc 1 244 0
- 718 00a2 86B3      		in r24,0x16
- 719 00a4 90E0      		ldi r25,0
- 720 00a6 00C0      		rjmp 2f
- 721               		1:
- 722 00a8 9595      		asr r25
- 723 00aa 8795      		ror r24
- 724               		2:
- 725 00ac 2A95      		dec r18
- 726 00ae 02F4      		brpl 1b
- 727 00b0 80FD      		sbrc r24,0
- 728 00b2 00C0      		rjmp .L30
- 729               		.loc 1 244 0 is_stmt 0 discriminator 1
- 730 00b4 F701      		movw r30,r14
- 731 00b6 8081      		ld r24,Z
- 732 00b8 9181      		ldd r25,Z+1
- 733 00ba 892B      		or r24,r25
- 734 00bc 01F0      		breq .L30
- 245:main.c        **** 				{
- 246:main.c        **** 					PRESSED_BUTTON_tab[i][j] = 0;
- 735               		.loc 1 246 0 is_stmt 1
- 736 00be 1182      		std Z+1,__zero_reg__
- 737 00c0 1082      		st Z,__zero_reg__
- 247:main.c        **** 					note_off(i,j);
- 738               		.loc 1 247 0
- 739 00c2 B401      		movw r22,r8
- 740 00c4 CE01      		movw r24,r28
- 741 00c6 0E94 0000 		call note_off
- 742               	.LVL47:
- 743               	.L30:
- 237:main.c        **** 			{
- 744               		.loc 1 237 0 discriminator 2
- 745 00ca FFEF      		ldi r31,-1
- 746 00cc 8F1A      		sub r8,r31
- 747 00ce 9F0A      		sbc r9,r31
- 748               	.LVL48:
- 749 00d0 82E0      		ldi r24,2
- 750 00d2 E80E      		add r14,r24
- 751 00d4 F11C      		adc r15,__zero_reg__
- 752 00d6 94E0      		ldi r25,4
- 753 00d8 8916      		cp r8,r25
- 754 00da 9104      		cpc r9,__zero_reg__
- 755 00dc 01F4      		brne .L31
- 756               	.LBE3:
- 248:main.c        **** 				}
- 249:main.c        **** 			}
- 250:main.c        **** 			
- 251:main.c        **** 			if(i < 7)	// PORTD
- 757               		.loc 1 251 0
- 758 00de C730      		cpi r28,7
- 759 00e0 D105      		cpc r29,__zero_reg__
- 760 00e2 04F4      		brge .L32
- 252:main.c        **** 			{
- 253:main.c        **** 				PORTD &= ~(1<<NOTES_tab[i]);
- 761               		.loc 1 253 0
- 762 00e4 92B3      		in r25,0x12
- 763 00e6 9601      		movw r18,r12
- 764 00e8 F801      		movw r30,r16
- 765 00ea 0080      		ld r0,Z
- 766 00ec 00C0      		rjmp 2f
- 767               		1:
- 768 00ee 220F      		lsl r18
- 769 00f0 331F      		rol r19
- 770               		2:
- 771 00f2 0A94      		dec r0
- 772 00f4 02F4      		brpl 1b
- 773 00f6 822F      		mov r24,r18
- 774 00f8 8095      		com r24
- 775 00fa 8923      		and r24,r25
- 776 00fc 82BB      		out 0x12,r24
- 777 00fe 00C0      		rjmp .L33
- 778               	.L32:
- 254:main.c        **** 			}
- 255:main.c        **** 			else		// PORT C
- 256:main.c        **** 			{
- 257:main.c        **** 				PORTC &= ~(1<<NOTES_tab[i]);
- 779               		.loc 1 257 0
- 780 0100 95B3      		in r25,0x15
- 781 0102 9601      		movw r18,r12
- 782 0104 F801      		movw r30,r16
- 783 0106 0080      		ld r0,Z
- 784 0108 00C0      		rjmp 2f
- 785               		1:
- 786 010a 220F      		lsl r18
- 787 010c 331F      		rol r19
- 788               		2:
- 789 010e 0A94      		dec r0
- 790 0110 02F4      		brpl 1b
- 791 0112 822F      		mov r24,r18
- 792 0114 8095      		com r24
- 793 0116 8923      		and r24,r25
- 794 0118 85BB      		out 0x15,r24
- 795               	.L33:
- 212:main.c        **** 		{
- 796               		.loc 1 212 0 discriminator 2
- 797 011a 2196      		adiw r28,1
- 798               	.LVL49:
- 799 011c 0E5F      		subi r16,-2
- 800 011e 1F4F      		sbci r17,-1
- 801 0120 F8E0      		ldi r31,8
- 802 0122 6F0E      		add r6,r31
- 803 0124 711C      		adc r7,__zero_reg__
- 804 0126 CD30      		cpi r28,13
- 805 0128 D105      		cpc r29,__zero_reg__
- 806 012a 01F0      		breq .+2
- 807 012c 00C0      		rjmp .L34
- 808 012e 00C0      		rjmp .L35
- 809               	.LBE2:
- 810               		.cfi_endproc
- 811               	.LFE12:
- 813               	.global	pitch_bend
- 814               		.section .bss
- 817               	pitch_bend:
- 818 0000 0000      		.zero	2
- 819               	.global	adc_0_prev
- 822               	adc_0_prev:
- 823 0002 0000      		.zero	2
- 824               	.global	adc_6
- 827               	adc_6:
- 828 0004 0000      		.zero	2
- 829               	.global	adc_1
- 832               	adc_1:
- 833 0006 0000      		.zero	2
- 834               	.global	adc_0
- 837               	adc_0:
- 838 0008 0000      		.zero	2
- 839               	.global	adc_prev_read
- 842               	adc_prev_read:
- 843 000a 0000 0000 		.zero	16
- 843      0000 0000 
- 843      0000 0000 
- 843      0000 0000 
- 844               	.global	adc_read
- 847               	adc_read:
- 848 001a 0000 0000 		.zero	16
- 848      0000 0000 
- 848      0000 0000 
- 848      0000 0000 
- 849               	.global	PRESSED_BUTTON_tab
- 852               	PRESSED_BUTTON_tab:
- 853 002a 0000 0000 		.zero	104
- 853      0000 0000 
- 853      0000 0000 
- 853      0000 0000 
- 853      0000 0000 
- 854               	.global	OCTAVES_tab
- 855               		.data
- 858               	OCTAVES_tab:
- 859 0000 0400      		.word	4
- 860 0002 0500      		.word	5
- 861 0004 0600      		.word	6
- 862 0006 0700      		.word	7
- 863               	.global	NOTES_tab
- 866               	NOTES_tab:
- 867 0008 0000      		.word	0
- 868 000a 0200      		.word	2
- 869 000c 0300      		.word	3
- 870 000e 0400      		.word	4
- 871 0010 0500      		.word	5
- 872 0012 0600      		.word	6
- 873 0014 0700      		.word	7
- 874 0016 0200      		.word	2
- 875 0018 0300      		.word	3
- 876 001a 0400      		.word	4
- 877 001c 0500      		.word	5
- 878 001e 0600      		.word	6
- 879 0020 0700      		.word	7
- 880               		.text
- 881               	.Letext0:
- 882               		.file 2 "/usr/lib/avr/include/stdint.h"
+ 237:main.c        **** 		CC_send_ADC(MAIN_VOLUME_CMD, 0);	// slide 1
+ 970               		.loc 1 237 0
+ 971 036c 60E0      		ldi r22,0
+ 972 036e 70E0      		ldi r23,0
+ 973 0370 87E0      		ldi r24,lo8(7)
+ 974 0372 0E94 0000 		call CC_send_ADC
+ 975               	.LVL72:
+ 238:main.c        **** 		CC_send_ADC(SOUND_CTRL_6_DECAY_CMD, 1);	// slide 2
+ 976               		.loc 1 238 0
+ 977 0376 61E0      		ldi r22,lo8(1)
+ 978 0378 70E0      		ldi r23,0
+ 979 037a 8BE4      		ldi r24,lo8(75)
+ 980 037c 0E94 0000 		call CC_send_ADC
+ 981               	.LVL73:
+ 239:main.c        **** 		CC_send_ADC(GEN_PURP_CTRL_1_CMD, 2);	// knob 1 
+ 982               		.loc 1 239 0
+ 983 0380 62E0      		ldi r22,lo8(2)
+ 984 0382 70E0      		ldi r23,0
+ 985 0384 80E1      		ldi r24,lo8(16)
+ 986 0386 0E94 0000 		call CC_send_ADC
+ 987               	.LVL74:
+ 240:main.c        **** 		CC_send_ADC(GEN_PURP_CTRL_2_CMD, 3);	// knob 2
+ 988               		.loc 1 240 0
+ 989 038a 63E0      		ldi r22,lo8(3)
+ 990 038c 70E0      		ldi r23,0
+ 991 038e 81E1      		ldi r24,lo8(17)
+ 992 0390 0E94 0000 		call CC_send_ADC
+ 993               	.LVL75:
+ 241:main.c        **** 		CC_send_ADC(GEN_PURP_CTRL_3_CMD, 4);	// knob 3
+ 994               		.loc 1 241 0
+ 995 0394 64E0      		ldi r22,lo8(4)
+ 996 0396 70E0      		ldi r23,0
+ 997 0398 82E1      		ldi r24,lo8(18)
+ 998 039a 0E94 0000 		call CC_send_ADC
+ 999               	.LVL76:
+ 242:main.c        **** 		CC_send_ADC(GEN_PURP_CTRL_4_CMD, 5);	// knob 4		
+ 1000               		.loc 1 242 0
+ 1001 039e 65E0      		ldi r22,lo8(5)
+ 1002 03a0 70E0      		ldi r23,0
+ 1003 03a2 83E1      		ldi r24,lo8(19)
+ 1004 03a4 0E94 0000 		call CC_send_ADC
+ 1005               	.LVL77:
+ 243:main.c        **** 		CC_send_ADC(MODULATION_WHEEL_CMD, 6);	// joystick 1	
+ 1006               		.loc 1 243 0
+ 1007 03a8 66E0      		ldi r22,lo8(6)
+ 1008 03aa 70E0      		ldi r23,0
+ 1009 03ac 81E0      		ldi r24,lo8(1)
+ 1010 03ae 0E94 0000 		call CC_send_ADC
+ 1011               	.LVL78:
+ 244:main.c        **** 		CC_send_ADC(BREATH_CONTROLLER_CMD, 7);	// joystick 2	
+ 1012               		.loc 1 244 0
+ 1013 03b2 67E0      		ldi r22,lo8(7)
+ 1014 03b4 70E0      		ldi r23,0
+ 1015 03b6 82E0      		ldi r24,lo8(2)
+ 1016 03b8 0E94 0000 		call CC_send_ADC
+ 1017               	.LVL79:
+ 1018 03bc 00E0      		ldi r16,lo8(NOTES_tab)
+ 1019 03be 10E0      		ldi r17,hi8(NOTES_tab)
+ 1020 03c0 90E0      		ldi r25,lo8(PRESSED_KEY_tab)
+ 1021 03c2 692E      		mov r6,r25
+ 1022 03c4 90E0      		ldi r25,hi8(PRESSED_KEY_tab)
+ 1023 03c6 792E      		mov r7,r25
+ 1024               	.LBB38:
+ 245:main.c        **** 
+ 246:main.c        **** for(int i=0; i<13; i++)		// notes loop
+ 1025               		.loc 1 246 0
+ 1026 03c8 C0E0      		ldi r28,0
+ 1027 03ca D0E0      		ldi r29,0
+ 247:main.c        **** 		{
+ 248:main.c        **** 			if(i < 7)	// PORTD
+ 249:main.c        **** 			{
+ 250:main.c        **** 				PORTD |= (1<<NOTES_tab[i]);
+ 251:main.c        **** 			}
+ 252:main.c        **** 			else		// PORTC
+ 253:main.c        **** 			{
+ 254:main.c        **** 				PORTC |= (1<<NOTES_tab[i]);
+ 1028               		.loc 1 254 0
+ 1029 03cc CC24      		clr r12
+ 1030 03ce C394      		inc r12
+ 1031 03d0 D12C      		mov r13,__zero_reg__
+ 1032               	.LVL80:
+ 1033               	.L45:
+ 248:main.c        **** 			{
+ 1034               		.loc 1 248 0
+ 1035 03d2 C730      		cpi r28,7
+ 1036 03d4 D105      		cpc r29,__zero_reg__
+ 1037 03d6 04F4      		brge .L38
+ 250:main.c        **** 			}
+ 1038               		.loc 1 250 0
+ 1039 03d8 22B3      		in r18,0x12
+ 1040 03da C601      		movw r24,r12
+ 1041 03dc F801      		movw r30,r16
+ 1042 03de 0080      		ld r0,Z
+ 1043 03e0 00C0      		rjmp 2f
+ 1044               		1:
+ 1045 03e2 880F      		lsl r24
+ 1046 03e4 991F      		rol r25
+ 1047               		2:
+ 1048 03e6 0A94      		dec r0
+ 1049 03e8 02F4      		brpl 1b
+ 1050 03ea 822B      		or r24,r18
+ 1051 03ec 82BB      		out 0x12,r24
+ 1052 03ee 00C0      		rjmp .L39
+ 1053               	.L38:
+ 1054               		.loc 1 254 0
+ 1055 03f0 25B3      		in r18,0x15
+ 1056 03f2 C601      		movw r24,r12
+ 1057 03f4 F801      		movw r30,r16
+ 1058 03f6 0080      		ld r0,Z
+ 1059 03f8 00C0      		rjmp 2f
+ 1060               		1:
+ 1061 03fa 880F      		lsl r24
+ 1062 03fc 991F      		rol r25
+ 1063               		2:
+ 1064 03fe 0A94      		dec r0
+ 1065 0400 02F4      		brpl 1b
+ 1066 0402 822B      		or r24,r18
+ 1067 0404 85BB      		out 0x15,r24
+ 1068               	.L39:
+ 1069               	.LVL81:
+ 1070 0406 80E0      		ldi r24,lo8(OCTAVES_tab)
+ 1071 0408 A82E      		mov r10,r24
+ 1072 040a 80E0      		ldi r24,hi8(OCTAVES_tab)
+ 1073 040c B82E      		mov r11,r24
+ 246:main.c        **** 		{
+ 1074               		.loc 1 246 0 discriminator 1
+ 1075 040e 7301      		movw r14,r6
+ 1076 0410 812C      		mov r8,__zero_reg__
+ 1077 0412 912C      		mov r9,__zero_reg__
+ 1078               	.LVL82:
+ 1079               	.L42:
+ 1080               	.LBB39:
+ 255:main.c        **** 			}
+ 256:main.c        **** 
+ 257:main.c        **** 			// if(i == 12)		// last key case
+ 258:main.c        **** 			// {
+ 259:main.c        **** 			// 	if(PINC & (1<<NOTES_tab[12]) && !(PRESSED_KEY_tab[12][0]) )
+ 260:main.c        **** 			// 	{
+ 261:main.c        **** 			// 		PRESSED_KEY_tab[12][0] = 1;
+ 262:main.c        **** 			// 		note_on(12,0);
+ 263:main.c        **** 			// 	}
+ 264:main.c        **** 			// 	else if( !(PINC & (1<<NOTES_tab[12])) && PRESSED_KEY_tab[12][0])
+ 265:main.c        **** 			// 	{
+ 266:main.c        **** 			// 		PRESSED_KEY_tab[12][0] = 0;
+ 267:main.c        **** 			// 		note_off(12,0);
+ 268:main.c        **** 			// 	}
+ 269:main.c        **** 			// }
+ 270:main.c        **** 
+ 271:main.c        **** 			for(int j=0; j<4; j++)		// octaves loop
+ 272:main.c        **** 			{
+ 273:main.c        **** 				if( PINB & (1<<OCTAVES_tab[j]) && !(PRESSED_KEY_tab[i][j]) )
+ 1081               		.loc 1 273 0
+ 1082 0414 86B3      		in r24,0x16
+ 1083 0416 F501      		movw r30,r10
+ 1084 0418 2081      		ld r18,Z
+ 1085 041a F2E0      		ldi r31,2
+ 1086 041c AF0E      		add r10,r31
+ 1087 041e B11C      		adc r11,__zero_reg__
+ 1088 0420 90E0      		ldi r25,0
+ 1089 0422 022E      		mov r0,r18
+ 1090 0424 00C0      		rjmp 2f
+ 1091               		1:
+ 1092 0426 9595      		asr r25
+ 1093 0428 8795      		ror r24
+ 1094               		2:
+ 1095 042a 0A94      		dec r0
+ 1096 042c 02F4      		brpl 1b
+ 1097 042e 80FF      		sbrs r24,0
+ 1098 0430 00C0      		rjmp .L40
+ 1099               		.loc 1 273 0 is_stmt 0 discriminator 1
+ 1100 0432 F701      		movw r30,r14
+ 1101 0434 8081      		ld r24,Z
+ 1102 0436 9181      		ldd r25,Z+1
+ 1103 0438 892B      		or r24,r25
+ 1104 043a 01F4      		brne .L40
+ 274:main.c        **** 				{
+ 275:main.c        **** 					PRESSED_KEY_tab[i][j] = 1;
+ 1105               		.loc 1 275 0 is_stmt 1
+ 1106 043c D182      		std Z+1,r13
+ 1107 043e C082      		st Z,r12
+ 276:main.c        **** 					note_on(i,j);
+ 1108               		.loc 1 276 0
+ 1109 0440 B401      		movw r22,r8
+ 1110 0442 CE01      		movw r24,r28
+ 1111 0444 0E94 0000 		call note_on
+ 1112               	.LVL83:
+ 1113 0448 00C0      		rjmp .L41
+ 1114               	.L40:
+ 277:main.c        **** 				}
+ 278:main.c        **** 				else if( !(PINB & (1<<OCTAVES_tab[j])) && PRESSED_KEY_tab[i][j] )
+ 1115               		.loc 1 278 0
+ 1116 044a 86B3      		in r24,0x16
+ 1117 044c 90E0      		ldi r25,0
+ 1118 044e 00C0      		rjmp 2f
+ 1119               		1:
+ 1120 0450 9595      		asr r25
+ 1121 0452 8795      		ror r24
+ 1122               		2:
+ 1123 0454 2A95      		dec r18
+ 1124 0456 02F4      		brpl 1b
+ 1125 0458 80FD      		sbrc r24,0
+ 1126 045a 00C0      		rjmp .L41
+ 1127               		.loc 1 278 0 is_stmt 0 discriminator 1
+ 1128 045c F701      		movw r30,r14
+ 1129 045e 8081      		ld r24,Z
+ 1130 0460 9181      		ldd r25,Z+1
+ 1131 0462 892B      		or r24,r25
+ 1132 0464 01F0      		breq .L41
+ 279:main.c        **** 				{
+ 280:main.c        **** 					PRESSED_KEY_tab[i][j] = 0;
+ 1133               		.loc 1 280 0 is_stmt 1
+ 1134 0466 1182      		std Z+1,__zero_reg__
+ 1135 0468 1082      		st Z,__zero_reg__
+ 281:main.c        **** 					note_off(i,j);
+ 1136               		.loc 1 281 0
+ 1137 046a B401      		movw r22,r8
+ 1138 046c CE01      		movw r24,r28
+ 1139 046e 0E94 0000 		call note_off
+ 1140               	.LVL84:
+ 1141               	.L41:
+ 271:main.c        **** 			{
+ 1142               		.loc 1 271 0 discriminator 2
+ 1143 0472 FFEF      		ldi r31,-1
+ 1144 0474 8F1A      		sub r8,r31
+ 1145 0476 9F0A      		sbc r9,r31
+ 1146               	.LVL85:
+ 1147 0478 82E0      		ldi r24,2
+ 1148 047a E80E      		add r14,r24
+ 1149 047c F11C      		adc r15,__zero_reg__
+ 1150 047e 94E0      		ldi r25,4
+ 1151 0480 8916      		cp r8,r25
+ 1152 0482 9104      		cpc r9,__zero_reg__
+ 1153 0484 01F4      		brne .L42
+ 1154               	.LBE39:
+ 282:main.c        **** 				}
+ 283:main.c        **** 			}
+ 284:main.c        **** 			
+ 285:main.c        **** 			if(i < 7)	// PORTD
+ 1155               		.loc 1 285 0
+ 1156 0486 C730      		cpi r28,7
+ 1157 0488 D105      		cpc r29,__zero_reg__
+ 1158 048a 04F4      		brge .L43
+ 286:main.c        **** 			{
+ 287:main.c        **** 				PORTD &= ~(1<<NOTES_tab[i]);
+ 1159               		.loc 1 287 0
+ 1160 048c 92B3      		in r25,0x12
+ 1161 048e 9601      		movw r18,r12
+ 1162 0490 F801      		movw r30,r16
+ 1163 0492 0080      		ld r0,Z
+ 1164 0494 00C0      		rjmp 2f
+ 1165               		1:
+ 1166 0496 220F      		lsl r18
+ 1167 0498 331F      		rol r19
+ 1168               		2:
+ 1169 049a 0A94      		dec r0
+ 1170 049c 02F4      		brpl 1b
+ 1171 049e 822F      		mov r24,r18
+ 1172 04a0 8095      		com r24
+ 1173 04a2 8923      		and r24,r25
+ 1174 04a4 82BB      		out 0x12,r24
+ 1175 04a6 00C0      		rjmp .L44
+ 1176               	.L43:
+ 288:main.c        **** 			}
+ 289:main.c        **** 			else		// PORT C
+ 290:main.c        **** 			{
+ 291:main.c        **** 				PORTC &= ~(1<<NOTES_tab[i]);
+ 1177               		.loc 1 291 0
+ 1178 04a8 95B3      		in r25,0x15
+ 1179 04aa 9601      		movw r18,r12
+ 1180 04ac F801      		movw r30,r16
+ 1181 04ae 0080      		ld r0,Z
+ 1182 04b0 00C0      		rjmp 2f
+ 1183               		1:
+ 1184 04b2 220F      		lsl r18
+ 1185 04b4 331F      		rol r19
+ 1186               		2:
+ 1187 04b6 0A94      		dec r0
+ 1188 04b8 02F4      		brpl 1b
+ 1189 04ba 822F      		mov r24,r18
+ 1190 04bc 8095      		com r24
+ 1191 04be 8923      		and r24,r25
+ 1192 04c0 85BB      		out 0x15,r24
+ 1193               	.L44:
+ 246:main.c        **** 		{
+ 1194               		.loc 1 246 0 discriminator 2
+ 1195 04c2 2196      		adiw r28,1
+ 1196               	.LVL86:
+ 1197 04c4 0E5F      		subi r16,-2
+ 1198 04c6 1F4F      		sbci r17,-1
+ 1199 04c8 F8E0      		ldi r31,8
+ 1200 04ca 6F0E      		add r6,r31
+ 1201 04cc 711C      		adc r7,__zero_reg__
+ 1202 04ce CD30      		cpi r28,13
+ 1203 04d0 D105      		cpc r29,__zero_reg__
+ 1204 04d2 01F0      		breq .+2
+ 1205 04d4 00C0      		rjmp .L45
+ 1206               	/* epilogue start */
+ 1207               	.LBE38:
+ 292:main.c        **** 			}
+ 293:main.c        **** 		}
+ 294:main.c        **** }
+ 1208               		.loc 1 294 0
+ 1209 04d6 FF91      		pop r31
+ 1210 04d8 EF91      		pop r30
+ 1211 04da DF91      		pop r29
+ 1212 04dc CF91      		pop r28
+ 1213               	.LVL87:
+ 1214 04de BF91      		pop r27
+ 1215 04e0 AF91      		pop r26
+ 1216 04e2 9F91      		pop r25
+ 1217 04e4 8F91      		pop r24
+ 1218 04e6 7F91      		pop r23
+ 1219 04e8 6F91      		pop r22
+ 1220 04ea 5F91      		pop r21
+ 1221 04ec 4F91      		pop r20
+ 1222 04ee 3F91      		pop r19
+ 1223 04f0 2F91      		pop r18
+ 1224 04f2 1F91      		pop r17
+ 1225 04f4 0F91      		pop r16
+ 1226 04f6 FF90      		pop r15
+ 1227 04f8 EF90      		pop r14
+ 1228 04fa DF90      		pop r13
+ 1229 04fc CF90      		pop r12
+ 1230 04fe BF90      		pop r11
+ 1231 0500 AF90      		pop r10
+ 1232 0502 9F90      		pop r9
+ 1233 0504 8F90      		pop r8
+ 1234               	.LVL88:
+ 1235 0506 7F90      		pop r7
+ 1236 0508 6F90      		pop r6
+ 1237 050a 0F90      		pop r0
+ 1238 050c 0FBE      		out __SREG__,r0
+ 1239 050e 0F90      		pop r0
+ 1240 0510 1F90      		pop r1
+ 1241 0512 1895      		reti
+ 1242               		.cfi_endproc
+ 1243               	.LFE13:
+ 1245               		.section	.text.startup,"ax",@progbits
+ 1246               	.global	main
+ 1248               	main:
+ 1249               	.LFB14:
+ 295:main.c        **** 
+ 296:main.c        **** // ------------------------- MAIN ----------------------------------------
+ 297:main.c        **** 
+ 298:main.c        **** int main(void)
+ 299:main.c        **** {
+ 1250               		.loc 1 299 0
+ 1251               		.cfi_startproc
+ 1252               	/* prologue: function */
+ 1253               	/* frame size = 0 */
+ 1254               	/* stack size = 0 */
+ 1255               	.L__stack_usage = 0
+ 300:main.c        **** 	USART_Init(MYUBRR);
+ 1256               		.loc 1 300 0
+ 1257 0000 8FE1      		ldi r24,lo8(31)
+ 1258 0002 90E0      		ldi r25,0
+ 1259 0004 0E94 0000 		call USART_Init
+ 1260               	.LVL89:
+ 301:main.c        **** 	PORT_Init();
+ 1261               		.loc 1 301 0
+ 1262 0008 0E94 0000 		call PORT_Init
+ 1263               	.LVL90:
+ 302:main.c        **** 	ADC_Init();
+ 1264               		.loc 1 302 0
+ 1265 000c 0E94 0000 		call ADC_Init
+ 1266               	.LVL91:
+ 303:main.c        **** 	TIM1_Init();
+ 1267               		.loc 1 303 0
+ 1268 0010 0E94 0000 		call TIM1_Init
+ 1269               	.LVL92:
+ 1270               	.L55:
+ 1271 0014 00C0      		rjmp .L55
+ 1272               		.cfi_endproc
+ 1273               	.LFE14:
+ 1275               	.global	octave_change
+ 1276               		.data
+ 1279               	octave_change:
+ 1280 0000 0300      		.word	3
+ 1281               	.global	EMA_prev
+ 1282               		.section .bss
+ 1285               	EMA_prev:
+ 1286 0000 0000 0000 		.zero	16
+ 1286      0000 0000 
+ 1286      0000 0000 
+ 1286      0000 0000 
+ 1287               	.global	EMA
+ 1290               	EMA:
+ 1291 0010 0000 0000 		.zero	16
+ 1291      0000 0000 
+ 1291      0000 0000 
+ 1291      0000 0000 
+ 1292               	.global	EMA_a
+ 1293               		.section	.rodata
+ 1296               	EMA_a:
+ 1297 0000 9A        		.byte	-102
+ 1298 0001 99        		.byte	-103
+ 1299 0002 19        		.byte	25
+ 1300 0003 3F        		.byte	63
+ 1301               	.global	adc_prev_read
+ 1302               		.section .bss
+ 1305               	adc_prev_read:
+ 1306 0020 0000 0000 		.zero	16
+ 1306      0000 0000 
+ 1306      0000 0000 
+ 1306      0000 0000 
+ 1307               	.global	adc_read
+ 1310               	adc_read:
+ 1311 0030 0000 0000 		.zero	16
+ 1311      0000 0000 
+ 1311      0000 0000 
+ 1311      0000 0000 
+ 1312               	.global	PRESSED_BUTTON_tab
+ 1315               	PRESSED_BUTTON_tab:
+ 1316 0040 0000 0000 		.zero	8
+ 1316      0000 0000 
+ 1317               	.global	BUTTON_tab
+ 1320               	BUTTON_tab:
+ 1321 0048 0000      		.zero	2
+ 1322               	.global	PRESSED_KEY_tab
+ 1325               	PRESSED_KEY_tab:
+ 1326 004a 0000 0000 		.zero	104
+ 1326      0000 0000 
+ 1326      0000 0000 
+ 1326      0000 0000 
+ 1326      0000 0000 
+ 1327               	.global	OCTAVES_tab
+ 1328               		.data
+ 1331               	OCTAVES_tab:
+ 1332 0002 0400      		.word	4
+ 1333 0004 0500      		.word	5
+ 1334 0006 0600      		.word	6
+ 1335 0008 0700      		.word	7
+ 1336               	.global	NOTES_tab
+ 1339               	NOTES_tab:
+ 1340 000a 0000      		.word	0
+ 1341 000c 0200      		.word	2
+ 1342 000e 0300      		.word	3
+ 1343 0010 0400      		.word	4
+ 1344 0012 0500      		.word	5
+ 1345 0014 0600      		.word	6
+ 1346 0016 0700      		.word	7
+ 1347 0018 0200      		.word	2
+ 1348 001a 0300      		.word	3
+ 1349 001c 0400      		.word	4
+ 1350 001e 0500      		.word	5
+ 1351 0020 0600      		.word	6
+ 1352 0022 0700      		.word	7
+ 1353               		.text
+ 1354               	.Letext0:
+ 1355               		.file 2 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-     /tmp/cc8sBLxz.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/cc8sBLxz.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/cc8sBLxz.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/cc8sBLxz.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/cc8sBLxz.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/cc8sBLxz.s:12     .text:0000000000000000 TIM1_Init
-     /tmp/cc8sBLxz.s:50     .text:000000000000001e USART_Init
-     /tmp/cc8sBLxz.s:76     .text:000000000000002c uart_putchar
-     /tmp/cc8sBLxz.s:97     .text:0000000000000034 uart_putstring
-     /tmp/cc8sBLxz.s:140    .text:0000000000000050 uart_putint
-     /tmp/cc8sBLxz.s:198    .text:000000000000008c ADC_Init
-     /tmp/cc8sBLxz.s:220    .text:0000000000000098 ADC_read
-     /tmp/cc8sBLxz.s:253    .text:00000000000000ae PORT_Init
-     /tmp/cc8sBLxz.s:277    .text:00000000000000bc note_on
-     /tmp/cc8sBLxz.s:323    .text:00000000000000e2 note_off
-     /tmp/cc8sBLxz.s:369    .text:0000000000000108 CC_send_ADC
-     /tmp/cc8sBLxz.s:842    .bss:000000000000000a adc_prev_read
-     /tmp/cc8sBLxz.s:847    .bss:000000000000001a adc_read
-     /tmp/cc8sBLxz.s:480    .text:0000000000000180 __vector_7
-     /tmp/cc8sBLxz.s:596    .text.startup:0000000000000000 main
-     /tmp/cc8sBLxz.s:866    .data:0000000000000008 NOTES_tab
-     /tmp/cc8sBLxz.s:852    .bss:000000000000002a PRESSED_BUTTON_tab
-     /tmp/cc8sBLxz.s:858    .data:0000000000000000 OCTAVES_tab
-     /tmp/cc8sBLxz.s:817    .bss:0000000000000000 pitch_bend
-     /tmp/cc8sBLxz.s:822    .bss:0000000000000002 adc_0_prev
-     /tmp/cc8sBLxz.s:827    .bss:0000000000000004 adc_6
-     /tmp/cc8sBLxz.s:832    .bss:0000000000000006 adc_1
-     /tmp/cc8sBLxz.s:837    .bss:0000000000000008 adc_0
+     /tmp/cc2p1Bwx.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cc2p1Bwx.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cc2p1Bwx.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cc2p1Bwx.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cc2p1Bwx.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cc2p1Bwx.s:12     .text:0000000000000000 TIM1_Init
+     /tmp/cc2p1Bwx.s:50     .text:000000000000001e USART_Init
+     /tmp/cc2p1Bwx.s:76     .text:000000000000002c uart_putchar
+     /tmp/cc2p1Bwx.s:97     .text:0000000000000034 uart_putstring
+     /tmp/cc2p1Bwx.s:140    .text:0000000000000050 uart_putint
+     /tmp/cc2p1Bwx.s:198    .text:000000000000008c ADC_Init
+     /tmp/cc2p1Bwx.s:220    .text:0000000000000098 ADC_read
+     /tmp/cc2p1Bwx.s:253    .text:00000000000000ae PORT_Init
+     /tmp/cc2p1Bwx.s:281    .text:00000000000000c2 note_on
+     /tmp/cc2p1Bwx.s:1279   .data:0000000000000000 octave_change
+     /tmp/cc2p1Bwx.s:337    .text:00000000000000f8 note_off
+     /tmp/cc2p1Bwx.s:393    .text:000000000000012e button_pressed
+     /tmp/cc2p1Bwx.s:421    .text:0000000000000142 CC_send_BUTTON
+     /tmp/cc2p1Bwx.s:1315   .bss:0000000000000040 PRESSED_BUTTON_tab
+     /tmp/cc2p1Bwx.s:554    .text:00000000000001b8 CC_send_ADC
+     /tmp/cc2p1Bwx.s:1305   .bss:0000000000000020 adc_prev_read
+     /tmp/cc2p1Bwx.s:1310   .bss:0000000000000030 adc_read
+     /tmp/cc2p1Bwx.s:1290   .bss:0000000000000010 EMA
+     /tmp/cc2p1Bwx.s:1285   .bss:0000000000000000 EMA_prev
+     /tmp/cc2p1Bwx.s:819    .text:00000000000002fe __vector_7
+     /tmp/cc2p1Bwx.s:1339   .data:000000000000000a NOTES_tab
+     /tmp/cc2p1Bwx.s:1325   .bss:000000000000004a PRESSED_KEY_tab
+     /tmp/cc2p1Bwx.s:1331   .data:0000000000000002 OCTAVES_tab
+     /tmp/cc2p1Bwx.s:1248   .text.startup:0000000000000000 main
+     /tmp/cc2p1Bwx.s:1296   .rodata:0000000000000000 EMA_a
+     /tmp/cc2p1Bwx.s:1320   .bss:0000000000000048 BUTTON_tab
 
 UNDEFINED SYMBOLS
 itoa
+__floatsisf
+__mulsf3
+__addsf3
+__fixsfsi
 __do_copy_data
 __do_clear_bss
