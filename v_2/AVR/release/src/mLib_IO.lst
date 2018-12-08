@@ -1,0 +1,275 @@
+   1               		.file	"mLib_IO.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	is_pin
+  12               	is_pin:
+  13               	.LFB0:
+  14               		.file 1 "src/mLib_IO.c"
+   1:src/mLib_IO.c **** #include "mLib_IO.h"
+   2:src/mLib_IO.c **** 
+   3:src/mLib_IO.c **** unsigned int is_pin(uint8_t pin, volatile uint8_t *pin_pin)
+   4:src/mLib_IO.c **** {
+  15               		.loc 1 4 0
+  16               		.cfi_startproc
+  17               	.LVL0:
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20               	/* stack size = 0 */
+  21               	.L__stack_usage = 0
+   5:src/mLib_IO.c **** 	if(*pin_pin & (1<<pin))		return 1;
+  22               		.loc 1 5 0
+  23 0000 FB01      		movw r30,r22
+  24 0002 2081      		ld r18,Z
+  25 0004 30E0      		ldi r19,0
+  26 0006 A901      		movw r20,r18
+  27 0008 00C0      		rjmp 2f
+  28               		1:
+  29 000a 5595      		asr r21
+  30 000c 4795      		ror r20
+  31               		2:
+  32 000e 8A95      		dec r24
+  33 0010 02F4      		brpl 1b
+  34 0012 CA01      		movw r24,r20
+  35               	.LVL1:
+   6:src/mLib_IO.c **** 	else 						return 0;
+   7:src/mLib_IO.c **** }
+  36               		.loc 1 7 0
+  37 0014 8170      		andi r24,1
+  38 0016 9927      		clr r25
+  39 0018 0895      		ret
+  40               		.cfi_endproc
+  41               	.LFE0:
+  43               	.global	pin_init
+  45               	pin_init:
+  46               	.LFB1:
+   8:src/mLib_IO.c **** 
+   9:src/mLib_IO.c **** void pin_init(uint8_t pin, volatile uint8_t *pin_ddr, volatile uint8_t *pin_port, unsigned int b_in
+  10:src/mLib_IO.c **** {
+  47               		.loc 1 10 0
+  48               		.cfi_startproc
+  49               	.LVL2:
+  50 001a 0F93      		push r16
+  51               	.LCFI0:
+  52               		.cfi_def_cfa_offset 3
+  53               		.cfi_offset 16, -2
+  54 001c 1F93      		push r17
+  55               	.LCFI1:
+  56               		.cfi_def_cfa_offset 4
+  57               		.cfi_offset 17, -3
+  58               	/* prologue: function */
+  59               	/* frame size = 0 */
+  60               	/* stack size = 2 */
+  61               	.L__stack_usage = 2
+  62 001e 982F      		mov r25,r24
+  63 0020 DB01      		movw r26,r22
+  64 0022 FA01      		movw r30,r20
+  11:src/mLib_IO.c **** 	if(b_in_or_out)		*pin_ddr |= (1<<pin);	// output
+  65               		.loc 1 11 0
+  66 0024 8C91      		ld r24,X
+  67               	.LVL3:
+  68 0026 232B      		or r18,r19
+  69 0028 01F0      		breq .L3
+  70               		.loc 1 11 0 is_stmt 0 discriminator 1
+  71 002a 21E0      		ldi r18,lo8(1)
+  72 002c 30E0      		ldi r19,0
+  73               	.LVL4:
+  74 002e 092E      		mov r0,r25
+  75 0030 00C0      		rjmp 2f
+  76               		1:
+  77 0032 220F      		lsl r18
+  78               		2:
+  79 0034 0A94      		dec r0
+  80 0036 02F4      		brpl 1b
+  81 0038 282B      		or r18,r24
+  82 003a 00C0      		rjmp .L7
+  83               	.LVL5:
+  84               	.L3:
+  12:src/mLib_IO.c **** 	else 				*pin_ddr &= ~(1<<pin);	// input
+  85               		.loc 1 12 0 is_stmt 1
+  86 003c 21E0      		ldi r18,lo8(1)
+  87 003e 30E0      		ldi r19,0
+  88               	.LVL6:
+  89 0040 092E      		mov r0,r25
+  90 0042 00C0      		rjmp 2f
+  91               		1:
+  92 0044 220F      		lsl r18
+  93               		2:
+  94 0046 0A94      		dec r0
+  95 0048 02F4      		brpl 1b
+  96 004a 2095      		com r18
+  97 004c 2823      		and r18,r24
+  98               	.L7:
+  99 004e 2C93      		st X,r18
+  13:src/mLib_IO.c **** 
+  14:src/mLib_IO.c **** 	if(b_def_state_or_pullup)	*pin_port |= (1<<pin);	// default set or pullup
+ 100               		.loc 1 14 0
+ 101 0050 4081      		ld r20,Z
+ 102               	.LVL7:
+ 103 0052 21E0      		ldi r18,lo8(1)
+ 104 0054 30E0      		ldi r19,0
+ 105 0056 B901      		movw r22,r18
+ 106               	.LVL8:
+ 107 0058 00C0      		rjmp 2f
+ 108               		1:
+ 109 005a 660F      		lsl r22
+ 110 005c 771F      		rol r23
+ 111               		2:
+ 112 005e 9A95      		dec r25
+ 113 0060 02F4      		brpl 1b
+ 114 0062 CB01      		movw r24,r22
+ 115 0064 012B      		or r16,r17
+ 116 0066 01F0      		breq .L5
+ 117               		.loc 1 14 0 is_stmt 0 discriminator 1
+ 118 0068 842B      		or r24,r20
+ 119 006a 00C0      		rjmp .L8
+ 120               	.L5:
+  15:src/mLib_IO.c **** 	else						*pin_port &= ~(1<<pin);	// default reset or no pullup
+ 121               		.loc 1 15 0 is_stmt 1
+ 122 006c 8095      		com r24
+ 123 006e 8423      		and r24,r20
+ 124               	.L8:
+ 125 0070 8083      		st Z,r24
+ 126               	/* epilogue start */
+  16:src/mLib_IO.c **** }
+ 127               		.loc 1 16 0
+ 128 0072 1F91      		pop r17
+ 129 0074 0F91      		pop r16
+ 130               	.LVL9:
+ 131 0076 0895      		ret
+ 132               		.cfi_endproc
+ 133               	.LFE1:
+ 135               	.global	pin_set_state
+ 137               	pin_set_state:
+ 138               	.LFB2:
+  17:src/mLib_IO.c **** 
+  18:src/mLib_IO.c **** void pin_set_state(uint8_t pin, volatile uint8_t *pin_port, volatile uint8_t *pin_pin, unsigned int
+  19:src/mLib_IO.c **** {
+ 139               		.loc 1 19 0
+ 140               		.cfi_startproc
+ 141               	.LVL10:
+ 142               	/* prologue: function */
+ 143               	/* frame size = 0 */
+ 144               	/* stack size = 0 */
+ 145               	.L__stack_usage = 0
+ 146 0078 FB01      		movw r30,r22
+  20:src/mLib_IO.c **** 	switch (mode)
+ 147               		.loc 1 20 0
+ 148 007a 2130      		cpi r18,1
+ 149 007c 3105      		cpc r19,__zero_reg__
+ 150 007e 01F0      		breq .L12
+ 151 0080 00F0      		brlo .L17
+ 152 0082 2230      		cpi r18,2
+ 153 0084 3105      		cpc r19,__zero_reg__
+ 154 0086 01F0      		breq .L14
+ 155 0088 00C0      		rjmp .L17
+ 156               	.L12:
+  21:src/mLib_IO.c **** 	{
+  22:src/mLib_IO.c **** 		case 0:		// reset pin
+  23:src/mLib_IO.c **** 		*pin_port &= ~(1<<pin);
+  24:src/mLib_IO.c **** 		break;
+  25:src/mLib_IO.c **** 
+  26:src/mLib_IO.c **** 		case 1:		// set pin
+  27:src/mLib_IO.c **** 		*pin_port |= (1<<pin);
+ 157               		.loc 1 27 0
+ 158 008a 9081      		ld r25,Z
+ 159 008c 00C0      		rjmp 2f
+ 160               		1:
+ 161 008e 220F      		lsl r18
+ 162               		2:
+ 163 0090 8A95      		dec r24
+ 164 0092 02F4      		brpl 1b
+ 165               	.LVL11:
+ 166 0094 292B      		or r18,r25
+ 167 0096 2083      		st Z,r18
+  28:src/mLib_IO.c **** 		break;
+ 168               		.loc 1 28 0
+ 169 0098 0895      		ret
+ 170               	.LVL12:
+ 171               	.L14:
+  29:src/mLib_IO.c **** 
+  30:src/mLib_IO.c **** 		case 2:		// toggle pin
+  31:src/mLib_IO.c **** 		if(*pin_pin & (1<<pin))	*pin_port &= ~(1<<pin);
+ 172               		.loc 1 31 0
+ 173 009a DA01      		movw r26,r20
+ 174 009c 2C91      		ld r18,X
+ 175               	.LVL13:
+ 176 009e 30E0      		ldi r19,0
+ 177 00a0 082E      		mov r0,r24
+ 178 00a2 00C0      		rjmp 2f
+ 179               		1:
+ 180 00a4 3595      		asr r19
+ 181 00a6 2795      		ror r18
+ 182               		2:
+ 183 00a8 0A94      		dec r0
+ 184 00aa 02F4      		brpl 1b
+ 185 00ac 4081      		ld r20,Z
+ 186               	.LVL14:
+ 187 00ae 20FD      		sbrc r18,0
+ 188 00b0 00C0      		rjmp .L18
+  32:src/mLib_IO.c **** 		else					*pin_port |= (1<<pin);
+ 189               		.loc 1 32 0
+ 190 00b2 21E0      		ldi r18,lo8(1)
+ 191 00b4 30E0      		ldi r19,0
+ 192 00b6 D901      		movw r26,r18
+ 193               	.LVL15:
+ 194 00b8 00C0      		rjmp 2f
+ 195               		1:
+ 196 00ba AA0F      		lsl r26
+ 197 00bc BB1F      		rol r27
+ 198               		2:
+ 199 00be 8A95      		dec r24
+ 200 00c0 02F4      		brpl 1b
+ 201 00c2 CD01      		movw r24,r26
+ 202               	.LVL16:
+ 203 00c4 842B      		or r24,r20
+ 204 00c6 00C0      		rjmp .L19
+ 205               	.LVL17:
+ 206               	.L17:
+  33:src/mLib_IO.c **** 		break;
+  34:src/mLib_IO.c **** 
+  35:src/mLib_IO.c **** 		default:
+  36:src/mLib_IO.c **** 		*pin_port &= ~(1<<pin);
+ 207               		.loc 1 36 0
+ 208 00c8 4081      		ld r20,Z
+ 209               	.LVL18:
+ 210               	.L18:
+ 211 00ca 21E0      		ldi r18,lo8(1)
+ 212 00cc 30E0      		ldi r19,0
+ 213 00ce B901      		movw r22,r18
+ 214               	.LVL19:
+ 215 00d0 00C0      		rjmp 2f
+ 216               		1:
+ 217 00d2 660F      		lsl r22
+ 218 00d4 771F      		rol r23
+ 219               		2:
+ 220 00d6 8A95      		dec r24
+ 221 00d8 02F4      		brpl 1b
+ 222 00da CB01      		movw r24,r22
+ 223               	.LVL20:
+ 224 00dc 8095      		com r24
+ 225 00de 8423      		and r24,r20
+ 226               	.L19:
+ 227 00e0 8083      		st Z,r24
+ 228 00e2 0895      		ret
+ 229               		.cfi_endproc
+ 230               	.LFE2:
+ 232               	.Letext0:
+ 233               		.file 2 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mLib_IO.c
+     /tmp/ccapAsqI.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccapAsqI.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccapAsqI.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccapAsqI.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccapAsqI.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccapAsqI.s:12     .text:0000000000000000 is_pin
+     /tmp/ccapAsqI.s:45     .text:000000000000001a pin_init
+     /tmp/ccapAsqI.s:137    .text:0000000000000078 pin_set_state
+
+NO UNDEFINED SYMBOLS

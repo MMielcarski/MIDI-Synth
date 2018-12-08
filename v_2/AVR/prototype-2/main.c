@@ -29,7 +29,17 @@
 
 #define VEL_DEF_CMD		0x40	// default 64 velocity
 
+#define UNDEF_1 0x14
+#define UNDEF_2 0x15
+#define UNDEF_3 0x16
+#define UNDEF_4 0x17
+#define UNDEF_5 0x18
+#define UNDEF_6 0x19
+#define UNDEF_7 0x1A
+#define UNDEF_8 0x19
 
+#define CC_ON_VAL 0x46
+#define CC_OFF_VAL 0x3C
 
 #define note1 PD0 
 #define note2 PD2 
@@ -62,6 +72,7 @@ int PRESSED_KEY_tab[13][4]={0};
 
 int BUTTON_tab = {button1, button2, button3, button4};
 int PRESSED_BUTTON_tab[4] = {};
+unsigned int PRESSED_BUTTON_STATE_tab[4] = {};
 
 int adc_read[8] = {};
 int adc_prev_read[8] = {};	
@@ -172,8 +183,18 @@ void CC_send_BUTTON(uint8_t data1, uint8_t data2, int button_pin)
 	{
 		PRESSED_BUTTON_tab[button_pin] = 1;
 		uart_putchar(CC_CMD);
-		uart_putchar(data1);		
-		uart_putchar(data2);
+		if(PRESSED_BUTTON_STATE_tab[button_pin])
+		{
+			PRESSED_BUTTON_STATE_tab[button_pin] = 0;
+			uart_putchar(data1);		
+			uart_putchar(CC_OFF_VAL);	
+		}
+		else
+		{
+			PRESSED_BUTTON_STATE_tab[button_pin] = 1;
+			uart_putchar(data1);		
+			uart_putchar(CC_ON_VAL);
+		}	
 	}
 	else if(!(button_pressed(button_pin_port,button_pin)))
 	{
@@ -209,10 +230,10 @@ void CC_send_ADC(uint8_t control_num,  unsigned int channel)
 
 ISR(TIMER1_COMPA_vect)	// timer1 overflow interrupt
 {
-		CC_send_BUTTON(5,6,button1);	// todo: tab with pin numbers
-		CC_send_BUTTON(7,6,button2);
-		CC_send_BUTTON(8,6,button3);
-		CC_send_BUTTON(9,6,button4);
+		CC_send_BUTTON(UNDEF_1,1,button1);	// todo: tab with pin numbers
+		CC_send_BUTTON(UNDEF_2,1,button2);
+		CC_send_BUTTON(UNDEF_3,1,button3);
+		CC_send_BUTTON(UNDEF_4,1,button4);
 
 	// octave change:
 	/*if(button_pressed(button_pin_port,button3) && !(PRESSED_BUTTON_tab[button3]))
@@ -234,14 +255,14 @@ ISR(TIMER1_COMPA_vect)	// timer1 overflow interrupt
 		PRESSED_BUTTON_tab[button4] = 0;
 	}*/
 
-		CC_send_ADC(MAIN_VOLUME_CMD, 0);	// slide 1
-		CC_send_ADC(SOUND_CTRL_6_DECAY_CMD, 1);	// slide 2
+		CC_send_ADC(UNDEF_5, 0);	// slide 1
+		CC_send_ADC(UNDEF_6, 1);	// slide 2
 		CC_send_ADC(GEN_PURP_CTRL_1_CMD, 2);	// knob 1 
 		CC_send_ADC(GEN_PURP_CTRL_2_CMD, 3);	// knob 2
 		CC_send_ADC(GEN_PURP_CTRL_3_CMD, 4);	// knob 3
 		CC_send_ADC(GEN_PURP_CTRL_4_CMD, 5);	// knob 4		
-		CC_send_ADC(MODULATION_WHEEL_CMD, 6);	// joystick 1	
-		CC_send_ADC(BREATH_CONTROLLER_CMD, 7);	// joystick 2	
+		CC_send_ADC(UNDEF_7, 6);	// joystick 1	
+		CC_send_ADC(UNDEF_8, 7);	// joystick 2	
 
 for(int i=0; i<13; i++)		// notes loop
 		{

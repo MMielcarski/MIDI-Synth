@@ -1,0 +1,95 @@
+   1               		.file	"mLib_ADC.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	adc_init
+  12               	adc_init:
+  13               	.LFB0:
+  14               		.file 1 "src/mLib_ADC.c"
+   1:src/mLib_ADC.c **** #include "mLib_ADC.h"
+   2:src/mLib_ADC.c **** 
+   3:src/mLib_ADC.c **** void adc_init(void)
+   4:src/mLib_ADC.c **** {
+  15               		.loc 1 4 0
+  16               		.cfi_startproc
+  17               	/* prologue: function */
+  18               	/* frame size = 0 */
+  19               	/* stack size = 0 */
+  20               	.L__stack_usage = 0
+   5:src/mLib_ADC.c **** 	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0); // Set ADC prescalar to 128 - 125KHz sample 
+  21               		.loc 1 5 0
+  22 0000 86B1      		in r24,0x6
+  23 0002 8760      		ori r24,lo8(7)
+  24 0004 86B9      		out 0x6,r24
+   6:src/mLib_ADC.c **** 	ADMUX |= (1 << REFS0); 	// Set ADC reference to AVCC
+  25               		.loc 1 6 0
+  26 0006 3E9A      		sbi 0x7,6
+   7:src/mLib_ADC.c **** 
+   8:src/mLib_ADC.c **** 	ADCSRA |= (1 << ADEN);  // Enable ADC
+  27               		.loc 1 8 0
+  28 0008 379A      		sbi 0x6,7
+  29 000a 0895      		ret
+  30               		.cfi_endproc
+  31               	.LFE0:
+  33               	.global	adc_read
+  35               	adc_read:
+  36               	.LFB1:
+   9:src/mLib_ADC.c **** 	//ADCSRA |= (1 << ADSC);  // Start A2D Conversions
+  10:src/mLib_ADC.c **** 	//ADCSRA |= (1 << ADATE);	// for free running mode
+  11:src/mLib_ADC.c **** }
+  12:src/mLib_ADC.c **** 
+  13:src/mLib_ADC.c **** uint16_t adc_read(uint8_t adc_channel)		
+  14:src/mLib_ADC.c **** {
+  37               		.loc 1 14 0
+  38               		.cfi_startproc
+  39               	.LVL0:
+  40               	/* prologue: function */
+  41               	/* frame size = 0 */
+  42               	/* stack size = 0 */
+  43               	.L__stack_usage = 0
+  15:src/mLib_ADC.c **** 	adc_channel &= 0x07;					// AND operation with 7 (will keep channel between 0-7) 
+  16:src/mLib_ADC.c **** 	ADMUX = (ADMUX & 0xF8) | adc_channel;	// clears 3 first bits before OR
+  44               		.loc 1 16 0
+  45 000c 97B1      		in r25,0x7
+  46 000e 987F      		andi r25,lo8(-8)
+  47 0010 8770      		andi r24,lo8(7)
+  48               	.LVL1:
+  49 0012 892B      		or r24,r25
+  50               	.LVL2:
+  51 0014 87B9      		out 0x7,r24
+  17:src/mLib_ADC.c **** 
+  18:src/mLib_ADC.c **** 	ADCSRA |= (1 << ADSC);				// start single convesrion
+  52               		.loc 1 18 0
+  53 0016 369A      		sbi 0x6,6
+  54               	.L3:
+  19:src/mLib_ADC.c **** 	while(ADCSRA & (1 << ADSC));		// wait for conversion to complete
+  55               		.loc 1 19 0 discriminator 1
+  56 0018 3699      		sbic 0x6,6
+  57 001a 00C0      		rjmp .L3
+  20:src/mLib_ADC.c **** 	return ADCW;
+  58               		.loc 1 20 0
+  59 001c 84B1      		in r24,0x4
+  60 001e 95B1      		in r25,0x4+1
+  21:src/mLib_ADC.c **** }
+  61               		.loc 1 21 0
+  62 0020 0895      		ret
+  63               		.cfi_endproc
+  64               	.LFE1:
+  66               	.Letext0:
+  67               		.file 2 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mLib_ADC.c
+     /tmp/ccoFRmpG.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccoFRmpG.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccoFRmpG.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccoFRmpG.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccoFRmpG.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccoFRmpG.s:12     .text:0000000000000000 adc_init
+     /tmp/ccoFRmpG.s:35     .text:000000000000000c adc_read
+
+NO UNDEFINED SYMBOLS

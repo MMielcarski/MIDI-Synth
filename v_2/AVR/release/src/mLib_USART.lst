@@ -1,0 +1,226 @@
+   1               		.file	"mLib_USART.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	usart_init
+  12               	usart_init:
+  13               	.LFB0:
+  14               		.file 1 "src/mLib_USART.c"
+   1:src/mLib_USART.c **** #include "mLib_USART.h"
+   2:src/mLib_USART.c **** 
+   3:src/mLib_USART.c **** void usart_init(unsigned int ubrr)		
+   4:src/mLib_USART.c **** {
+  15               		.loc 1 4 0
+  16               		.cfi_startproc
+  17               	.LVL0:
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20               	/* stack size = 0 */
+  21               	.L__stack_usage = 0
+   5:src/mLib_USART.c ****    UBRRH = (unsigned char)(ubrr>>8);	// set baud rate to 31250
+  22               		.loc 1 5 0
+  23 0000 90BD      		out 0x20,r25
+   6:src/mLib_USART.c ****    UBRRL = (unsigned char)ubrr;		//
+  24               		.loc 1 6 0
+  25 0002 89B9      		out 0x9,r24
+   7:src/mLib_USART.c ****    UCSRB = (1<<TXEN);		            // Enable transmitter 
+  26               		.loc 1 7 0
+  27 0004 88E0      		ldi r24,lo8(8)
+  28               	.LVL1:
+  29 0006 8AB9      		out 0xa,r24
+   8:src/mLib_USART.c ****    UCSRC = (1<<URSEL)|(1<<USBS)|(3<<UCSZ0);		// Set frame format: 8data, 2stop bit
+  30               		.loc 1 8 0
+  31 0008 8EE8      		ldi r24,lo8(-114)
+  32 000a 80BD      		out 0x20,r24
+  33 000c 0895      		ret
+  34               		.cfi_endproc
+  35               	.LFE0:
+  37               	.global	usart_put_8bit
+  39               	usart_put_8bit:
+  40               	.LFB1:
+   9:src/mLib_USART.c **** }
+  10:src/mLib_USART.c **** 
+  11:src/mLib_USART.c **** void usart_put_8bit(char data) 
+  12:src/mLib_USART.c **** {
+  41               		.loc 1 12 0
+  42               		.cfi_startproc
+  43               	/* prologue: function */
+  44               	/* frame size = 0 */
+  45               	/* stack size = 0 */
+  46               	.L__stack_usage = 0
+  47               	.LVL2:
+  48               	.L3:
+  13:src/mLib_USART.c **** 	while ( !(UCSRA & (1<<UDRE)) )	 
+  49               		.loc 1 13 0 discriminator 1
+  50 000e 5D9B      		sbis 0xb,5
+  51 0010 00C0      		rjmp .L3
+  14:src/mLib_USART.c **** 	;
+  15:src/mLib_USART.c ****     UDR = data;							
+  52               		.loc 1 15 0
+  53 0012 8CB9      		out 0xc,r24
+  54 0014 0895      		ret
+  55               		.cfi_endproc
+  56               	.LFE1:
+  58               	.global	usart_get_8bit
+  60               	usart_get_8bit:
+  61               	.LFB2:
+  16:src/mLib_USART.c **** }
+  17:src/mLib_USART.c **** 
+  18:src/mLib_USART.c **** uint8_t usart_get_8bit(void) 
+  19:src/mLib_USART.c **** {
+  62               		.loc 1 19 0
+  63               		.cfi_startproc
+  64               	/* prologue: function */
+  65               	/* frame size = 0 */
+  66               	/* stack size = 0 */
+  67               	.L__stack_usage = 0
+  68               	.L8:
+  20:src/mLib_USART.c ****     loop_until_bit_is_set(UCSRA, RXC); 	
+  69               		.loc 1 20 0 discriminator 1
+  70 0016 5F9B      		sbis 0xb,7
+  71 0018 00C0      		rjmp .L8
+  21:src/mLib_USART.c ****     return UDR;
+  72               		.loc 1 21 0
+  73 001a 8CB1      		in r24,0xc
+  22:src/mLib_USART.c **** }
+  74               		.loc 1 22 0
+  75 001c 0895      		ret
+  76               		.cfi_endproc
+  77               	.LFE2:
+  79               	.global	usart_putstring
+  81               	usart_putstring:
+  82               	.LFB3:
+  23:src/mLib_USART.c **** 
+  24:src/mLib_USART.c **** void usart_putstring(char tab[])
+  25:src/mLib_USART.c **** {
+  83               		.loc 1 25 0
+  84               		.cfi_startproc
+  85               	.LVL3:
+  86 001e CF93      		push r28
+  87               	.LCFI0:
+  88               		.cfi_def_cfa_offset 3
+  89               		.cfi_offset 28, -2
+  90 0020 DF93      		push r29
+  91               	.LCFI1:
+  92               		.cfi_def_cfa_offset 4
+  93               		.cfi_offset 29, -3
+  94               	/* prologue: function */
+  95               	/* frame size = 0 */
+  96               	/* stack size = 2 */
+  97               	.L__stack_usage = 2
+  98               	.L11:
+  26:src/mLib_USART.c **** 	int character_number = 0;
+  27:src/mLib_USART.c **** 	while (( UCSRA & (1<<UDRE))  == 0) {};
+  99               		.loc 1 27 0 discriminator 1
+ 100 0022 5D9B      		sbis 0xb,5
+ 101 0024 00C0      		rjmp .L11
+ 102 0026 EC01      		movw r28,r24
+ 103               	.LVL4:
+ 104               	.L12:
+  28:src/mLib_USART.c ****         while (tab[character_number] != 0x00)
+ 105               		.loc 1 28 0
+ 106 0028 8991      		ld r24,Y+
+ 107 002a 8823      		tst r24
+ 108 002c 01F0      		breq .L16
+  29:src/mLib_USART.c **** 		{ 
+  30:src/mLib_USART.c ****             usart_put_8bit(tab[character_number]);
+ 109               		.loc 1 30 0
+ 110 002e 0E94 0000 		call usart_put_8bit
+ 111               	.LVL5:
+ 112 0032 00C0      		rjmp .L12
+ 113               	.L16:
+ 114               	/* epilogue start */
+  31:src/mLib_USART.c **** 			character_number++; 
+  32:src/mLib_USART.c ****         }
+  33:src/mLib_USART.c **** }
+ 115               		.loc 1 33 0
+ 116 0034 DF91      		pop r29
+ 117 0036 CF91      		pop r28
+ 118 0038 0895      		ret
+ 119               		.cfi_endproc
+ 120               	.LFE3:
+ 122               	.global	usart_put_16bit
+ 124               	usart_put_16bit:
+ 125               	.LFB4:
+  34:src/mLib_USART.c **** 
+  35:src/mLib_USART.c **** void usart_put_16bit(int16_t value)
+  36:src/mLib_USART.c **** {
+ 126               		.loc 1 36 0
+ 127               		.cfi_startproc
+ 128               	.LVL6:
+ 129 003a CF93      		push r28
+ 130               	.LCFI2:
+ 131               		.cfi_def_cfa_offset 3
+ 132               		.cfi_offset 28, -2
+ 133 003c DF93      		push r29
+ 134               	.LCFI3:
+ 135               		.cfi_def_cfa_offset 4
+ 136               		.cfi_offset 29, -3
+ 137 003e CDB7      		in r28,__SP_L__
+ 138 0040 DEB7      		in r29,__SP_H__
+ 139               	.LCFI4:
+ 140               		.cfi_def_cfa_register 28
+ 141 0042 6097      		sbiw r28,16
+ 142               	.LCFI5:
+ 143               		.cfi_def_cfa_offset 20
+ 144 0044 0FB6      		in __tmp_reg__,__SREG__
+ 145 0046 F894      		cli
+ 146 0048 DEBF      		out __SP_H__,r29
+ 147 004a 0FBE      		out __SREG__,__tmp_reg__
+ 148 004c CDBF      		out __SP_L__,r28
+ 149               	/* prologue: function */
+ 150               	/* frame size = 16 */
+ 151               	/* stack size = 18 */
+ 152               	.L__stack_usage = 18
+  37:src/mLib_USART.c **** 	char tab[16];
+  38:src/mLib_USART.c **** 	itoa(value,tab,10);
+ 153               		.loc 1 38 0
+ 154 004e 4AE0      		ldi r20,lo8(10)
+ 155 0050 50E0      		ldi r21,0
+ 156 0052 BE01      		movw r22,r28
+ 157 0054 6F5F      		subi r22,-1
+ 158 0056 7F4F      		sbci r23,-1
+ 159 0058 0E94 0000 		call itoa
+ 160               	.LVL7:
+  39:src/mLib_USART.c **** 	usart_putstring(tab);
+ 161               		.loc 1 39 0
+ 162 005c CE01      		movw r24,r28
+ 163 005e 0196      		adiw r24,1
+ 164 0060 0E94 0000 		call usart_putstring
+ 165               	.LVL8:
+ 166               	/* epilogue start */
+  40:src/mLib_USART.c **** }...
+ 167               		.loc 1 40 0
+ 168 0064 6096      		adiw r28,16
+ 169 0066 0FB6      		in __tmp_reg__,__SREG__
+ 170 0068 F894      		cli
+ 171 006a DEBF      		out __SP_H__,r29
+ 172 006c 0FBE      		out __SREG__,__tmp_reg__
+ 173 006e CDBF      		out __SP_L__,r28
+ 174 0070 DF91      		pop r29
+ 175 0072 CF91      		pop r28
+ 176 0074 0895      		ret
+ 177               		.cfi_endproc
+ 178               	.LFE4:
+ 180               	.Letext0:
+ 181               		.file 2 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 mLib_USART.c
+     /tmp/ccXRbQUN.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccXRbQUN.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccXRbQUN.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccXRbQUN.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccXRbQUN.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccXRbQUN.s:12     .text:0000000000000000 usart_init
+     /tmp/ccXRbQUN.s:39     .text:000000000000000e usart_put_8bit
+     /tmp/ccXRbQUN.s:60     .text:0000000000000016 usart_get_8bit
+     /tmp/ccXRbQUN.s:81     .text:000000000000001e usart_putstring
+     /tmp/ccXRbQUN.s:124    .text:000000000000003a usart_put_16bit
+
+UNDEFINED SYMBOLS
+itoa

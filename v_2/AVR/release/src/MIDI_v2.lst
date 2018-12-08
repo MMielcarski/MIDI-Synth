@@ -1,0 +1,1110 @@
+   1               		.file	"MIDI_v2.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               	.global	midi_reg_init
+  12               	midi_reg_init:
+  13               	.LFB6:
+  14               		.file 1 "src/MIDI_v2.c"
+   1:src/MIDI_v2.c **** #include "MIDI_v2.h"
+   2:src/MIDI_v2.c **** 
+   3:src/MIDI_v2.c **** unsigned int notes_pin_tab[13] = {NOTE1,NOTE2,NOTE3,NOTE4,NOTE5,NOTE6,NOTE7,NOTE8,NOTE9,NOTE10,NOTE
+   4:src/MIDI_v2.c **** unsigned int octaves_pin_tab[4] = {OCTAVE1,OCTAVE2,OCTAVE3,OCTAVE4};
+   5:src/MIDI_v2.c **** unsigned int key_state_tab[13][4]={0};
+   6:src/MIDI_v2.c **** 
+   7:src/MIDI_v2.c **** unsigned int buttons_pin_tab = {BUTTON1, BUTTON2, BUTTON3, BUTTON4};
+   8:src/MIDI_v2.c **** unsigned int buttons_state_tab[4] = {};
+   9:src/MIDI_v2.c **** unsigned int buttons_toggle_tab[4] = {};
+  10:src/MIDI_v2.c **** 
+  11:src/MIDI_v2.c **** unsigned int adc_actual_read[8] = {};
+  12:src/MIDI_v2.c **** unsigned int adc_prev_read[8] = {};	
+  13:src/MIDI_v2.c **** 
+  14:src/MIDI_v2.c **** const float ema_a = 0.6;
+  15:src/MIDI_v2.c **** unsigned int ema[8] = {};
+  16:src/MIDI_v2.c **** unsigned int ema_prev[8] = {};
+  17:src/MIDI_v2.c **** 
+  18:src/MIDI_v2.c **** int octave_change_global = 3;
+  19:src/MIDI_v2.c **** 
+  20:src/MIDI_v2.c **** void midi_reg_init(void)
+  21:src/MIDI_v2.c **** {
+  15               		.loc 1 21 0
+  16               		.cfi_startproc
+  17               	/* prologue: function */
+  18               	/* frame size = 0 */
+  19               	/* stack size = 0 */
+  20               	.L__stack_usage = 0
+  22:src/MIDI_v2.c **** 	MCUCSR = (1<<JTD);			//disabling JTAG
+  21               		.loc 1 22 0
+  22 0000 80E8      		ldi r24,lo8(-128)
+  23 0002 84BF      		out 0x34,r24
+  23:src/MIDI_v2.c **** 	MCUCSR = (1<<JTD);			//
+  24               		.loc 1 23 0
+  25 0004 84BF      		out 0x34,r24
+  24:src/MIDI_v2.c **** 	DDRD = 0xFF;
+  26               		.loc 1 24 0
+  27 0006 8FEF      		ldi r24,lo8(-1)
+  28 0008 81BB      		out 0x11,r24
+  25:src/MIDI_v2.c **** 	DDRC = 0xFF;
+  29               		.loc 1 25 0
+  30 000a 84BB      		out 0x14,r24
+  26:src/MIDI_v2.c **** 	
+  27:src/MIDI_v2.c **** 	PORTB |= (1<<BUTTON1)|(1<<BUTTON2)|(1<<BUTTON3)|(1<<BUTTON4);	// pull-up on buttons
+  31               		.loc 1 27 0
+  32 000c 88B3      		in r24,0x18
+  33 000e 8F60      		ori r24,lo8(15)
+  34 0010 88BB      		out 0x18,r24
+  35 0012 0895      		ret
+  36               		.cfi_endproc
+  37               	.LFE6:
+  39               	.global	midi_note_on
+  41               	midi_note_on:
+  42               	.LFB7:
+  28:src/MIDI_v2.c **** }
+  29:src/MIDI_v2.c **** 
+  30:src/MIDI_v2.c **** void midi_note_on(unsigned int key, unsigned int oct, unsigned int octave_change)
+  31:src/MIDI_v2.c **** {
+  43               		.loc 1 31 0
+  44               		.cfi_startproc
+  45               	.LVL0:
+  46 0014 EF92      		push r14
+  47               	.LCFI0:
+  48               		.cfi_def_cfa_offset 3
+  49               		.cfi_offset 14, -2
+  50 0016 FF92      		push r15
+  51               	.LCFI1:
+  52               		.cfi_def_cfa_offset 4
+  53               		.cfi_offset 15, -3
+  54 0018 1F93      		push r17
+  55               	.LCFI2:
+  56               		.cfi_def_cfa_offset 5
+  57               		.cfi_offset 17, -4
+  58 001a CF93      		push r28
+  59               	.LCFI3:
+  60               		.cfi_def_cfa_offset 6
+  61               		.cfi_offset 28, -5
+  62 001c DF93      		push r29
+  63               	.LCFI4:
+  64               		.cfi_def_cfa_offset 7
+  65               		.cfi_offset 29, -6
+  66               	/* prologue: function */
+  67               	/* frame size = 0 */
+  68               	/* stack size = 5 */
+  69               	.L__stack_usage = 5
+  70 001e 182F      		mov r17,r24
+  71 0020 7B01      		movw r14,r22
+  72 0022 EA01      		movw r28,r20
+  32:src/MIDI_v2.c **** 	usart_put_8bit(NOTE_ON_CMD);		
+  73               		.loc 1 32 0
+  74 0024 80E9      		ldi r24,lo8(-112)
+  75               	.LVL1:
+  76 0026 0E94 0000 		call usart_put_8bit
+  77               	.LVL2:
+  33:src/MIDI_v2.c **** 	usart_put_8bit(key + (oct+octave_change) * 12);
+  78               		.loc 1 33 0
+  79 002a CE0D      		add r28,r14
+  80 002c DF1D      		adc r29,r15
+  81               	.LVL3:
+  82 002e 812F      		mov r24,r17
+  83 0030 2CE0      		ldi r18,lo8(12)
+  84 0032 C29F      		mul r28,r18
+  85 0034 800D      		add r24,r0
+  86 0036 1124      		clr __zero_reg__
+  87 0038 0E94 0000 		call usart_put_8bit
+  88               	.LVL4:
+  34:src/MIDI_v2.c **** 	usart_put_8bit(VEL_DEF_CMD);
+  89               		.loc 1 34 0
+  90 003c 80E4      		ldi r24,lo8(64)
+  91               	/* epilogue start */
+  35:src/MIDI_v2.c **** }
+  92               		.loc 1 35 0
+  93 003e DF91      		pop r29
+  94 0040 CF91      		pop r28
+  95 0042 1F91      		pop r17
+  96 0044 FF90      		pop r15
+  97 0046 EF90      		pop r14
+  98               	.LVL5:
+  34:src/MIDI_v2.c **** 	usart_put_8bit(VEL_DEF_CMD);
+  99               		.loc 1 34 0
+ 100 0048 0C94 0000 		jmp usart_put_8bit
+ 101               	.LVL6:
+ 102               		.cfi_endproc
+ 103               	.LFE7:
+ 105               	.global	midi_note_off
+ 107               	midi_note_off:
+ 108               	.LFB8:
+  36:src/MIDI_v2.c **** 
+  37:src/MIDI_v2.c **** void midi_note_off(unsigned int key, unsigned int oct, unsigned int octave_change)
+  38:src/MIDI_v2.c **** {
+ 109               		.loc 1 38 0
+ 110               		.cfi_startproc
+ 111               	.LVL7:
+ 112 004c EF92      		push r14
+ 113               	.LCFI5:
+ 114               		.cfi_def_cfa_offset 3
+ 115               		.cfi_offset 14, -2
+ 116 004e FF92      		push r15
+ 117               	.LCFI6:
+ 118               		.cfi_def_cfa_offset 4
+ 119               		.cfi_offset 15, -3
+ 120 0050 1F93      		push r17
+ 121               	.LCFI7:
+ 122               		.cfi_def_cfa_offset 5
+ 123               		.cfi_offset 17, -4
+ 124 0052 CF93      		push r28
+ 125               	.LCFI8:
+ 126               		.cfi_def_cfa_offset 6
+ 127               		.cfi_offset 28, -5
+ 128 0054 DF93      		push r29
+ 129               	.LCFI9:
+ 130               		.cfi_def_cfa_offset 7
+ 131               		.cfi_offset 29, -6
+ 132               	/* prologue: function */
+ 133               	/* frame size = 0 */
+ 134               	/* stack size = 5 */
+ 135               	.L__stack_usage = 5
+ 136 0056 182F      		mov r17,r24
+ 137 0058 7B01      		movw r14,r22
+ 138 005a EA01      		movw r28,r20
+  39:src/MIDI_v2.c **** 	usart_put_8bit(NOTE_OFF_CMD);		
+ 139               		.loc 1 39 0
+ 140 005c 80E8      		ldi r24,lo8(-128)
+ 141               	.LVL8:
+ 142 005e 0E94 0000 		call usart_put_8bit
+ 143               	.LVL9:
+  40:src/MIDI_v2.c **** 	usart_put_8bit(key + (oct+octave_change) * 12);
+ 144               		.loc 1 40 0
+ 145 0062 CE0D      		add r28,r14
+ 146 0064 DF1D      		adc r29,r15
+ 147               	.LVL10:
+ 148 0066 812F      		mov r24,r17
+ 149 0068 2CE0      		ldi r18,lo8(12)
+ 150 006a C29F      		mul r28,r18
+ 151 006c 800D      		add r24,r0
+ 152 006e 1124      		clr __zero_reg__
+ 153 0070 0E94 0000 		call usart_put_8bit
+ 154               	.LVL11:
+  41:src/MIDI_v2.c **** 	usart_put_8bit(VEL_DEF_CMD);
+ 155               		.loc 1 41 0
+ 156 0074 80E4      		ldi r24,lo8(64)
+ 157               	/* epilogue start */
+  42:src/MIDI_v2.c **** }
+ 158               		.loc 1 42 0
+ 159 0076 DF91      		pop r29
+ 160 0078 CF91      		pop r28
+ 161 007a 1F91      		pop r17
+ 162 007c FF90      		pop r15
+ 163 007e EF90      		pop r14
+ 164               	.LVL12:
+  41:src/MIDI_v2.c **** 	usart_put_8bit(VEL_DEF_CMD);
+ 165               		.loc 1 41 0
+ 166 0080 0C94 0000 		jmp usart_put_8bit
+ 167               	.LVL13:
+ 168               		.cfi_endproc
+ 169               	.LFE8:
+ 171               	.global	midi_cc
+ 173               	midi_cc:
+ 174               	.LFB9:
+  43:src/MIDI_v2.c **** 
+  44:src/MIDI_v2.c **** void midi_cc(uint8_t data1, uint8_t data2)
+  45:src/MIDI_v2.c **** {
+ 175               		.loc 1 45 0
+ 176               		.cfi_startproc
+ 177               	.LVL14:
+ 178 0084 CF93      		push r28
+ 179               	.LCFI10:
+ 180               		.cfi_def_cfa_offset 3
+ 181               		.cfi_offset 28, -2
+ 182 0086 DF93      		push r29
+ 183               	.LCFI11:
+ 184               		.cfi_def_cfa_offset 4
+ 185               		.cfi_offset 29, -3
+ 186               	/* prologue: function */
+ 187               	/* frame size = 0 */
+ 188               	/* stack size = 2 */
+ 189               	.L__stack_usage = 2
+ 190 0088 D82F      		mov r29,r24
+ 191 008a C62F      		mov r28,r22
+  46:src/MIDI_v2.c **** 	usart_put_8bit(CC_CMD);
+ 192               		.loc 1 46 0
+ 193 008c 80EB      		ldi r24,lo8(-80)
+ 194               	.LVL15:
+ 195 008e 0E94 0000 		call usart_put_8bit
+ 196               	.LVL16:
+  47:src/MIDI_v2.c **** 	usart_put_8bit(data1);		
+ 197               		.loc 1 47 0
+ 198 0092 8D2F      		mov r24,r29
+ 199 0094 0E94 0000 		call usart_put_8bit
+ 200               	.LVL17:
+  48:src/MIDI_v2.c **** 	usart_put_8bit(data2);
+ 201               		.loc 1 48 0
+ 202 0098 8C2F      		mov r24,r28
+ 203               	/* epilogue start */
+  49:src/MIDI_v2.c **** }
+ 204               		.loc 1 49 0
+ 205 009a DF91      		pop r29
+ 206               	.LVL18:
+ 207 009c CF91      		pop r28
+ 208               	.LVL19:
+  48:src/MIDI_v2.c **** 	usart_put_8bit(data2);
+ 209               		.loc 1 48 0
+ 210 009e 0C94 0000 		jmp usart_put_8bit
+ 211               	.LVL20:
+ 212               		.cfi_endproc
+ 213               	.LFE9:
+ 215               	.global	midi_button_control
+ 217               	midi_button_control:
+ 218               	.LFB10:
+  50:src/MIDI_v2.c **** 
+  51:src/MIDI_v2.c **** void midi_button_control(uint8_t cc_data1, uint8_t cc_data2, unsigned int button_pin)
+  52:src/MIDI_v2.c **** {
+ 219               		.loc 1 52 0
+ 220               		.cfi_startproc
+ 221               	.LVL21:
+ 222 00a2 1F93      		push r17
+ 223               	.LCFI12:
+ 224               		.cfi_def_cfa_offset 3
+ 225               		.cfi_offset 17, -2
+ 226 00a4 CF93      		push r28
+ 227               	.LCFI13:
+ 228               		.cfi_def_cfa_offset 4
+ 229               		.cfi_offset 28, -3
+ 230 00a6 DF93      		push r29
+ 231               	.LCFI14:
+ 232               		.cfi_def_cfa_offset 5
+ 233               		.cfi_offset 29, -4
+ 234               	/* prologue: function */
+ 235               	/* frame size = 0 */
+ 236               	/* stack size = 3 */
+ 237               	.L__stack_usage = 3
+ 238 00a8 182F      		mov r17,r24
+ 239 00aa EA01      		movw r28,r20
+  53:src/MIDI_v2.c **** 	if( !(is_pin(button_pin, &BUTTON_PIN_PORT)) && (!(buttons_state_tab[button_pin])) )
+ 240               		.loc 1 53 0
+ 241 00ac 66E3      		ldi r22,lo8(54)
+ 242 00ae 70E0      		ldi r23,0
+ 243               	.LVL22:
+ 244 00b0 842F      		mov r24,r20
+ 245               	.LVL23:
+ 246 00b2 0E94 0000 		call is_pin
+ 247               	.LVL24:
+ 248 00b6 892B      		or r24,r25
+ 249 00b8 01F4      		brne .L6
+ 250               		.loc 1 53 0 is_stmt 0 discriminator 1
+ 251 00ba FE01      		movw r30,r28
+ 252 00bc EE0F      		lsl r30
+ 253 00be FF1F      		rol r31
+ 254 00c0 DF01      		movw r26,r30
+ 255 00c2 A050      		subi r26,lo8(-(buttons_state_tab))
+ 256 00c4 B040      		sbci r27,hi8(-(buttons_state_tab))
+ 257 00c6 8D91      		ld r24,X+
+ 258 00c8 9C91      		ld r25,X
+ 259 00ca 1197      		sbiw r26,1
+ 260 00cc 892B      		or r24,r25
+ 261 00ce 01F4      		brne .L6
+  54:src/MIDI_v2.c **** 	{
+  55:src/MIDI_v2.c **** 		buttons_state_tab[button_pin] = 1;
+ 262               		.loc 1 55 0 is_stmt 1
+ 263 00d0 81E0      		ldi r24,lo8(1)
+ 264 00d2 90E0      		ldi r25,0
+ 265 00d4 8D93      		st X+,r24
+ 266 00d6 9C93      		st X,r25
+  56:src/MIDI_v2.c **** 		
+  57:src/MIDI_v2.c **** 		if(buttons_toggle_tab[button_pin])
+ 267               		.loc 1 57 0
+ 268 00d8 E050      		subi r30,lo8(-(buttons_toggle_tab))
+ 269 00da F040      		sbci r31,hi8(-(buttons_toggle_tab))
+ 270 00dc 2081      		ld r18,Z
+ 271 00de 3181      		ldd r19,Z+1
+ 272 00e0 232B      		or r18,r19
+ 273 00e2 01F0      		breq .L7
+  58:src/MIDI_v2.c **** 		{
+  59:src/MIDI_v2.c **** 			buttons_toggle_tab[button_pin] = 0;
+ 274               		.loc 1 59 0
+ 275 00e4 1182      		std Z+1,__zero_reg__
+ 276 00e6 1082      		st Z,__zero_reg__
+  60:src/MIDI_v2.c **** 			midi_cc(cc_data1, CC_OFF_VAL);
+ 277               		.loc 1 60 0
+ 278 00e8 6CE3      		ldi r22,lo8(60)
+ 279 00ea 00C0      		rjmp .L12
+ 280               	.L7:
+  61:src/MIDI_v2.c **** 		}
+  62:src/MIDI_v2.c **** 		else
+  63:src/MIDI_v2.c **** 		{
+  64:src/MIDI_v2.c **** 			buttons_toggle_tab[button_pin] = 1;
+ 281               		.loc 1 64 0
+ 282 00ec 9183      		std Z+1,r25
+ 283 00ee 8083      		st Z,r24
+  65:src/MIDI_v2.c **** 			midi_cc(cc_data1, CC_ON_VAL);
+ 284               		.loc 1 65 0
+ 285 00f0 66E4      		ldi r22,lo8(70)
+ 286               	.L12:
+ 287 00f2 812F      		mov r24,r17
+ 288               	/* epilogue start */
+  66:src/MIDI_v2.c **** 		}	
+  67:src/MIDI_v2.c **** 	}
+  68:src/MIDI_v2.c **** 	else if(is_pin(button_pin, &BUTTON_PIN_PORT))
+  69:src/MIDI_v2.c **** 	{
+  70:src/MIDI_v2.c **** 		buttons_state_tab[button_pin] = 0;
+  71:src/MIDI_v2.c **** 	}
+  72:src/MIDI_v2.c **** }
+ 289               		.loc 1 72 0
+ 290 00f4 DF91      		pop r29
+ 291 00f6 CF91      		pop r28
+ 292               	.LVL25:
+ 293 00f8 1F91      		pop r17
+ 294               	.LVL26:
+  65:src/MIDI_v2.c **** 			midi_cc(cc_data1, CC_ON_VAL);
+ 295               		.loc 1 65 0
+ 296 00fa 0C94 0000 		jmp midi_cc
+ 297               	.LVL27:
+ 298               	.L6:
+  68:src/MIDI_v2.c **** 	{
+ 299               		.loc 1 68 0
+ 300 00fe 66E3      		ldi r22,lo8(54)
+ 301 0100 70E0      		ldi r23,0
+ 302 0102 8C2F      		mov r24,r28
+ 303 0104 0E94 0000 		call is_pin
+ 304               	.LVL28:
+ 305 0108 892B      		or r24,r25
+ 306 010a 01F0      		breq .L5
+  70:src/MIDI_v2.c **** 	}
+ 307               		.loc 1 70 0
+ 308 010c CC0F      		lsl r28
+ 309 010e DD1F      		rol r29
+ 310               	.LVL29:
+ 311 0110 C050      		subi r28,lo8(-(buttons_state_tab))
+ 312 0112 D040      		sbci r29,hi8(-(buttons_state_tab))
+ 313 0114 1982      		std Y+1,__zero_reg__
+ 314 0116 1882      		st Y,__zero_reg__
+ 315               	.L5:
+ 316               	/* epilogue start */
+ 317               		.loc 1 72 0
+ 318 0118 DF91      		pop r29
+ 319 011a CF91      		pop r28
+ 320 011c 1F91      		pop r17
+ 321               	.LVL30:
+ 322 011e 0895      		ret
+ 323               		.cfi_endproc
+ 324               	.LFE10:
+ 326               	.global	__floatsisf
+ 327               	.global	__mulsf3
+ 328               	.global	__addsf3
+ 329               	.global	__fixunssfsi
+ 330               	.global	midi_pot_control
+ 332               	midi_pot_control:
+ 333               	.LFB11:
+  73:src/MIDI_v2.c **** 
+  74:src/MIDI_v2.c **** void midi_pot_control(uint8_t control_cmd,  unsigned int channel)
+  75:src/MIDI_v2.c **** {
+ 334               		.loc 1 75 0
+ 335               		.cfi_startproc
+ 336               	.LVL31:
+ 337 0120 4F92      		push r4
+ 338               	.LCFI15:
+ 339               		.cfi_def_cfa_offset 3
+ 340               		.cfi_offset 4, -2
+ 341 0122 5F92      		push r5
+ 342               	.LCFI16:
+ 343               		.cfi_def_cfa_offset 4
+ 344               		.cfi_offset 5, -3
+ 345 0124 6F92      		push r6
+ 346               	.LCFI17:
+ 347               		.cfi_def_cfa_offset 5
+ 348               		.cfi_offset 6, -4
+ 349 0126 7F92      		push r7
+ 350               	.LCFI18:
+ 351               		.cfi_def_cfa_offset 6
+ 352               		.cfi_offset 7, -5
+ 353 0128 BF92      		push r11
+ 354               	.LCFI19:
+ 355               		.cfi_def_cfa_offset 7
+ 356               		.cfi_offset 11, -6
+ 357 012a CF92      		push r12
+ 358               	.LCFI20:
+ 359               		.cfi_def_cfa_offset 8
+ 360               		.cfi_offset 12, -7
+ 361 012c DF92      		push r13
+ 362               	.LCFI21:
+ 363               		.cfi_def_cfa_offset 9
+ 364               		.cfi_offset 13, -8
+ 365 012e EF92      		push r14
+ 366               	.LCFI22:
+ 367               		.cfi_def_cfa_offset 10
+ 368               		.cfi_offset 14, -9
+ 369 0130 FF92      		push r15
+ 370               	.LCFI23:
+ 371               		.cfi_def_cfa_offset 11
+ 372               		.cfi_offset 15, -10
+ 373 0132 0F93      		push r16
+ 374               	.LCFI24:
+ 375               		.cfi_def_cfa_offset 12
+ 376               		.cfi_offset 16, -11
+ 377 0134 1F93      		push r17
+ 378               	.LCFI25:
+ 379               		.cfi_def_cfa_offset 13
+ 380               		.cfi_offset 17, -12
+ 381 0136 CF93      		push r28
+ 382               	.LCFI26:
+ 383               		.cfi_def_cfa_offset 14
+ 384               		.cfi_offset 28, -13
+ 385 0138 DF93      		push r29
+ 386               	.LCFI27:
+ 387               		.cfi_def_cfa_offset 15
+ 388               		.cfi_offset 29, -14
+ 389               	/* prologue: function */
+ 390               	/* frame size = 0 */
+ 391               	/* stack size = 13 */
+ 392               	.L__stack_usage = 13
+ 393 013a B82E      		mov r11,r24
+ 394 013c 7B01      		movw r14,r22
+  76:src/MIDI_v2.c **** 	adc_prev_read[channel] = adc_actual_read[channel];
+ 395               		.loc 1 76 0
+ 396 013e 6B01      		movw r12,r22
+ 397 0140 CC0C      		lsl r12
+ 398 0142 DD1C      		rol r13
+ 399 0144 F601      		movw r30,r12
+ 400 0146 E050      		subi r30,lo8(-(adc_prev_read))
+ 401 0148 F040      		sbci r31,hi8(-(adc_prev_read))
+ 402 014a D601      		movw r26,r12
+ 403 014c A050      		subi r26,lo8(-(adc_actual_read))
+ 404 014e B040      		sbci r27,hi8(-(adc_actual_read))
+ 405 0150 8D91      		ld r24,X+
+ 406 0152 9C91      		ld r25,X
+ 407               	.LVL32:
+ 408 0154 9183      		std Z+1,r25
+ 409 0156 8083      		st Z,r24
+ 410               	.LVL33:
+ 411 0158 00E1      		ldi r16,lo8(16)
+ 412 015a 10E0      		ldi r17,0
+  77:src/MIDI_v2.c **** 	unsigned int adc_sum = 0;
+ 413               		.loc 1 77 0
+ 414 015c C0E0      		ldi r28,0
+ 415 015e D0E0      		ldi r29,0
+ 416               	.LVL34:
+ 417               	.L15:
+ 418               	.LBB2:
+  78:src/MIDI_v2.c **** 
+  79:src/MIDI_v2.c **** 	for(unsigned int adc_i=0;adc_i<16;adc_i++)
+  80:src/MIDI_v2.c **** 	{
+  81:src/MIDI_v2.c **** 		adc_sum += adc_read(channel);
+ 419               		.loc 1 81 0 discriminator 3
+ 420 0160 8E2D      		mov r24,r14
+ 421 0162 0E94 0000 		call adc_read
+ 422               	.LVL35:
+ 423 0166 C80F      		add r28,r24
+ 424 0168 D91F      		adc r29,r25
+ 425               	.LVL36:
+ 426 016a 0150      		subi r16,1
+ 427 016c 1109      		sbc r17,__zero_reg__
+ 428               	.LVL37:
+  79:src/MIDI_v2.c **** 	{
+ 429               		.loc 1 79 0 discriminator 3
+ 430 016e 01F4      		brne .L15
+ 431               	.LBE2:
+  82:src/MIDI_v2.c **** 	}
+  83:src/MIDI_v2.c **** 	adc_actual_read[channel] = adc_sum/16;
+ 432               		.loc 1 83 0
+ 433 0170 CE01      		movw r24,r28
+ 434 0172 24E0      		ldi r18,4
+ 435               		1:
+ 436 0174 9695      		lsr r25
+ 437 0176 8795      		ror r24
+ 438 0178 2A95      		dec r18
+ 439 017a 01F4      		brne 1b
+ 440 017c F601      		movw r30,r12
+ 441 017e E050      		subi r30,lo8(-(adc_actual_read))
+ 442 0180 F040      		sbci r31,hi8(-(adc_actual_read))
+ 443 0182 9183      		std Z+1,r25
+ 444 0184 8083      		st Z,r24
+  84:src/MIDI_v2.c **** 
+  85:src/MIDI_v2.c **** 	uint8_t adc_7bit = (adc_actual_read[channel] >> 3);
+ 445               		.loc 1 85 0
+ 446 0186 BE01      		movw r22,r28
+ 447 0188 660F      		lsl r22
+ 448 018a 672F      		mov r22,r23
+ 449 018c 661F      		rol r22
+ 450 018e 770B      		sbc r23,r23
+ 451 0190 7195      		neg r23
+ 452               	.LVL38:
+  86:src/MIDI_v2.c **** 	uint8_t adc_prev_7bit = (adc_prev_read[channel] >> 3);
+ 453               		.loc 1 86 0
+ 454 0192 F601      		movw r30,r12
+ 455 0194 E050      		subi r30,lo8(-(adc_prev_read))
+ 456 0196 F040      		sbci r31,hi8(-(adc_prev_read))
+ 457 0198 0081      		ld r16,Z
+ 458 019a 1181      		ldd r17,Z+1
+ 459               	.LVL39:
+ 460 019c 43E0      		ldi r20,3
+ 461               		1:
+ 462 019e 1695      		lsr r17
+ 463 01a0 0795      		ror r16
+ 464 01a2 4A95      		dec r20
+ 465 01a4 01F4      		brne 1b
+ 466               	.LVL40:
+  87:src/MIDI_v2.c **** 
+  88:src/MIDI_v2.c **** 	if((unsigned int)adc_7bit != (unsigned int)adc_prev_7bit)
+ 467               		.loc 1 88 0
+ 468 01a6 6017      		cp r22,r16
+ 469 01a8 01F4      		brne .+2
+ 470 01aa 00C0      		rjmp .L14
+  89:src/MIDI_v2.c **** 	{
+  90:src/MIDI_v2.c **** 		ema_prev[channel] = ema[channel];
+ 471               		.loc 1 90 0
+ 472 01ac E601      		movw r28,r12
+ 473               	.LVL41:
+ 474 01ae C050      		subi r28,lo8(-(ema))
+ 475 01b0 D040      		sbci r29,hi8(-(ema))
+ 476 01b2 E880      		ld r14,Y
+ 477 01b4 F980      		ldd r15,Y+1
+ 478               	.LVL42:
+ 479 01b6 F601      		movw r30,r12
+ 480 01b8 E050      		subi r30,lo8(-(ema_prev))
+ 481 01ba F040      		sbci r31,hi8(-(ema_prev))
+ 482 01bc F182      		std Z+1,r15
+ 483 01be E082      		st Z,r14
+  91:src/MIDI_v2.c **** 		ema[channel] = (ema_a*adc_7bit) + (1-ema_a)*adc_prev_7bit;
+ 484               		.loc 1 91 0
+ 485 01c0 7727      		clr r23
+ 486               	.LVL43:
+ 487 01c2 072E      		mov __tmp_reg__,r23
+ 488 01c4 000C      		lsl r0
+ 489 01c6 880B      		sbc r24,r24
+ 490 01c8 990B      		sbc r25,r25
+ 491 01ca 0E94 0000 		call __floatsisf
+ 492               	.LVL44:
+ 493 01ce 2AE9      		ldi r18,lo8(-102)
+ 494 01d0 39E9      		ldi r19,lo8(-103)
+ 495 01d2 49E1      		ldi r20,lo8(25)
+ 496 01d4 5FE3      		ldi r21,lo8(63)
+ 497 01d6 0E94 0000 		call __mulsf3
+ 498               	.LVL45:
+ 499 01da 2B01      		movw r4,r22
+ 500 01dc 3C01      		movw r6,r24
+ 501 01de B801      		movw r22,r16
+ 502 01e0 7727      		clr r23
+ 503 01e2 072E      		mov __tmp_reg__,r23
+ 504 01e4 000C      		lsl r0
+ 505 01e6 880B      		sbc r24,r24
+ 506 01e8 990B      		sbc r25,r25
+ 507 01ea 0E94 0000 		call __floatsisf
+ 508               	.LVL46:
+ 509 01ee 2CEC      		ldi r18,lo8(-52)
+ 510 01f0 3CEC      		ldi r19,lo8(-52)
+ 511 01f2 4CEC      		ldi r20,lo8(-52)
+ 512 01f4 5EE3      		ldi r21,lo8(62)
+ 513 01f6 0E94 0000 		call __mulsf3
+ 514               	.LVL47:
+ 515 01fa 9B01      		movw r18,r22
+ 516 01fc AC01      		movw r20,r24
+ 517 01fe C301      		movw r24,r6
+ 518 0200 B201      		movw r22,r4
+ 519 0202 0E94 0000 		call __addsf3
+ 520               	.LVL48:
+ 521 0206 0E94 0000 		call __fixunssfsi
+ 522               	.LVL49:
+ 523 020a 7983      		std Y+1,r23
+ 524 020c 6883      		st Y,r22
+  92:src/MIDI_v2.c **** 
+  93:src/MIDI_v2.c **** 		if(ema[channel] != ema_prev[channel])
+ 525               		.loc 1 93 0
+ 526 020e E616      		cp r14,r22
+ 527 0210 F706      		cpc r15,r23
+ 528 0212 01F0      		breq .L14
+  94:src/MIDI_v2.c **** 		{
+  95:src/MIDI_v2.c **** 			midi_cc(control_cmd, ema[channel]);
+ 529               		.loc 1 95 0
+ 530 0214 8B2D      		mov r24,r11
+ 531               	/* epilogue start */
+  96:src/MIDI_v2.c **** 		}
+  97:src/MIDI_v2.c **** 	}
+  98:src/MIDI_v2.c **** }
+ 532               		.loc 1 98 0
+ 533 0216 DF91      		pop r29
+ 534 0218 CF91      		pop r28
+ 535 021a 1F91      		pop r17
+ 536 021c 0F91      		pop r16
+ 537               	.LVL50:
+ 538 021e FF90      		pop r15
+ 539 0220 EF90      		pop r14
+ 540 0222 DF90      		pop r13
+ 541 0224 CF90      		pop r12
+ 542 0226 BF90      		pop r11
+ 543               	.LVL51:
+ 544 0228 7F90      		pop r7
+ 545 022a 6F90      		pop r6
+ 546 022c 5F90      		pop r5
+ 547 022e 4F90      		pop r4
+  95:src/MIDI_v2.c **** 		}
+ 548               		.loc 1 95 0
+ 549 0230 0C94 0000 		jmp midi_cc
+ 550               	.LVL52:
+ 551               	.L14:
+ 552               	/* epilogue start */
+ 553               		.loc 1 98 0
+ 554 0234 DF91      		pop r29
+ 555 0236 CF91      		pop r28
+ 556 0238 1F91      		pop r17
+ 557 023a 0F91      		pop r16
+ 558               	.LVL53:
+ 559 023c FF90      		pop r15
+ 560 023e EF90      		pop r14
+ 561 0240 DF90      		pop r13
+ 562 0242 CF90      		pop r12
+ 563 0244 BF90      		pop r11
+ 564               	.LVL54:
+ 565 0246 7F90      		pop r7
+ 566 0248 6F90      		pop r6
+ 567 024a 5F90      		pop r5
+ 568 024c 4F90      		pop r4
+ 569 024e 0895      		ret
+ 570               		.cfi_endproc
+ 571               	.LFE11:
+ 573               	.global	midi_keyboard_scan
+ 575               	midi_keyboard_scan:
+ 576               	.LFB12:
+  99:src/MIDI_v2.c **** 
+ 100:src/MIDI_v2.c **** void midi_keyboard_scan(void)
+ 101:src/MIDI_v2.c **** {
+ 577               		.loc 1 101 0
+ 578               		.cfi_startproc
+ 579 0250 6F92      		push r6
+ 580               	.LCFI28:
+ 581               		.cfi_def_cfa_offset 3
+ 582               		.cfi_offset 6, -2
+ 583 0252 7F92      		push r7
+ 584               	.LCFI29:
+ 585               		.cfi_def_cfa_offset 4
+ 586               		.cfi_offset 7, -3
+ 587 0254 8F92      		push r8
+ 588               	.LCFI30:
+ 589               		.cfi_def_cfa_offset 5
+ 590               		.cfi_offset 8, -4
+ 591 0256 9F92      		push r9
+ 592               	.LCFI31:
+ 593               		.cfi_def_cfa_offset 6
+ 594               		.cfi_offset 9, -5
+ 595 0258 AF92      		push r10
+ 596               	.LCFI32:
+ 597               		.cfi_def_cfa_offset 7
+ 598               		.cfi_offset 10, -6
+ 599 025a BF92      		push r11
+ 600               	.LCFI33:
+ 601               		.cfi_def_cfa_offset 8
+ 602               		.cfi_offset 11, -7
+ 603 025c CF92      		push r12
+ 604               	.LCFI34:
+ 605               		.cfi_def_cfa_offset 9
+ 606               		.cfi_offset 12, -8
+ 607 025e DF92      		push r13
+ 608               	.LCFI35:
+ 609               		.cfi_def_cfa_offset 10
+ 610               		.cfi_offset 13, -9
+ 611 0260 EF92      		push r14
+ 612               	.LCFI36:
+ 613               		.cfi_def_cfa_offset 11
+ 614               		.cfi_offset 14, -10
+ 615 0262 FF92      		push r15
+ 616               	.LCFI37:
+ 617               		.cfi_def_cfa_offset 12
+ 618               		.cfi_offset 15, -11
+ 619 0264 0F93      		push r16
+ 620               	.LCFI38:
+ 621               		.cfi_def_cfa_offset 13
+ 622               		.cfi_offset 16, -12
+ 623 0266 1F93      		push r17
+ 624               	.LCFI39:
+ 625               		.cfi_def_cfa_offset 14
+ 626               		.cfi_offset 17, -13
+ 627 0268 CF93      		push r28
+ 628               	.LCFI40:
+ 629               		.cfi_def_cfa_offset 15
+ 630               		.cfi_offset 28, -14
+ 631 026a DF93      		push r29
+ 632               	.LCFI41:
+ 633               		.cfi_def_cfa_offset 16
+ 634               		.cfi_offset 29, -15
+ 635               	/* prologue: function */
+ 636               	/* frame size = 0 */
+ 637               	/* stack size = 14 */
+ 638               	.L__stack_usage = 14
+ 639               	.LVL55:
+ 640 026c 00E0      		ldi r16,lo8(notes_pin_tab)
+ 641 026e 10E0      		ldi r17,hi8(notes_pin_tab)
+ 642 0270 90E0      		ldi r25,lo8(key_state_tab)
+ 643 0272 692E      		mov r6,r25
+ 644 0274 90E0      		ldi r25,hi8(key_state_tab)
+ 645 0276 792E      		mov r7,r25
+ 646               	.LBB3:
+ 102:src/MIDI_v2.c **** 	for(int i=0; i<13; i++)		// notes loop
+ 647               		.loc 1 102 0
+ 648 0278 C0E0      		ldi r28,0
+ 649 027a D0E0      		ldi r29,0
+ 103:src/MIDI_v2.c **** 	{
+ 104:src/MIDI_v2.c **** 		if(i < 7)	// PORTD
+ 105:src/MIDI_v2.c **** 		{
+ 106:src/MIDI_v2.c **** 			PORTD |= (1<<notes_pin_tab[i]);
+ 107:src/MIDI_v2.c **** 		}
+ 108:src/MIDI_v2.c **** 		else		// PORTC
+ 109:src/MIDI_v2.c **** 		{
+ 110:src/MIDI_v2.c **** 			PORTC |= (1<<notes_pin_tab[i]);
+ 650               		.loc 1 110 0
+ 651 027c CC24      		clr r12
+ 652 027e C394      		inc r12
+ 653 0280 D12C      		mov r13,__zero_reg__
+ 654               	.LVL56:
+ 655               	.L28:
+ 104:src/MIDI_v2.c **** 		{
+ 656               		.loc 1 104 0
+ 657 0282 C730      		cpi r28,7
+ 658 0284 D105      		cpc r29,__zero_reg__
+ 659 0286 04F4      		brge .L21
+ 106:src/MIDI_v2.c **** 		}
+ 660               		.loc 1 106 0
+ 661 0288 22B3      		in r18,0x12
+ 662 028a C601      		movw r24,r12
+ 663 028c F801      		movw r30,r16
+ 664 028e 0080      		ld r0,Z
+ 665 0290 00C0      		rjmp 2f
+ 666               		1:
+ 667 0292 880F      		lsl r24
+ 668 0294 991F      		rol r25
+ 669               		2:
+ 670 0296 0A94      		dec r0
+ 671 0298 02F4      		brpl 1b
+ 672 029a 822B      		or r24,r18
+ 673 029c 82BB      		out 0x12,r24
+ 674 029e 00C0      		rjmp .L22
+ 675               	.L21:
+ 676               		.loc 1 110 0
+ 677 02a0 25B3      		in r18,0x15
+ 678 02a2 C601      		movw r24,r12
+ 679 02a4 F801      		movw r30,r16
+ 680 02a6 0080      		ld r0,Z
+ 681 02a8 00C0      		rjmp 2f
+ 682               		1:
+ 683 02aa 880F      		lsl r24
+ 684 02ac 991F      		rol r25
+ 685               		2:
+ 686 02ae 0A94      		dec r0
+ 687 02b0 02F4      		brpl 1b
+ 688 02b2 822B      		or r24,r18
+ 689 02b4 85BB      		out 0x15,r24
+ 690               	.L22:
+ 691               	.LVL57:
+ 692 02b6 80E0      		ldi r24,lo8(octaves_pin_tab)
+ 693 02b8 A82E      		mov r10,r24
+ 694 02ba 80E0      		ldi r24,hi8(octaves_pin_tab)
+ 695 02bc B82E      		mov r11,r24
+ 102:src/MIDI_v2.c **** 	{
+ 696               		.loc 1 102 0 discriminator 1
+ 697 02be 7301      		movw r14,r6
+ 698 02c0 812C      		mov r8,__zero_reg__
+ 699 02c2 912C      		mov r9,__zero_reg__
+ 700               	.LVL58:
+ 701               	.L25:
+ 702               	.LBB4:
+ 111:src/MIDI_v2.c **** 		}
+ 112:src/MIDI_v2.c **** 
+ 113:src/MIDI_v2.c **** 		for(int j=0; j<4; j++)		// octaves loop
+ 114:src/MIDI_v2.c **** 		{
+ 115:src/MIDI_v2.c **** 			if( PINB & (1<<octaves_pin_tab[j]) && !(key_state_tab[i][j]) )
+ 703               		.loc 1 115 0
+ 704 02c4 86B3      		in r24,0x16
+ 705 02c6 F501      		movw r30,r10
+ 706 02c8 2081      		ld r18,Z
+ 707 02ca F2E0      		ldi r31,2
+ 708 02cc AF0E      		add r10,r31
+ 709 02ce B11C      		adc r11,__zero_reg__
+ 710 02d0 90E0      		ldi r25,0
+ 711 02d2 022E      		mov r0,r18
+ 712 02d4 00C0      		rjmp 2f
+ 713               		1:
+ 714 02d6 9595      		asr r25
+ 715 02d8 8795      		ror r24
+ 716               		2:
+ 717 02da 0A94      		dec r0
+ 718 02dc 02F4      		brpl 1b
+ 719 02de 80FF      		sbrs r24,0
+ 720 02e0 00C0      		rjmp .L23
+ 721               		.loc 1 115 0 is_stmt 0 discriminator 1
+ 722 02e2 F701      		movw r30,r14
+ 723 02e4 8081      		ld r24,Z
+ 724 02e6 9181      		ldd r25,Z+1
+ 725 02e8 892B      		or r24,r25
+ 726 02ea 01F4      		brne .L23
+ 116:src/MIDI_v2.c **** 			{
+ 117:src/MIDI_v2.c **** 				key_state_tab[i][j] = 1;
+ 727               		.loc 1 117 0 is_stmt 1
+ 728 02ec D182      		std Z+1,r13
+ 729 02ee C082      		st Z,r12
+ 118:src/MIDI_v2.c **** 				midi_note_on(i,j,octave_change_global);
+ 730               		.loc 1 118 0
+ 731 02f0 4091 0000 		lds r20,octave_change_global
+ 732 02f4 5091 0000 		lds r21,octave_change_global+1
+ 733 02f8 B401      		movw r22,r8
+ 734 02fa CE01      		movw r24,r28
+ 735 02fc 0E94 0000 		call midi_note_on
+ 736               	.LVL59:
+ 737 0300 00C0      		rjmp .L24
+ 738               	.L23:
+ 119:src/MIDI_v2.c **** 			}
+ 120:src/MIDI_v2.c **** 			else if( !(PINB & (1<<octaves_pin_tab[j])) && key_state_tab[i][j] )
+ 739               		.loc 1 120 0
+ 740 0302 86B3      		in r24,0x16
+ 741 0304 90E0      		ldi r25,0
+ 742 0306 00C0      		rjmp 2f
+ 743               		1:
+ 744 0308 9595      		asr r25
+ 745 030a 8795      		ror r24
+ 746               		2:
+ 747 030c 2A95      		dec r18
+ 748 030e 02F4      		brpl 1b
+ 749 0310 80FD      		sbrc r24,0
+ 750 0312 00C0      		rjmp .L24
+ 751               		.loc 1 120 0 is_stmt 0 discriminator 1
+ 752 0314 F701      		movw r30,r14
+ 753 0316 8081      		ld r24,Z
+ 754 0318 9181      		ldd r25,Z+1
+ 755 031a 892B      		or r24,r25
+ 756 031c 01F0      		breq .L24
+ 121:src/MIDI_v2.c **** 			{
+ 122:src/MIDI_v2.c **** 				key_state_tab[i][j] = 0;
+ 757               		.loc 1 122 0 is_stmt 1
+ 758 031e 1182      		std Z+1,__zero_reg__
+ 759 0320 1082      		st Z,__zero_reg__
+ 123:src/MIDI_v2.c **** 				midi_note_off(i,j,octave_change_global);
+ 760               		.loc 1 123 0
+ 761 0322 4091 0000 		lds r20,octave_change_global
+ 762 0326 5091 0000 		lds r21,octave_change_global+1
+ 763 032a B401      		movw r22,r8
+ 764 032c CE01      		movw r24,r28
+ 765 032e 0E94 0000 		call midi_note_off
+ 766               	.LVL60:
+ 767               	.L24:
+ 113:src/MIDI_v2.c **** 		{
+ 768               		.loc 1 113 0 discriminator 2
+ 769 0332 FFEF      		ldi r31,-1
+ 770 0334 8F1A      		sub r8,r31
+ 771 0336 9F0A      		sbc r9,r31
+ 772               	.LVL61:
+ 773 0338 82E0      		ldi r24,2
+ 774 033a E80E      		add r14,r24
+ 775 033c F11C      		adc r15,__zero_reg__
+ 776 033e 94E0      		ldi r25,4
+ 777 0340 8916      		cp r8,r25
+ 778 0342 9104      		cpc r9,__zero_reg__
+ 779 0344 01F0      		breq .+2
+ 780 0346 00C0      		rjmp .L25
+ 781               	.LBE4:
+ 124:src/MIDI_v2.c **** 			}
+ 125:src/MIDI_v2.c **** 		}
+ 126:src/MIDI_v2.c **** 		
+ 127:src/MIDI_v2.c **** 		if(i < 7)	// PORTD
+ 782               		.loc 1 127 0
+ 783 0348 C730      		cpi r28,7
+ 784 034a D105      		cpc r29,__zero_reg__
+ 785 034c 04F4      		brge .L26
+ 128:src/MIDI_v2.c **** 		{
+ 129:src/MIDI_v2.c **** 			PORTD &= ~(1<<notes_pin_tab[i]);
+ 786               		.loc 1 129 0
+ 787 034e 92B3      		in r25,0x12
+ 788 0350 9601      		movw r18,r12
+ 789 0352 F801      		movw r30,r16
+ 790 0354 0080      		ld r0,Z
+ 791 0356 00C0      		rjmp 2f
+ 792               		1:
+ 793 0358 220F      		lsl r18
+ 794 035a 331F      		rol r19
+ 795               		2:
+ 796 035c 0A94      		dec r0
+ 797 035e 02F4      		brpl 1b
+ 798 0360 822F      		mov r24,r18
+ 799 0362 8095      		com r24
+ 800 0364 8923      		and r24,r25
+ 801 0366 82BB      		out 0x12,r24
+ 802 0368 00C0      		rjmp .L27
+ 803               	.L26:
+ 130:src/MIDI_v2.c **** 		}
+ 131:src/MIDI_v2.c **** 		else		// PORT C
+ 132:src/MIDI_v2.c **** 		{
+ 133:src/MIDI_v2.c **** 			PORTC &= ~(1<<notes_pin_tab[i]);
+ 804               		.loc 1 133 0
+ 805 036a 95B3      		in r25,0x15
+ 806 036c 9601      		movw r18,r12
+ 807 036e F801      		movw r30,r16
+ 808 0370 0080      		ld r0,Z
+ 809 0372 00C0      		rjmp 2f
+ 810               		1:
+ 811 0374 220F      		lsl r18
+ 812 0376 331F      		rol r19
+ 813               		2:
+ 814 0378 0A94      		dec r0
+ 815 037a 02F4      		brpl 1b
+ 816 037c 822F      		mov r24,r18
+ 817 037e 8095      		com r24
+ 818 0380 8923      		and r24,r25
+ 819 0382 85BB      		out 0x15,r24
+ 820               	.L27:
+ 102:src/MIDI_v2.c **** 	{
+ 821               		.loc 1 102 0 discriminator 2
+ 822 0384 2196      		adiw r28,1
+ 823               	.LVL62:
+ 824 0386 0E5F      		subi r16,-2
+ 825 0388 1F4F      		sbci r17,-1
+ 826 038a F8E0      		ldi r31,8
+ 827 038c 6F0E      		add r6,r31
+ 828 038e 711C      		adc r7,__zero_reg__
+ 829 0390 CD30      		cpi r28,13
+ 830 0392 D105      		cpc r29,__zero_reg__
+ 831 0394 01F0      		breq .+2
+ 832 0396 00C0      		rjmp .L28
+ 833               	/* epilogue start */
+ 834               	.LBE3:
+ 134:src/MIDI_v2.c **** 		}
+ 135:src/MIDI_v2.c **** 	}
+ 136:src/MIDI_v2.c **** }...
+ 835               		.loc 1 136 0
+ 836 0398 DF91      		pop r29
+ 837 039a CF91      		pop r28
+ 838               	.LVL63:
+ 839 039c 1F91      		pop r17
+ 840 039e 0F91      		pop r16
+ 841 03a0 FF90      		pop r15
+ 842 03a2 EF90      		pop r14
+ 843 03a4 DF90      		pop r13
+ 844 03a6 CF90      		pop r12
+ 845 03a8 BF90      		pop r11
+ 846 03aa AF90      		pop r10
+ 847 03ac 9F90      		pop r9
+ 848 03ae 8F90      		pop r8
+ 849               	.LVL64:
+ 850 03b0 7F90      		pop r7
+ 851 03b2 6F90      		pop r6
+ 852 03b4 0895      		ret
+ 853               		.cfi_endproc
+ 854               	.LFE12:
+ 856               	.global	octave_change_global
+ 857               		.data
+ 860               	octave_change_global:
+ 861 0000 0300      		.word	3
+ 862               	.global	ema_prev
+ 863               		.section .bss
+ 866               	ema_prev:
+ 867 0000 0000 0000 		.zero	16
+ 867      0000 0000 
+ 867      0000 0000 
+ 867      0000 0000 
+ 868               	.global	ema
+ 871               	ema:
+ 872 0010 0000 0000 		.zero	16
+ 872      0000 0000 
+ 872      0000 0000 
+ 872      0000 0000 
+ 873               	.global	ema_a
+ 874               		.section	.rodata
+ 877               	ema_a:
+ 878 0000 9A        		.byte	-102
+ 879 0001 99        		.byte	-103
+ 880 0002 19        		.byte	25
+ 881 0003 3F        		.byte	63
+ 882               	.global	adc_prev_read
+ 883               		.section .bss
+ 886               	adc_prev_read:
+ 887 0020 0000 0000 		.zero	16
+ 887      0000 0000 
+ 887      0000 0000 
+ 887      0000 0000 
+ 888               	.global	adc_actual_read
+ 891               	adc_actual_read:
+ 892 0030 0000 0000 		.zero	16
+ 892      0000 0000 
+ 892      0000 0000 
+ 892      0000 0000 
+ 893               	.global	buttons_toggle_tab
+ 896               	buttons_toggle_tab:
+ 897 0040 0000 0000 		.zero	8
+ 897      0000 0000 
+ 898               	.global	buttons_state_tab
+ 901               	buttons_state_tab:
+ 902 0048 0000 0000 		.zero	8
+ 902      0000 0000 
+ 903               	.global	buttons_pin_tab
+ 906               	buttons_pin_tab:
+ 907 0050 0000      		.zero	2
+ 908               	.global	key_state_tab
+ 911               	key_state_tab:
+ 912 0052 0000 0000 		.zero	104
+ 912      0000 0000 
+ 912      0000 0000 
+ 912      0000 0000 
+ 912      0000 0000 
+ 913               	.global	octaves_pin_tab
+ 914               		.data
+ 917               	octaves_pin_tab:
+ 918 0002 0400      		.word	4
+ 919 0004 0500      		.word	5
+ 920 0006 0600      		.word	6
+ 921 0008 0700      		.word	7
+ 922               	.global	notes_pin_tab
+ 925               	notes_pin_tab:
+ 926 000a 0000      		.word	0
+ 927 000c 0200      		.word	2
+ 928 000e 0300      		.word	3
+ 929 0010 0400      		.word	4
+ 930 0012 0500      		.word	5
+ 931 0014 0600      		.word	6
+ 932 0016 0700      		.word	7
+ 933 0018 0200      		.word	2
+ 934 001a 0300      		.word	3
+ 935 001c 0400      		.word	4
+ 936 001e 0500      		.word	5
+ 937 0020 0600      		.word	6
+ 938 0022 0700      		.word	7
+ 939               		.text
+ 940               	.Letext0:
+ 941               		.file 2 "inc/mLib_USART.h"
+ 942               		.file 3 "inc/mLib_IO.h"
+ 943               		.file 4 "inc/mLib_ADC.h"
+ 944               		.file 5 "/usr/lib/avr/include/stdint.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 MIDI_v2.c
+     /tmp/cckrdVBB.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cckrdVBB.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cckrdVBB.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cckrdVBB.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cckrdVBB.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cckrdVBB.s:12     .text:0000000000000000 midi_reg_init
+     /tmp/cckrdVBB.s:41     .text:0000000000000014 midi_note_on
+     /tmp/cckrdVBB.s:107    .text:000000000000004c midi_note_off
+     /tmp/cckrdVBB.s:173    .text:0000000000000084 midi_cc
+     /tmp/cckrdVBB.s:217    .text:00000000000000a2 midi_button_control
+     /tmp/cckrdVBB.s:901    .bss:0000000000000048 buttons_state_tab
+     /tmp/cckrdVBB.s:896    .bss:0000000000000040 buttons_toggle_tab
+     /tmp/cckrdVBB.s:332    .text:0000000000000120 midi_pot_control
+     /tmp/cckrdVBB.s:886    .bss:0000000000000020 adc_prev_read
+     /tmp/cckrdVBB.s:891    .bss:0000000000000030 adc_actual_read
+     /tmp/cckrdVBB.s:871    .bss:0000000000000010 ema
+     /tmp/cckrdVBB.s:866    .bss:0000000000000000 ema_prev
+     /tmp/cckrdVBB.s:575    .text:0000000000000250 midi_keyboard_scan
+     /tmp/cckrdVBB.s:925    .data:000000000000000a notes_pin_tab
+     /tmp/cckrdVBB.s:911    .bss:0000000000000052 key_state_tab
+     /tmp/cckrdVBB.s:917    .data:0000000000000002 octaves_pin_tab
+     /tmp/cckrdVBB.s:860    .data:0000000000000000 octave_change_global
+     /tmp/cckrdVBB.s:877    .rodata:0000000000000000 ema_a
+     /tmp/cckrdVBB.s:906    .bss:0000000000000050 buttons_pin_tab
+
+UNDEFINED SYMBOLS
+usart_put_8bit
+is_pin
+__floatsisf
+__mulsf3
+__addsf3
+__fixunssfsi
+adc_read
+__do_copy_data
+__do_clear_bss

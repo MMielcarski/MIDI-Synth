@@ -1,0 +1,267 @@
+   1               		.file	"main.c"
+   2               	__SP_H__ = 0x3e
+   3               	__SP_L__ = 0x3d
+   4               	__SREG__ = 0x3f
+   5               	__tmp_reg__ = 0
+   6               	__zero_reg__ = 1
+   7               		.text
+   8               	.Ltext0:
+   9               		.cfi_sections	.debug_frame
+  10               		.section	.text.startup,"ax",@progbits
+  11               	.global	main
+  13               	main:
+  14               	.LFB6:
+  15               		.file 1 "main.c"
+   1:main.c        **** #include "MIDI_v2.h"
+   2:main.c        **** 
+   3:main.c        **** int main(void)
+   4:main.c        **** {
+  16               		.loc 1 4 0
+  17               		.cfi_startproc
+  18               	/* prologue: function */
+  19               	/* frame size = 0 */
+  20               	/* stack size = 0 */
+  21               	.L__stack_usage = 0
+   5:main.c        **** 	midi_reg_init();
+  22               		.loc 1 5 0
+  23 0000 0E94 0000 		call midi_reg_init
+  24               	.LVL0:
+   6:main.c        **** 	timer_init(TIMER_1_PSC,TIMER_1_PERIOD_MS);
+  25               		.loc 1 6 0
+  26 0004 6AE0      		ldi r22,lo8(10)
+  27 0006 70E0      		ldi r23,0
+  28 0008 80E0      		ldi r24,0
+  29 000a 94E0      		ldi r25,lo8(4)
+  30 000c 0E94 0000 		call timer_init
+  31               	.LVL1:
+   7:main.c        **** 	usart_init(MYUBRR);
+  32               		.loc 1 7 0
+  33 0010 8FE1      		ldi r24,lo8(31)
+  34 0012 90E0      		ldi r25,0
+  35 0014 0E94 0000 		call usart_init
+  36               	.LVL2:
+   8:main.c        **** 	adc_init();
+  37               		.loc 1 8 0
+  38 0018 0E94 0000 		call adc_init
+  39               	.LVL3:
+  40               	.L2:
+  41 001c 00C0      		rjmp .L2
+  42               		.cfi_endproc
+  43               	.LFE6:
+  45               		.text
+  46               	.global	__vector_7
+  48               	__vector_7:
+  49               	.LFB7:
+   9:main.c        **** 
+  10:main.c        **** 	while(1)
+  11:main.c        **** 	{
+  12:main.c        **** 		
+  13:main.c        **** 	}
+  14:main.c        **** }
+  15:main.c        **** 
+  16:main.c        **** ISR(TIMER1_COMPA_vect)	// timer1 overflow interrupt
+  17:main.c        **** {
+  50               		.loc 1 17 0
+  51               		.cfi_startproc
+  52 0000 1F92      		push r1
+  53               	.LCFI0:
+  54               		.cfi_def_cfa_offset 3
+  55               		.cfi_offset 1, -2
+  56 0002 0F92      		push r0
+  57               	.LCFI1:
+  58               		.cfi_def_cfa_offset 4
+  59               		.cfi_offset 0, -3
+  60 0004 0FB6      		in r0,__SREG__
+  61 0006 0F92      		push r0
+  62 0008 1124      		clr __zero_reg__
+  63 000a 2F93      		push r18
+  64               	.LCFI2:
+  65               		.cfi_def_cfa_offset 5
+  66               		.cfi_offset 18, -4
+  67 000c 3F93      		push r19
+  68               	.LCFI3:
+  69               		.cfi_def_cfa_offset 6
+  70               		.cfi_offset 19, -5
+  71 000e 4F93      		push r20
+  72               	.LCFI4:
+  73               		.cfi_def_cfa_offset 7
+  74               		.cfi_offset 20, -6
+  75 0010 5F93      		push r21
+  76               	.LCFI5:
+  77               		.cfi_def_cfa_offset 8
+  78               		.cfi_offset 21, -7
+  79 0012 6F93      		push r22
+  80               	.LCFI6:
+  81               		.cfi_def_cfa_offset 9
+  82               		.cfi_offset 22, -8
+  83 0014 7F93      		push r23
+  84               	.LCFI7:
+  85               		.cfi_def_cfa_offset 10
+  86               		.cfi_offset 23, -9
+  87 0016 8F93      		push r24
+  88               	.LCFI8:
+  89               		.cfi_def_cfa_offset 11
+  90               		.cfi_offset 24, -10
+  91 0018 9F93      		push r25
+  92               	.LCFI9:
+  93               		.cfi_def_cfa_offset 12
+  94               		.cfi_offset 25, -11
+  95 001a AF93      		push r26
+  96               	.LCFI10:
+  97               		.cfi_def_cfa_offset 13
+  98               		.cfi_offset 26, -12
+  99 001c BF93      		push r27
+ 100               	.LCFI11:
+ 101               		.cfi_def_cfa_offset 14
+ 102               		.cfi_offset 27, -13
+ 103 001e EF93      		push r30
+ 104               	.LCFI12:
+ 105               		.cfi_def_cfa_offset 15
+ 106               		.cfi_offset 30, -14
+ 107 0020 FF93      		push r31
+ 108               	.LCFI13:
+ 109               		.cfi_def_cfa_offset 16
+ 110               		.cfi_offset 31, -15
+ 111               	/* prologue: Signal */
+ 112               	/* frame size = 0 */
+ 113               	/* stack size = 15 */
+ 114               	.L__stack_usage = 15
+  18:main.c        **** 	midi_keyboard_scan();
+ 115               		.loc 1 18 0
+ 116 0022 0E94 0000 		call midi_keyboard_scan
+ 117               	.LVL4:
+  19:main.c        **** 
+  20:main.c        **** 	midi_button_control(UNDEF_1, 1, BUTTON1);
+ 118               		.loc 1 20 0
+ 119 0026 40E0      		ldi r20,0
+ 120 0028 50E0      		ldi r21,0
+ 121 002a 61E0      		ldi r22,lo8(1)
+ 122 002c 84E1      		ldi r24,lo8(20)
+ 123 002e 0E94 0000 		call midi_button_control
+ 124               	.LVL5:
+  21:main.c        **** 	midi_button_control(UNDEF_2, 1, BUTTON2);
+ 125               		.loc 1 21 0
+ 126 0032 41E0      		ldi r20,lo8(1)
+ 127 0034 50E0      		ldi r21,0
+ 128 0036 61E0      		ldi r22,lo8(1)
+ 129 0038 85E1      		ldi r24,lo8(21)
+ 130 003a 0E94 0000 		call midi_button_control
+ 131               	.LVL6:
+  22:main.c        **** 	midi_button_control(UNDEF_3, 1, BUTTON3);
+ 132               		.loc 1 22 0
+ 133 003e 42E0      		ldi r20,lo8(2)
+ 134 0040 50E0      		ldi r21,0
+ 135 0042 61E0      		ldi r22,lo8(1)
+ 136 0044 86E1      		ldi r24,lo8(22)
+ 137 0046 0E94 0000 		call midi_button_control
+ 138               	.LVL7:
+  23:main.c        **** 	midi_button_control(UNDEF_4, 1, BUTTON4);
+ 139               		.loc 1 23 0
+ 140 004a 43E0      		ldi r20,lo8(3)
+ 141 004c 50E0      		ldi r21,0
+ 142 004e 61E0      		ldi r22,lo8(1)
+ 143 0050 87E1      		ldi r24,lo8(23)
+ 144 0052 0E94 0000 		call midi_button_control
+ 145               	.LVL8:
+  24:main.c        **** 
+  25:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_1_CMD, ADC0);
+ 146               		.loc 1 25 0
+ 147 0056 60E0      		ldi r22,0
+ 148 0058 70E0      		ldi r23,0
+ 149 005a 80E1      		ldi r24,lo8(16)
+ 150 005c 0E94 0000 		call midi_pot_control
+ 151               	.LVL9:
+  26:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_2_CMD, ADC1);
+ 152               		.loc 1 26 0
+ 153 0060 61E0      		ldi r22,lo8(1)
+ 154 0062 70E0      		ldi r23,0
+ 155 0064 81E1      		ldi r24,lo8(17)
+ 156 0066 0E94 0000 		call midi_pot_control
+ 157               	.LVL10:
+  27:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_3_CMD, ADC2);
+ 158               		.loc 1 27 0
+ 159 006a 62E0      		ldi r22,lo8(2)
+ 160 006c 70E0      		ldi r23,0
+ 161 006e 82E1      		ldi r24,lo8(18)
+ 162 0070 0E94 0000 		call midi_pot_control
+ 163               	.LVL11:
+  28:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_4_CMD, ADC3);
+ 164               		.loc 1 28 0
+ 165 0074 63E0      		ldi r22,lo8(3)
+ 166 0076 70E0      		ldi r23,0
+ 167 0078 83E1      		ldi r24,lo8(19)
+ 168 007a 0E94 0000 		call midi_pot_control
+ 169               	.LVL12:
+  29:main.c        **** 	midi_pot_control(UNDEF_5, ADC4);
+ 170               		.loc 1 29 0
+ 171 007e 64E0      		ldi r22,lo8(4)
+ 172 0080 70E0      		ldi r23,0
+ 173 0082 88E1      		ldi r24,lo8(24)
+ 174 0084 0E94 0000 		call midi_pot_control
+ 175               	.LVL13:
+  30:main.c        **** 	midi_pot_control(UNDEF_6, ADC5);
+ 176               		.loc 1 30 0
+ 177 0088 65E0      		ldi r22,lo8(5)
+ 178 008a 70E0      		ldi r23,0
+ 179 008c 89E1      		ldi r24,lo8(25)
+ 180 008e 0E94 0000 		call midi_pot_control
+ 181               	.LVL14:
+  31:main.c        **** 	midi_pot_control(UNDEF_7, ADC6);
+ 182               		.loc 1 31 0
+ 183 0092 66E0      		ldi r22,lo8(6)
+ 184 0094 70E0      		ldi r23,0
+ 185 0096 8AE1      		ldi r24,lo8(26)
+ 186 0098 0E94 0000 		call midi_pot_control
+ 187               	.LVL15:
+  32:main.c        **** 	midi_pot_control(UNDEF_8, ADC7);
+ 188               		.loc 1 32 0
+ 189 009c 67E0      		ldi r22,lo8(7)
+ 190 009e 70E0      		ldi r23,0
+ 191 00a0 89E1      		ldi r24,lo8(25)
+ 192 00a2 0E94 0000 		call midi_pot_control
+ 193               	.LVL16:
+ 194               	/* epilogue start */
+  33:main.c        **** }...
+ 195               		.loc 1 33 0
+ 196 00a6 FF91      		pop r31
+ 197 00a8 EF91      		pop r30
+ 198 00aa BF91      		pop r27
+ 199 00ac AF91      		pop r26
+ 200 00ae 9F91      		pop r25
+ 201 00b0 8F91      		pop r24
+ 202 00b2 7F91      		pop r23
+ 203 00b4 6F91      		pop r22
+ 204 00b6 5F91      		pop r21
+ 205 00b8 4F91      		pop r20
+ 206 00ba 3F91      		pop r19
+ 207 00bc 2F91      		pop r18
+ 208 00be 0F90      		pop r0
+ 209 00c0 0FBE      		out __SREG__,r0
+ 210 00c2 0F90      		pop r0
+ 211 00c4 1F90      		pop r1
+ 212 00c6 1895      		reti
+ 213               		.cfi_endproc
+ 214               	.LFE7:
+ 216               	.Letext0:
+ 217               		.file 2 "inc/MIDI_v2.h"
+ 218               		.file 3 "inc/mLib_Interrupts.h"
+ 219               		.file 4 "inc/mLib_USART.h"
+ 220               		.file 5 "inc/mLib_ADC.h"
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 main.c
+     /tmp/cclGcLCH.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/cclGcLCH.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/cclGcLCH.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/cclGcLCH.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/cclGcLCH.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/cclGcLCH.s:13     .text.startup:0000000000000000 main
+     /tmp/cclGcLCH.s:48     .text:0000000000000000 __vector_7
+
+UNDEFINED SYMBOLS
+midi_reg_init
+timer_init
+usart_init
+adc_init
+midi_keyboard_scan
+midi_button_control
+midi_pot_control
