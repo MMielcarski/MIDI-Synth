@@ -37,7 +37,7 @@ atmega32 (4 octaves, 8x ADC, 4x BUTTON)
 #define UNDEF_5 0x18
 #define UNDEF_6 0x19
 #define UNDEF_7 0x1A
-#define UNDEF_8 0x19
+#define UNDEF_8 0x1B
 
 #define VEL_DEF_CMD		0x40	// default 64 velocity
 

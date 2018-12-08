@@ -164,60 +164,60 @@
  144 0052 0E94 0000 		call midi_button_control
  145               	.LVL8:
   24:main.c        **** 
-  25:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_1_CMD, ADC0);
+  25:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_1_CMD, ADC0);	// slide pot 1
  146               		.loc 1 25 0
  147 0056 60E0      		ldi r22,0
  148 0058 70E0      		ldi r23,0
  149 005a 80E1      		ldi r24,lo8(16)
  150 005c 0E94 0000 		call midi_pot_control
  151               	.LVL9:
-  26:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_2_CMD, ADC1);
+  26:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_2_CMD, ADC1);	// slide pot 2
  152               		.loc 1 26 0
  153 0060 61E0      		ldi r22,lo8(1)
  154 0062 70E0      		ldi r23,0
  155 0064 81E1      		ldi r24,lo8(17)
  156 0066 0E94 0000 		call midi_pot_control
  157               	.LVL10:
-  27:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_3_CMD, ADC2);
+  27:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_3_CMD, ADC2);	// knob pot 1	
  158               		.loc 1 27 0
  159 006a 62E0      		ldi r22,lo8(2)
  160 006c 70E0      		ldi r23,0
  161 006e 82E1      		ldi r24,lo8(18)
  162 0070 0E94 0000 		call midi_pot_control
  163               	.LVL11:
-  28:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_4_CMD, ADC3);
+  28:main.c        **** 	midi_pot_control(GEN_PURP_CTRL_4_CMD, ADC3);	// knob pot 2
  164               		.loc 1 28 0
  165 0074 63E0      		ldi r22,lo8(3)
  166 0076 70E0      		ldi r23,0
  167 0078 83E1      		ldi r24,lo8(19)
  168 007a 0E94 0000 		call midi_pot_control
  169               	.LVL12:
-  29:main.c        **** 	midi_pot_control(UNDEF_5, ADC4);
+  29:main.c        **** 	midi_pot_control(UNDEF_5, ADC4);				// knob pot 3
  170               		.loc 1 29 0
  171 007e 64E0      		ldi r22,lo8(4)
  172 0080 70E0      		ldi r23,0
  173 0082 88E1      		ldi r24,lo8(24)
  174 0084 0E94 0000 		call midi_pot_control
  175               	.LVL13:
-  30:main.c        **** 	midi_pot_control(UNDEF_6, ADC5);
+  30:main.c        **** 	midi_pot_control(UNDEF_6, ADC5);				// knob pot 4
  176               		.loc 1 30 0
  177 0088 65E0      		ldi r22,lo8(5)
  178 008a 70E0      		ldi r23,0
  179 008c 89E1      		ldi r24,lo8(25)
  180 008e 0E94 0000 		call midi_pot_control
  181               	.LVL14:
-  31:main.c        **** 	midi_pot_control(UNDEF_7, ADC6);
+  31:main.c        **** 	midi_pot_control(UNDEF_7, ADC6);				// joystick pot 1
  182               		.loc 1 31 0
  183 0092 66E0      		ldi r22,lo8(6)
  184 0094 70E0      		ldi r23,0
  185 0096 8AE1      		ldi r24,lo8(26)
  186 0098 0E94 0000 		call midi_pot_control
  187               	.LVL15:
-  32:main.c        **** 	midi_pot_control(UNDEF_8, ADC7);
+  32:main.c        **** 	midi_pot_control(UNDEF_8, ADC7);				// joystick pot 2
  188               		.loc 1 32 0
  189 009c 67E0      		ldi r22,lo8(7)
  190 009e 70E0      		ldi r23,0
- 191 00a0 89E1      		ldi r24,lo8(25)
+ 191 00a0 8BE1      		ldi r24,lo8(27)
  192 00a2 0E94 0000 		call midi_pot_control
  193               	.LVL16:
  194               	/* epilogue start */
@@ -249,13 +249,13 @@
  220               		.file 5 "inc/mLib_ADC.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-     /tmp/cclGcLCH.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/cclGcLCH.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/cclGcLCH.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/cclGcLCH.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/cclGcLCH.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/cclGcLCH.s:13     .text.startup:0000000000000000 main
-     /tmp/cclGcLCH.s:48     .text:0000000000000000 __vector_7
+     /tmp/ccf7VixS.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccf7VixS.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccf7VixS.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccf7VixS.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccf7VixS.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccf7VixS.s:13     .text.startup:0000000000000000 main
+     /tmp/ccf7VixS.s:48     .text:0000000000000000 __vector_7
 
 UNDEFINED SYMBOLS
 midi_reg_init

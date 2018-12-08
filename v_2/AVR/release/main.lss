@@ -147,45 +147,45 @@ ISR(TIMER1_COMPA_vect)	// timer1 overflow interrupt
   e2:	87 e1       	ldi	r24, 0x17	; 23
   e4:	0e 94 fe 00 	call	0x1fc	; 0x1fc <midi_button_control>
 
-	midi_pot_control(GEN_PURP_CTRL_1_CMD, ADC0);
+	midi_pot_control(GEN_PURP_CTRL_1_CMD, ADC0);	// slide pot 1
   e8:	60 e0       	ldi	r22, 0x00	; 0
   ea:	70 e0       	ldi	r23, 0x00	; 0
   ec:	80 e1       	ldi	r24, 0x10	; 16
   ee:	0e 94 3d 01 	call	0x27a	; 0x27a <midi_pot_control>
-	midi_pot_control(GEN_PURP_CTRL_2_CMD, ADC1);
+	midi_pot_control(GEN_PURP_CTRL_2_CMD, ADC1);	// slide pot 2
   f2:	61 e0       	ldi	r22, 0x01	; 1
   f4:	70 e0       	ldi	r23, 0x00	; 0
   f6:	81 e1       	ldi	r24, 0x11	; 17
   f8:	0e 94 3d 01 	call	0x27a	; 0x27a <midi_pot_control>
-	midi_pot_control(GEN_PURP_CTRL_3_CMD, ADC2);
+	midi_pot_control(GEN_PURP_CTRL_3_CMD, ADC2);	// knob pot 1	
   fc:	62 e0       	ldi	r22, 0x02	; 2
   fe:	70 e0       	ldi	r23, 0x00	; 0
  100:	82 e1       	ldi	r24, 0x12	; 18
  102:	0e 94 3d 01 	call	0x27a	; 0x27a <midi_pot_control>
-	midi_pot_control(GEN_PURP_CTRL_4_CMD, ADC3);
+	midi_pot_control(GEN_PURP_CTRL_4_CMD, ADC3);	// knob pot 2
  106:	63 e0       	ldi	r22, 0x03	; 3
  108:	70 e0       	ldi	r23, 0x00	; 0
  10a:	83 e1       	ldi	r24, 0x13	; 19
  10c:	0e 94 3d 01 	call	0x27a	; 0x27a <midi_pot_control>
-	midi_pot_control(UNDEF_5, ADC4);
+	midi_pot_control(UNDEF_5, ADC4);				// knob pot 3
  110:	64 e0       	ldi	r22, 0x04	; 4
  112:	70 e0       	ldi	r23, 0x00	; 0
  114:	88 e1       	ldi	r24, 0x18	; 24
  116:	0e 94 3d 01 	call	0x27a	; 0x27a <midi_pot_control>
-	midi_pot_control(UNDEF_6, ADC5);
+	midi_pot_control(UNDEF_6, ADC5);				// knob pot 4
  11a:	65 e0       	ldi	r22, 0x05	; 5
  11c:	70 e0       	ldi	r23, 0x00	; 0
  11e:	89 e1       	ldi	r24, 0x19	; 25
  120:	0e 94 3d 01 	call	0x27a	; 0x27a <midi_pot_control>
-	midi_pot_control(UNDEF_7, ADC6);
+	midi_pot_control(UNDEF_7, ADC6);				// joystick pot 1
  124:	66 e0       	ldi	r22, 0x06	; 6
  126:	70 e0       	ldi	r23, 0x00	; 0
  128:	8a e1       	ldi	r24, 0x1A	; 26
  12a:	0e 94 3d 01 	call	0x27a	; 0x27a <midi_pot_control>
-	midi_pot_control(UNDEF_8, ADC7);
+	midi_pot_control(UNDEF_8, ADC7);				// joystick pot 2
  12e:	67 e0       	ldi	r22, 0x07	; 7
  130:	70 e0       	ldi	r23, 0x00	; 0
- 132:	89 e1       	ldi	r24, 0x19	; 25
+ 132:	8b e1       	ldi	r24, 0x1B	; 27
  134:	0e 94 3d 01 	call	0x27a	; 0x27a <midi_pot_control>
  138:	ff 91       	pop	r31
  13a:	ef 91       	pop	r30

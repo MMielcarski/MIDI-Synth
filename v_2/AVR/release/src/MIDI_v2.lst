@@ -1073,30 +1073,30 @@
  944               		.file 5 "/usr/lib/avr/include/stdint.h"
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 MIDI_v2.c
-     /tmp/cckrdVBB.s:2      *ABS*:000000000000003e __SP_H__
-     /tmp/cckrdVBB.s:3      *ABS*:000000000000003d __SP_L__
-     /tmp/cckrdVBB.s:4      *ABS*:000000000000003f __SREG__
-     /tmp/cckrdVBB.s:5      *ABS*:0000000000000000 __tmp_reg__
-     /tmp/cckrdVBB.s:6      *ABS*:0000000000000001 __zero_reg__
-     /tmp/cckrdVBB.s:12     .text:0000000000000000 midi_reg_init
-     /tmp/cckrdVBB.s:41     .text:0000000000000014 midi_note_on
-     /tmp/cckrdVBB.s:107    .text:000000000000004c midi_note_off
-     /tmp/cckrdVBB.s:173    .text:0000000000000084 midi_cc
-     /tmp/cckrdVBB.s:217    .text:00000000000000a2 midi_button_control
-     /tmp/cckrdVBB.s:901    .bss:0000000000000048 buttons_state_tab
-     /tmp/cckrdVBB.s:896    .bss:0000000000000040 buttons_toggle_tab
-     /tmp/cckrdVBB.s:332    .text:0000000000000120 midi_pot_control
-     /tmp/cckrdVBB.s:886    .bss:0000000000000020 adc_prev_read
-     /tmp/cckrdVBB.s:891    .bss:0000000000000030 adc_actual_read
-     /tmp/cckrdVBB.s:871    .bss:0000000000000010 ema
-     /tmp/cckrdVBB.s:866    .bss:0000000000000000 ema_prev
-     /tmp/cckrdVBB.s:575    .text:0000000000000250 midi_keyboard_scan
-     /tmp/cckrdVBB.s:925    .data:000000000000000a notes_pin_tab
-     /tmp/cckrdVBB.s:911    .bss:0000000000000052 key_state_tab
-     /tmp/cckrdVBB.s:917    .data:0000000000000002 octaves_pin_tab
-     /tmp/cckrdVBB.s:860    .data:0000000000000000 octave_change_global
-     /tmp/cckrdVBB.s:877    .rodata:0000000000000000 ema_a
-     /tmp/cckrdVBB.s:906    .bss:0000000000000050 buttons_pin_tab
+     /tmp/ccVxlhF0.s:2      *ABS*:000000000000003e __SP_H__
+     /tmp/ccVxlhF0.s:3      *ABS*:000000000000003d __SP_L__
+     /tmp/ccVxlhF0.s:4      *ABS*:000000000000003f __SREG__
+     /tmp/ccVxlhF0.s:5      *ABS*:0000000000000000 __tmp_reg__
+     /tmp/ccVxlhF0.s:6      *ABS*:0000000000000001 __zero_reg__
+     /tmp/ccVxlhF0.s:12     .text:0000000000000000 midi_reg_init
+     /tmp/ccVxlhF0.s:41     .text:0000000000000014 midi_note_on
+     /tmp/ccVxlhF0.s:107    .text:000000000000004c midi_note_off
+     /tmp/ccVxlhF0.s:173    .text:0000000000000084 midi_cc
+     /tmp/ccVxlhF0.s:217    .text:00000000000000a2 midi_button_control
+     /tmp/ccVxlhF0.s:901    .bss:0000000000000048 buttons_state_tab
+     /tmp/ccVxlhF0.s:896    .bss:0000000000000040 buttons_toggle_tab
+     /tmp/ccVxlhF0.s:332    .text:0000000000000120 midi_pot_control
+     /tmp/ccVxlhF0.s:886    .bss:0000000000000020 adc_prev_read
+     /tmp/ccVxlhF0.s:891    .bss:0000000000000030 adc_actual_read
+     /tmp/ccVxlhF0.s:871    .bss:0000000000000010 ema
+     /tmp/ccVxlhF0.s:866    .bss:0000000000000000 ema_prev
+     /tmp/ccVxlhF0.s:575    .text:0000000000000250 midi_keyboard_scan
+     /tmp/ccVxlhF0.s:925    .data:000000000000000a notes_pin_tab
+     /tmp/ccVxlhF0.s:911    .bss:0000000000000052 key_state_tab
+     /tmp/ccVxlhF0.s:917    .data:0000000000000002 octaves_pin_tab
+     /tmp/ccVxlhF0.s:860    .data:0000000000000000 octave_change_global
+     /tmp/ccVxlhF0.s:877    .rodata:0000000000000000 ema_a
+     /tmp/ccVxlhF0.s:906    .bss:0000000000000050 buttons_pin_tab
 
 UNDEFINED SYMBOLS
 usart_put_8bit
